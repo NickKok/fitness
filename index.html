@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Routine Builder</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .filter-group { margin-bottom: 20px; }
+    .filter-group label { margin-right: 10px; }
+    .routine-output { margin-top: 30px; }
+    .exercise-item { padding: 10px; border-bottom: 1px solid #ccc; }
+    .selected-exercises { margin-top: 20px; }
+    button { margin: 5px 0; }
+  </style>
+</head>
+<body>
+  <h1>Routine Builder</h1>
+
+  <!-- Search for existing routine -->
+  <div class="filter-group">
+    <label for="searchRoutine">Search Routine by Name:</label>
+    <input type="text" id="searchRoutine" placeholder="Enter routine name...">
+    <button onclick="searchRoutine()">Search</button>
+  </div>
+
+  <!-- Filters -->
+  <div class="filter-group">
+    <strong>Select Difficulty:</strong><br>
+    <label><input type="checkbox" name="difficulty" value="beginner"> Beginner</label>
+    <label><input type="checkbox" name="difficulty" value="intermediate"> Intermediate</label>
+    <label><input type="checkbox" name="difficulty" value="advanced"> Advanced</label>
+  </div>
+
+  <div class="filter-group">
+    <strong>Select Body Area:</strong><br>
+    <label><input type="checkbox" name="bodyArea" value="upper body"> Upper Body</label>
+    <label><input type="checkbox" name="bodyArea" value="lower body"> Lower Body</label>
+    <label><input type="checkbox" name="bodyArea" value="core"> Core</label>
+    <label><input type="checkbox" name="bodyArea" value="arms"> Arms</label>
+    <label><input type="checkbox" name="bodyArea" value="legs"> Legs</label>
+    <label><input type="checkbox" name="bodyArea" value="back"> Back</label>
+    <label><input type="checkbox" name="bodyArea" value="chest"> Chest</label>
+  </div>
+
+  <div class="filter-group">
+    <label for="muscleGroup">Select Muscle Group:</label>
+    <select id="muscleGroup">
+      <option value="">-- All --</option>
+      <option value="glutes">Glutes</option>
+      <option value="biceps">Biceps</option>
+      <option value="quads">Quads</option>
+      <option value="calves">Calves</option>
+      <option value="obliques">Obliques</option>
+      <option value="hamstrings">Hamstrings</option>
+    </select>
+  </div>
+
+  <button onclick="filterExercises()">List Exercises</button>
+
+  <!-- List of matching exercises -->
+  <div id="exerciseList" class="routine-output"></div>
+
+  <!-- Build Routine -->
+  <div class="selected-exercises" id="routineBuilder">
+    <h2>Selected Exercises</h2>
+    <ol id="selectedExercises"></ol>
+    <div>
+      <label for="routineName">Routine Name:</label>
+      <input type="text" id="routineName" placeholder="Enter routine name">
+    </div>
+    <div>
+      <label for="routineDesc">Routine Description:</label>
+      <input type="text" id="routineDesc" placeholder="e.g. Female, 35, weight loss">
+    </div>
+    <button onclick="generateRoutine()">Generate Routine</button>
+  </div>
+
+  <!-- Final Output -->
+  <div id="finalRoutine" class="routine-output"></div>
+
+  <script>
+    const sampleExercises = [
+      {
+        name: "Glute Bridge",
+        bodyAreas: ["lower body", "glutes"],
+        muscleGroups: ["glutes", "hamstrings"],
+        difficulty: "beginner",
+        description: "Lie on your back with knees bent and lift hips off the ground.",
+        easierVersion: "Bridge with feet elevated on step",
+        harderVersion: "Single-leg Glute Bridge"
+      },
+      {
+        name: "Push-Up",
+        bodyAreas: ["upper body", "arms", "chest"],
+        muscleGroups: ["chest", "triceps", "shoulders"],
+        difficulty: "intermediate",
+        description: "Standard push-up with hands shoulder-width apart.",
+        easierVersion: "Knee Push-Up",
+        harderVersion: "Clap Push-Up"
+      },
+      {
+        name: "Tabata Full Body",
+        bodyAreas: ["full body", "upper body", "lower body", "core"],
+        muscleGroups: ["quads", "glutes", "chest", "hamstrings", "shoulders", "abs", "back", "calves"],
+        difficulty: "intermediate",
+        description: "20s on, 10s rest. Exercises: Jumping Jacks, Squats, Push-Ups, Lunges, Plank Hold, High Knees, Mountain Climbers, Glute Bridges, Bicycle Crunches, Skaters, Inchworms, Side Planks (L/R), Supermans. 3–6 sets depending on level.",
+        easierVersion: "Reduce to 2–3 rounds or 15s work / 15s rest",
+        harderVersion: "Increase to 6+ rounds or add ankle/wrist weights"
+      }
+    ];
+
+    function getSelectedValues(name) {
+      return Array.from(document.querySelectorAll(`input[name='${name}']:checked`)).map(cb => cb.value);
+    }
+
+    function filterExercises() {
+      const difficulties = getSelectedValues('difficulty');
+      const bodyAreas = getSelectedValues('bodyArea');
+      const muscleGroup = document.getElementById('muscleGroup').value;
+
+      const filtered = sampleExercises.filter(ex => {
+        return (
+          (difficulties.length === 0 || difficulties.includes(ex.difficulty)) &&
+          (bodyAreas.length === 0 || ex.bodyAreas.some(area => bodyAreas.includes(area))) &&
+          (!muscleGroup || ex.muscleGroups.includes(muscleGroup))
+        );
+      });
+
+      const list = document.getElementById('exerciseList');
+      list.innerHTML = '';
+      filtered.forEach((ex, index) => {
+        const div = document.createElement('div');
+        div.className = 'exercise-item';
+        div.innerHTML = `<strong>${ex.name}</strong> (${ex.difficulty})<br>${ex.description}<br>
+                         <em>Easier:</em> ${ex.easierVersion} | <em>Harder:</em> ${ex.harderVersion}<br>
+                         <button onclick="addExercise(${index})">Add to Routine</button>`;
+        list.appendChild(div);
+      });
+    }
+
+    const selectedExercises = [];
+
+    function addExercise(index) {
+      selectedExercises.push(sampleExercises[index]);
+      updateSelectedExercises();
+    }
+
+    function updateSelectedExercises() {
+      const list = document.getElementById('selectedExercises');
+      list.innerHTML = '';
+      selectedExercises.forEach((ex, i) => {
+        const li = document.createElement('li');
+        li.textContent = ex.name;
+        list.appendChild(li);
+      });
+    }
+
+    function generateRoutine() {
+      const name = document.getElementById('routineName').value;
+      const desc = document.getElementById('routineDesc').value;
+
+      const output = document.getElementById('finalRoutine');
+      output.innerHTML = `<h3>${name}</h3><p>${desc}</p><ul>` +
+        selectedExercises.map(ex => `<li>${ex.name} - ${ex.description}</li>`).join('') +
+        '</ul>';
+    }
+
+    function searchRoutine() {
+      const name = document.getElementById('searchRoutine').value.toLowerCase();
+      const match = sampleExercises.find(ex => ex.name.toLowerCase().includes(name));
+      if (match) {
+        alert(`Found exercise: ${match.name}`);
+      } else {
+        alert('Routine not found.');
+      }
+    }
+  </script>
+</body>
+</html>
