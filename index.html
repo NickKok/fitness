@@ -60,12 +60,17 @@
   <script>
     let exercises = [];
 
-    // Fetch the exercises from the exercises.json file
+    // Fetch the exercises from exercises.json file
     fetch('exercises.json')
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to load exercises.json');
+        }
+        return response.json();
+      })
       .then(data => {
         exercises = data;
-        filterExercises();  // Initialize the list
+        filterExercises();  // Initial population of the exercises list
       })
       .catch(error => {
         console.error("Error loading exercises.json:", error);
@@ -84,7 +89,7 @@
       });
 
       if (filtered.length === 0 && selectedDifficulty.length === 0 && selectedBodyAreas.length === 0) {
-        filtered = exercises; // fallback to show all
+        filtered = exercises; // Fallback to show all
       }
 
       filtered.forEach(ex => {
