@@ -1,134 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Exercise Routine Builder</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px; color: #333; }
-    h1, h2 { color: #e76f51; }
-    .filter-group, .exercise-list, .new-routine, .add-custom-exercise { margin-bottom: 20px; }
-    .exercise-item { border-bottom: 1px solid #ddd; padding: 10px 0; }
-    button { background-color: #2a9d8f; color: white; border: none; padding: 10px 20px; cursor: pointer; }
-    button:hover { background-color: #21867a; }
-    .selected-exercises { margin-top: 20px; }
-    input[type="text"] { padding: 5px; width: 100%; margin-bottom: 10px; }
-    textarea { width: 100%; height: 60px; margin-bottom: 10px; padding: 5px; }
-  </style>
-</head>
-<body>
-  <h1>Exercise Routine Builder</h1>
-
-  <div class="filter-group">
-    <h2>Filter Exercises</h2>
-    <label><input type="checkbox" class="difficulty" value="Beginner"> Beginner</label>
-    <label><input type="checkbox" class="difficulty" value="Intermediate"> Intermediate</label>
-    <label><input type="checkbox" class="difficulty" value="Advanced"> Advanced</label>
-    <br>
-    <label><input type="checkbox" class="body-area" value="Upper Body"> Upper Body</label>
-    <label><input type="checkbox" class="body-area" value="Lower Body"> Lower Body</label>
-    <label><input type="checkbox" class="body-area" value="Core"> Core</label>
-    <label><input type="checkbox" class="body-area" value="Arms"> Arms</label>
-    <label><input type="checkbox" class="body-area" value="Legs"> Legs</label>
-    <label><input type="checkbox" class="body-area" value="Back"> Back</label>
-    <label><input type="checkbox" class="body-area" value="Chest"> Chest</label>
-    <br><br>
-    <button onclick="filterExercises()">List</button>
-  </div>
-
-  <div class="exercise-list">
-    <h2>Matching Exercises</h2>
-    <div id="exerciseResults"></div>
-  </div>
-
-  <div class="new-routine">
-    <h2>Create New Routine</h2>
-    <button onclick="generateRoutine()">Generate Routine</button>
-    <div class="selected-exercises" id="selectedExercises"></div>
-  </div>
-
-  <div class="add-custom-exercise">
-    <h2>Add Custom Exercise</h2>
-    <input type="text" id="customName" placeholder="Exercise Name" />
-    <textarea id="customDescription" placeholder="Description of the movement"></textarea>
-    <input type="text" id="customDifficulty" placeholder="Difficulty (e.g., Beginner, Intermediate, Advanced)" />
-    <input type="text" id="customBodyAreas" placeholder="Body Areas (comma-separated)" />
-    <input type="text" id="customMuscleGroups" placeholder="Muscle Groups (comma-separated)" />
-    <button onclick="addCustomExercise()">Add Exercise</button>
-  </div>
-
-  <script>
-    let exercises = [];
-
-    // Load exercises from JSON file
-    async function loadExercises() {
-      const response = await fetch('exercises.json');
-      exercises = await response.json();
-      filterExercises();
-    }
-
-    // Display exercises based on filters
-    function filterExercises() {
-      const selectedDifficulty = [...document.querySelectorAll('.difficulty:checked')].map(cb => cb.value);
-      const selectedBodyAreas = [...document.querySelectorAll('.body-area:checked')].map(cb => cb.value);
-      const results = document.getElementById('exerciseResults');
-      results.innerHTML = '';
-
-      let filtered = exercises.filter(ex => {
-        const matchesDifficulty = selectedDifficulty.length === 0 || selectedDifficulty.includes(ex.difficulty);
-        const matchesBody = selectedBodyAreas.length === 0 || ex.bodyAreas.some(area => selectedBodyAreas.includes(area));
-        return matchesDifficulty && matchesBody;
-      });
-
-      if (filtered.length === 0 && selectedDifficulty.length === 0 && selectedBodyAreas.length === 0) {
-        filtered = exercises; // fallback to show all
-      }
-
-      filtered.forEach(ex => {
-        const exDiv = document.createElement('div');
-        exDiv.className = 'exercise-item';
-        exDiv.innerHTML = `
-          <label><input type="checkbox" class="select-ex" value="${ex.name}"> <strong>${ex.name}</strong></label><br>
-          <em>${ex.description}</em><br>
-          <small>Difficulty: ${ex.difficulty}, Body Areas: ${ex.bodyAreas.join(', ')}, Muscle Groups: ${ex.muscleGroups.join(', ')}</small>
-        `;
-        results.appendChild(exDiv);
-      });
-    }
-
-    // Generate a new routine from selected exercises
-    function generateRoutine() {
-      const selected = [...document.querySelectorAll('.select-ex:checked')].map(cb => cb.value);
-      const output = document.getElementById('selectedExercises');
-      output.innerHTML = '<h3>Generated Routine:</h3>';
-      selected.forEach(name => {
-        const ex = exercises.find(e => e.name === name);
-        const div = document.createElement('div');
-        div.innerHTML = `<strong>${ex.name}</strong>: ${ex.description} <br><small>Muscle Groups: ${ex.muscleGroups.join(', ')}</small>`;
-        output.appendChild(div);
-      });
-    }
-
-    // Add custom exercise to the list
-    function addCustomExercise() {
-      const name = document.getElementById('customName').value.trim();
-      const description = document.getElementById('customDescription').value.trim();
-      const difficulty = document.getElementById('customDifficulty').value.trim();
-      const bodyAreas = document.getElementById('customBodyAreas').value.split(',').map(s => s.trim());
-      const muscleGroups = document.getElementById('customMuscleGroups').value.split(',').map(s => s.trim());
-
-      if (!name || !description || !difficulty || bodyAreas.length === 0 || muscleGroups.length === 0) {
-        alert('Please fill out all fields to add a custom exercise.');
-        return;
-      }
-
-      exercises.push({ name, description, difficulty, bodyAreas, muscleGroups });
-      alert(`Custom exercise "${name}" added.`);
-      filterExercises();
-    }
-
-    // Load exercises on window load
-    window.onload = loadExercises;
-  </script>
-</body>
-</html>
+[
+  {
+    "name": "Jumping Jacks",
+    "difficulty": "Beginner",
+    "bodyAreas": ["Full Body", "Cardio"],
+    "muscleGroups": ["Calves", "Glutes", "Deltoids", "Hip Flexors"],
+    "description": "A full-body cardio move involving jumping with arms and legs moving out and in."
+  },
+  {
+    "name": "Squats",
+    "difficulty": "Intermediate",
+    "bodyAreas": ["Lower Body", "Legs"],
+    "muscleGroups": ["Quadriceps", "Glutes", "Hamstrings", "Calves"],
+    "description": "A lower body move targeting quads, glutes, hamstrings, and calves."
+  },
+  {
+    "name": "Push-Ups",
+    "difficulty": "Intermediate",
+    "bodyAreas": ["Upper Body", "Chest", "Arms"],
+    "muscleGroups": ["Pectorals", "Triceps", "Deltoids", "Core"],
+    "description": "A classic upper body move focusing on chest, triceps, and shoulders."
+  },
+  {
+    "name": "Lunges",
+    "difficulty": "Intermediate",
+    "bodyAreas": ["Lower Body", "Legs"],
+    "muscleGroups": ["Glutes", "Quadriceps", "Hamstrings", "Calves"],
+    "description": "A unilateral lower body movement improving balance and strength."
+  },
+  {
+    "name": "Modified Burpee",
+    "difficulty": "Beginner",
+    "bodyAreas": ["Full Body", "Upper Body", "Lower Body", "Back", "Core"],
+    "muscleGroups": ["Arms", "Biceps", "Chest", "Back"],
+    "description": "Bend the knees, place hands on the floor, walk left leg then right leg back into a plank position. Then walk the legs back up and return to standing."
+  },
+  {
+    "name": "Sit-Ups",
+    "difficulty": "Beginner to Intermediate",
+    "bodyAreas": ["Core"],
+    "muscleGroups": ["Abdominals"],
+    "description": "A simple exercise where you lift your upper body up and down while lying on your back, targeting the abdominal muscles."
+  }
+]
