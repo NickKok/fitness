@@ -35,10 +35,10 @@
     "description": "Bend the knees, place hands on the floor, walk left leg then right leg back into a plank position. Then walk the legs back up and return to standing."
   },
   {
-    "name": "Sit-Ups",
+    "name": "Bicycle Crunches",
     "difficulty": "Beginner to Intermediate",
-    "bodyAreas": ["Core"],
-    "muscleGroups": ["Abdominals"],
-    "description": "A simple exercise where you lift your upper body up and down while lying on your back, targeting the abdominal muscles."
+    "bodyAreas": ["Core", "Legs", "Back"],
+    "muscleGroups": ["Abdominals", "Quadriceps", "Glutes"],
+    "description": "Lie on your back, place hands lightly behind your neck, and move your legs in a pedaling motion while crunching your torso to touch your opposite elbow to the opposite knee, targeting the core, quads, and glutes."
   }
 ]
