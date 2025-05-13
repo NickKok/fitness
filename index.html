@@ -58,43 +58,16 @@
   </div>
 
   <script>
-    const exercises = [
-      {
-        name: "Jumping Jacks",
-        difficulty: "Beginner",
-        bodyAreas: ["Full Body", "Cardio"],
-        muscleGroups: ["Calves", "Glutes", "Deltoids", "Hip Flexors"],
-        description: "A full-body cardio move involving jumping with arms and legs moving out and in."
-      },
-      {
-        name: "Squats",
-        difficulty: "Intermediate",
-        bodyAreas: ["Lower Body", "Legs"],
-        muscleGroups: ["Quadriceps", "Glutes", "Hamstrings", "Calves"],
-        description: "A lower body move targeting quads, glutes, hamstrings, and calves."
-      },
-      {
-        name: "Push-Ups",
-        difficulty: "Intermediate",
-        bodyAreas: ["Upper Body", "Chest", "Arms"],
-        muscleGroups: ["Pectorals", "Triceps", "Deltoids", "Core"],
-        description: "A classic upper body move focusing on chest, triceps, and shoulders."
-      },
-      {
-        name: "Lunges",
-        difficulty: "Intermediate",
-        bodyAreas: ["Lower Body", "Legs"],
-        muscleGroups: ["Glutes", "Quadriceps", "Hamstrings", "Calves"],
-        description: "A unilateral lower body movement improving balance and strength."
-      },
-      {
-        name: "Modified Burpee",
-        difficulty: "Beginner",
-        bodyAreas: ["Full Body", "Upper Body", "Lower Body", "Back", "Core"],
-        muscleGroups: ["Arms", "Biceps", "Chest", "Back"],
-        description: "Bend the knees, place hands on the floor, walk left leg then right leg back into a plank position. Then walk the legs back up and return to standing."
-      }
-    ];
+    let exercises = [];
+
+    // Load exercises from the exercises.json file
+    fetch('exercises.json')
+      .then(response => response.json())
+      .then(data => {
+        exercises = data;
+        filterExercises(); // Display all exercises by default
+      })
+      .catch(error => console.error('Error loading exercises:', error));
 
     function filterExercises() {
       const selectedDifficulty = [...document.querySelectorAll('.difficulty:checked')].map(cb => cb.value);
@@ -148,8 +121,11 @@
         return;
       }
 
-      exercises.push({ name, description, difficulty, bodyAreas, muscleGroups });
-      alert(`Custom exercise "${name}" added.`);
+      const newExercise = { name, description, difficulty, bodyAreas, muscleGroups };
+      exercises.push(newExercise);
+
+      // Update the exercises.json file manually by updating the file on GitHub
+      alert(`Custom exercise "${name}" added. Please update the exercises.json file.`);
       filterExercises();
     }
 
