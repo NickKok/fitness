@@ -7,7 +7,7 @@
   <style>
     body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px; color: #333; }
     h1, h2 { color: #e76f51; }
-    .filter-group, .exercise-list, .new-routine, .add-custom-exercise { margin-bottom: 20px; }
+    .filter-group, .exercise-list, .new-routine { margin-bottom: 20px; }
     .exercise-item { border-bottom: 1px solid #ddd; padding: 10px 0; }
     button { background-color: #2a9d8f; color: white; border: none; padding: 10px 20px; cursor: pointer; }
     button:hover { background-color: #21867a; }
@@ -45,16 +45,6 @@
     <h2>Create New Routine</h2>
     <button onclick="generateRoutine()">Generate Routine</button>
     <div class="selected-exercises" id="selectedExercises"></div>
-  </div>
-
-  <div class="add-custom-exercise">
-    <h2>Add Custom Exercise</h2>
-    <input type="text" id="customName" placeholder="Exercise Name" />
-    <textarea id="customDescription" placeholder="Description of the movement"></textarea>
-    <input type="text" id="customDifficulty" placeholder="Difficulty (e.g., Beginner, Intermediate, Advanced)" />
-    <input type="text" id="customBodyAreas" placeholder="Body Areas (comma-separated)" />
-    <input type="text" id="customMuscleGroups" placeholder="Muscle Groups (comma-separated)" />
-    <button onclick="addCustomExercise()">Add Exercise</button>
   </div>
 
   <script>
@@ -114,23 +104,6 @@
         div.innerHTML = `<strong>${ex.name}</strong>: ${ex.description} <br><small>Muscle Groups: ${ex.muscleGroups.join(', ')}</small>`;
         output.appendChild(div);
       });
-    }
-
-    function addCustomExercise() {
-      const name = document.getElementById('customName').value.trim();
-      const description = document.getElementById('customDescription').value.trim();
-      const difficulty = document.getElementById('customDifficulty').value.trim();
-      const bodyAreas = document.getElementById('customBodyAreas').value.split(',').map(s => s.trim());
-      const muscleGroups = document.getElementById('customMuscleGroups').value.split(',').map(s => s.trim());
-
-      if (!name || !description || !difficulty || bodyAreas.length === 0 || muscleGroups.length === 0) {
-        alert('Please fill out all fields to add a custom exercise.');
-        return;
-      }
-
-      exercises.push({ name, description, difficulty, bodyAreas, muscleGroups });
-      alert(`Custom exercise "${name}" added.`);
-      filterExercises();
     }
   </script>
 </body>
