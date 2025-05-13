@@ -1,229 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Routine Builder</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exercise Routine Builder</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    .filter-group { margin-bottom: 20px; }
-    .filter-group label { margin-right: 10px; }
-    .routine-output { margin-top: 30px; }
-    .exercise-item { padding: 10px; border-bottom: 1px solid #ccc; }
+    body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px; color: #333; }
+    h1, h2 { color: #e76f51; }
+    .filter-group, .exercise-list, .new-routine, .add-custom-exercise { margin-bottom: 20px; }
+    .exercise-item { border-bottom: 1px solid #ddd; padding: 10px 0; }
+    button { background-color: #2a9d8f; color: white; border: none; padding: 10px 20px; cursor: pointer; }
+    button:hover { background-color: #21867a; }
     .selected-exercises { margin-top: 20px; }
-    button { margin: 5px 0; }
-    .reorder-btn { margin-left: 10px; font-size: 0.8em; }
-    .exercise-controls { display: flex; align-items: center; gap: 10px; margin-top: 5px; }
+    input[type="text"] { padding: 5px; width: 100%; margin-bottom: 10px; }
+    textarea { width: 100%; height: 60px; margin-bottom: 10px; padding: 5px; }
   </style>
 </head>
 <body>
-  <h1>Routine Builder</h1>
-
-  <!-- Search for existing routine -->
-  <div class="filter-group">
-    <label for="searchRoutine">Search Routine by Name:</label>
-    <input type="text" id="searchRoutine" placeholder="Enter routine name...">
-    <button onclick="searchRoutine()">Search</button>
-  </div>
-
-  <!-- Filters -->
-  <div class="filter-group">
-    <strong>Select Difficulty:</strong><br>
-    <label><input type="checkbox" name="difficulty" value="beginner"> Beginner</label>
-    <label><input type="checkbox" name="difficulty" value="intermediate"> Intermediate</label>
-    <label><input type="checkbox" name="difficulty" value="advanced"> Advanced</label>
-  </div>
+  <h1>Exercise Routine Builder</h1>
 
   <div class="filter-group">
-    <strong>Select Body Area:</strong><br>
-    <label><input type="checkbox" name="bodyArea" value="upper body"> Upper Body</label>
-    <label><input type="checkbox" name="bodyArea" value="lower body"> Lower Body</label>
-    <label><input type="checkbox" name="bodyArea" value="core"> Core</label>
-    <label><input type="checkbox" name="bodyArea" value="arms"> Arms</label>
-    <label><input type="checkbox" name="bodyArea" value="legs"> Legs</label>
-    <label><input type="checkbox" name="bodyArea" value="back"> Back</label>
-    <label><input type="checkbox" name="bodyArea" value="chest"> Chest</label>
+    <h2>Filter Exercises</h2>
+    <label><input type="checkbox" class="difficulty" value="Beginner"> Beginner</label>
+    <label><input type="checkbox" class="difficulty" value="Intermediate"> Intermediate</label>
+    <label><input type="checkbox" class="difficulty" value="Advanced"> Advanced</label>
+    <br>
+    <label><input type="checkbox" class="body-area" value="Upper Body"> Upper Body</label>
+    <label><input type="checkbox" class="body-area" value="Lower Body"> Lower Body</label>
+    <label><input type="checkbox" class="body-area" value="Core"> Core</label>
+    <label><input type="checkbox" class="body-area" value="Arms"> Arms</label>
+    <label><input type="checkbox" class="body-area" value="Legs"> Legs</label>
+    <label><input type="checkbox" class="body-area" value="Back"> Back</label>
+    <label><input type="checkbox" class="body-area" value="Chest"> Chest</label>
+    <br><br>
+    <button onclick="filterExercises()">List</button>
   </div>
 
-  <div class="filter-group">
-    <label for="muscleGroup">Select Muscle Group:</label>
-    <select id="muscleGroup">
-      <option value="">-- All --</option>
-      <option value="glutes">Glutes</option>
-      <option value="biceps">Biceps</option>
-      <option value="quads">Quads</option>
-      <option value="calves">Calves</option>
-      <option value="obliques">Obliques</option>
-      <option value="hamstrings">Hamstrings</option>
-    </select>
+  <div class="exercise-list">
+    <h2>Matching Exercises</h2>
+    <div id="exerciseResults"></div>
   </div>
 
-  <button onclick="filterExercises()">List Exercises</button>
-
-  <!-- List of matching exercises -->
-  <div id="exerciseList" class="routine-output"></div>
-
-  <!-- Build Routine -->
-  <div class="selected-exercises" id="routineBuilder">
-    <h2>Selected Exercises</h2>
-    <ol id="selectedExercises"></ol>
-    <div>
-      <label for="routineName">Routine Name:</label>
-      <input type="text" id="routineName" placeholder="Enter routine name">
-    </div>
-    <div>
-      <label for="routineDesc">Routine Description:</label>
-      <input type="text" id="routineDesc" placeholder="e.g. Female, 35, weight loss">
-    </div>
+  <div class="new-routine">
+    <h2>Create New Routine</h2>
     <button onclick="generateRoutine()">Generate Routine</button>
+    <div class="selected-exercises" id="selectedExercises"></div>
   </div>
 
-  <!-- Final Output -->
-  <div id="finalRoutine" class="routine-output"></div>
+  <div class="add-custom-exercise">
+    <h2>Add Custom Exercise</h2>
+    <input type="text" id="customName" placeholder="Exercise Name" />
+    <textarea id="customDescription" placeholder="Description of the movement"></textarea>
+    <input type="text" id="customDifficulty" placeholder="Difficulty (e.g., Beginner, Intermediate, Advanced)" />
+    <input type="text" id="customBodyAreas" placeholder="Body Areas (comma-separated)" />
+    <input type="text" id="customMuscleGroups" placeholder="Muscle Groups (comma-separated)" />
+    <button onclick="addCustomExercise()">Add Exercise</button>
+  </div>
 
   <script>
-    let sampleExercises = [
-      {
-        name: "Jumping Jacks",
-        bodyAreas: ["full body"],
-        muscleGroups: ["calves", "glutes"],
-        difficulty: "beginner",
-        description: "Jump to a position with the legs spread and hands overhead, then return.",
-        easierVersion: "Step Jacks",
-        harderVersion: "Power Jacks"
-      },
-      {
-        name: "Squats",
-        bodyAreas: ["lower body", "legs"],
-        muscleGroups: ["quads", "glutes", "hamstrings"],
-        difficulty: "intermediate",
-        description: "Lower hips from a standing position, then stand back up.",
-        easierVersion: "Box Squat",
-        harderVersion: "Jump Squat"
-      },
-      {
-        name: "Push-Ups",
-        bodyAreas: ["upper body", "arms", "chest"],
-        muscleGroups: ["chest", "triceps"],
-        difficulty: "intermediate",
-        description: "Lower body to the ground and push back up with arms.",
-        easierVersion: "Knee Push-Up",
-        harderVersion: "Plyometric Push-Up"
-      },
-      {
-        name: "Lunges",
-        bodyAreas: ["lower body", "legs"],
-        muscleGroups: ["quads", "glutes", "hamstrings"],
-        difficulty: "intermediate",
-        description: "Step forward, lower hips, and return to start.",
-        easierVersion: "Static Lunge",
-        harderVersion: "Jumping Lunge"
-      },
-      {
-        name: "Plank Hold",
-        bodyAreas: ["core"],
-        muscleGroups: ["abs", "shoulders"],
-        difficulty: "intermediate",
-        description: "Hold a push-up-like position with forearms on the ground.",
-        easierVersion: "Knee Plank",
-        harderVersion: "Plank with Arm Lift"
-      },
-      {
-        name: "High Knees",
-        bodyAreas: ["lower body", "core"],
-        muscleGroups: ["quads", "calves", "abs"],
-        difficulty: "intermediate",
-        description: "Run in place while lifting knees high.",
-        easierVersion: "Marching High Knees",
-        harderVersion: "Sprint High Knees"
-      },
-      {
-        name: "Mountain Climbers",
-        bodyAreas: ["core", "upper body"],
-        muscleGroups: ["abs", "shoulders", "quads"],
-        difficulty: "intermediate",
-        description: "In a plank position, alternate driving knees toward chest.",
-        easierVersion: "Slow Climbers",
-        harderVersion: "Cross-Body Climbers"
-      },
-      {
-        name: "Glute Bridge",
-        bodyAreas: ["lower body", "glutes"],
-        muscleGroups: ["glutes", "hamstrings"],
-        difficulty: "beginner",
-        description: "Lie on back and lift hips toward the ceiling.",
-        easierVersion: "Bridge on Floor",
-        harderVersion: "Single-Leg Glute Bridge"
-      },
-      {
-        name: "Bicycle Crunches",
-        bodyAreas: ["core"],
-        muscleGroups: ["abs", "obliques"],
-        difficulty: "intermediate",
-        description: "Alternate touching elbows to opposite knees.",
-        easierVersion: "Bent-Leg Crunches",
-        harderVersion: "Weighted Bicycle Crunches"
-      },
-      {
-        name: "Skaters",
-        bodyAreas: ["lower body", "core"],
-        muscleGroups: ["glutes", "quads"],
-        difficulty: "intermediate",
-        description: "Jump side to side landing on one foot.",
-        easierVersion: "Step Skaters",
-        harderVersion: "Skaters with Floor Touch"
-      },
-      {
-        name: "Inchworms",
-        bodyAreas: ["core", "upper body"],
-        muscleGroups: ["shoulders", "abs", "hamstrings"],
-        difficulty: "intermediate",
-        description: "Walk hands out to plank and back to standing.",
-        easierVersion: "Partial Inchworm",
-        harderVersion: "Inchworm to Push-Up"
-      },
-      {
-        name: "Forearm Side Plank Left",
-        bodyAreas: ["core"],
-        muscleGroups: ["obliques"],
-        difficulty: "intermediate",
-        description: "Hold side plank position on left forearm.",
-        easierVersion: "Knee Side Plank",
-        harderVersion: "Leg Raise Side Plank"
-      },
-      {
-        name: "Forearm Side Plank Right",
-        bodyAreas: ["core"],
-        muscleGroups: ["obliques"],
-        difficulty: "intermediate",
-        description: "Hold side plank position on right forearm.",
-        easierVersion: "Knee Side Plank",
-        harderVersion: "Leg Raise Side Plank"
-      },
-      {
-        name: "Supermans",
-        bodyAreas: ["back", "core"],
-        muscleGroups: ["lower back", "glutes"],
-        difficulty: "beginner",
-        description: "Lift arms and legs off the floor while lying face down.",
-        easierVersion: "Alternating Supermans",
-        harderVersion: "Weighted Supermans"
-      }
-    ];
+    let exercises = [];
 
-    const routines = [
-      {
-        name: "Tabata Full Body",
-        description: "Intermediate to advanced. 20s work, 10s rest. 3–6 sets based on fitness.",
-        exercises: [
-          "Jumping Jacks", "Squats", "Push-Ups", "Lunges", "Plank Hold",
-          "High Knees", "Mountain Climbers", "Glute Bridge", "Bicycle Crunches",
-          "Skaters", "Inchworms", "Forearm Side Plank Left", "Forearm Side Plank Right", "Supermans"
-        ]
-      }
-    ];
+    // Load exercises from the exercises.json file
+    fetch('exercises.json')
+      .then(response => response.json())
+      .then(data => {
+        exercises = data;
+        filterExercises(); // Display all exercises by default
+      })
+      .catch(error => console.error('Error loading exercises:', error));
 
-    // ... JavaScript functions remain unchanged ...
+    function filterExercises() {
+      const selectedDifficulty = [...document.querySelectorAll('.difficulty:checked')].map(cb => cb.value);
+      const selectedBodyAreas = [...document.querySelectorAll('.body-area:checked')].map(cb => cb.value);
+      const results = document.getElementById('exerciseResults');
+      results.innerHTML = '';
+
+      let filtered = exercises.filter(ex => {
+        const matchesDifficulty = selectedDifficulty.length === 0 || selectedDifficulty.includes(ex.difficulty);
+        const matchesBody = selectedBodyAreas.length === 0 || ex.bodyAreas.some(area => selectedBodyAreas.includes(area));
+        return matchesDifficulty && matchesBody;
+      });
+
+      if (filtered.length === 0 && selectedDifficulty.length === 0 && selectedBodyAreas.length === 0) {
+        filtered = exercises; // fallback to show all
+      }
+
+      filtered.forEach(ex => {
+        const exDiv = document.createElement('div');
+        exDiv.className = 'exercise-item';
+        exDiv.innerHTML = `
+          <label><input type="checkbox" class="select-ex" value="${ex.name}"> <strong>${ex.name}</strong></label><br>
+          <em>${ex.description}</em><br>
+          <small>Difficulty: ${ex.difficulty}, Body Areas: ${ex.bodyAreas.join(', ')}, Muscle Groups: ${ex.muscleGroups.join(', ')}</small>
+        `;
+        results.appendChild(exDiv);
+      });
+    }
+
+    function generateRoutine() {
+      const selected = [...document.querySelectorAll('.select-ex:checked')].map(cb => cb.value);
+      const output = document.getElementById('selectedExercises');
+      output.innerHTML = '<h3>Generated Routine:</h3>';
+      selected.forEach(name => {
+        const ex = exercises.find(e => e.name === name);
+        const div = document.createElement('div');
+        div.innerHTML = `<strong>${ex.name}</strong>: ${ex.description} <br><small>Muscle Groups: ${ex.muscleGroups.join(', ')}</small>`;
+        output.appendChild(div);
+      });
+    }
+
+    function addCustomExercise() {
+      const name = document.getElementById('customName').value.trim();
+      const description = document.getElementById('customDescription').value.trim();
+      const difficulty = document.getElementById('customDifficulty').value.trim();
+      const bodyAreas = document.getElementById('customBodyAreas').value.split(',').map(s => s.trim());
+      const muscleGroups = document.getElementById('customMuscleGroups').value.split(',').map(s => s.trim());
+
+      if (!name || !description || !difficulty || bodyAreas.length === 0 || muscleGroups.length === 0) {
+        alert('Please fill out all fields to add a custom exercise.');
+        return;
+      }
+
+      const newExercise = { name, description, difficulty, bodyAreas, muscleGroups };
+      exercises.push(newExercise);
+
+      // Update the exercises.json file manually by updating the file on GitHub
+      alert(`Custom exercise "${name}" added. Please update the exercises.json file.`);
+      filterExercises();
+    }
+
+    // Show all exercises by default on load
+    window.onload = filterExercises;
   </script>
 </body>
 </html>
