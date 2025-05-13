@@ -60,14 +60,16 @@
   <script>
     let exercises = [];
 
-    // Load exercises from the exercises.json file
+    // Fetch the exercises from the exercises.json file
     fetch('exercises.json')
       .then(response => response.json())
       .then(data => {
         exercises = data;
-        filterExercises(); // Display all exercises by default
+        filterExercises();  // Initialize the list
       })
-      .catch(error => console.error('Error loading exercises:', error));
+      .catch(error => {
+        console.error("Error loading exercises.json:", error);
+      });
 
     function filterExercises() {
       const selectedDifficulty = [...document.querySelectorAll('.difficulty:checked')].map(cb => cb.value);
@@ -121,16 +123,10 @@
         return;
       }
 
-      const newExercise = { name, description, difficulty, bodyAreas, muscleGroups };
-      exercises.push(newExercise);
-
-      // Update the exercises.json file manually by updating the file on GitHub
-      alert(`Custom exercise "${name}" added. Please update the exercises.json file.`);
+      exercises.push({ name, description, difficulty, bodyAreas, muscleGroups });
+      alert(`Custom exercise "${name}" added.`);
       filterExercises();
     }
-
-    // Show all exercises by default on load
-    window.onload = filterExercises;
   </script>
 </body>
 </html>
