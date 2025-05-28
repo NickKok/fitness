@@ -21,16 +21,15 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
         .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
+        }
+        h1 {
+            color: #2c3e50;
+            margin: 0;
         }
         .controls {
             display: flex;
@@ -167,34 +166,210 @@
     </div>
 
     <script>
-        // Initialize with data from localStorage if available
+        // Initialize exercises array
         let exercises = [];
-        const savedData = localStorage.getItem('exerciseDatabase');
-        if (savedData) {
-            try {
-                exercises = JSON.parse(savedData);
-                if (exercises.length > 0) {
-                    document.getElementById('emptyState').style.display = 'none';
-                    document.getElementById('appInterface').style.display = 'block';
-                    renderExercises();
-                }
-            } catch (e) {
-                console.error("Error parsing saved data:", e);
-            }
-        }
 
         // DOM Elements
+        const emptyState = document.getElementById('emptyState');
+        const appInterface = document.getElementById('appInterface');
         const exerciseTableBody = document.getElementById('exerciseTableBody');
         const searchInput = document.getElementById('searchInput');
         const addExerciseBtn = document.getElementById('addExerciseBtn');
         const downloadBtn = document.getElementById('downloadBtn');
 
-        // ... (keep all your existing JavaScript functions exactly as they were) ...
+        // Load exercises from localStorage
+        function loadExercises() {
+            const savedData = localStorage.getItem('exerciseDatabase');
+            if (savedData) {
+                try {
+                    exercises = JSON.parse(savedData);
+                    if (exercises.length > 0) {
+                        emptyState.style.display = 'none';
+                        appInterface.style.display = 'block';
+                        renderExercises();
+                        return;
+                    }
+                } catch (e) {
+                    console.error("Error parsing saved data:", e);
+                }
+            }
+            // Show empty state if no valid data
+            emptyState.style.display = 'block';
+            appInterface.style.display = 'none';
+        }
 
-        // Update download to also save to localStorage
+        // Render exercises table
+        function renderExercises(exercisesToRender = exercises) {
+            exerciseTableBody.innerHTML = '';
+            exercisesToRender.forEach(exercise => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${exercise.name}</td>
+                    <td>${exercise.attributes}</td>
+                    <td class="action-buttons">
+                        <button class="edit-btn">Edit</button>
+                        <button class="delete-btn">Delete</button>
+                    </td>
+                `;
+                exerciseTableBody.appendChild(row);
+            });
+            addEventListeners();
+        }
+
+        // Add event listeners to buttons
+        function addEventListeners() {
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const row = e.target.closest('tr');
+                    editExercise(row);
+                });
+            });
+
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const row = e.target.closest('tr');
+                    deleteExercise(row);
+                });
+            });
+        }
+
+        // Edit exercise
+        function editExercise(row) {
+            const cells = row.querySelectorAll('td');
+            const name = cells[0].textContent;
+            const attributes = cells[1].textContent;
+
+            cells[0].innerHTML = `<input type="text" value="${name}">`;
+            cells[1].innerHTML = `<input type="text" value="${attributes}">`;
+            cells[2].innerHTML = `
+                <button class="save-btn">Save</button>
+                <button class="cancel-btn">Cancel</button>
+            `;
+
+            row.classList.add('edit-mode');
+
+            // Save button
+            row.querySelector('.save-btn').addEventListener('click', () => {
+                const newName = row.querySelector('td:first-child input').value.trim();
+                const newAttributes = row.querySelector('td:nth-child(2) input').value.trim();
+
+                if (!newName || !newAttributes) {
+                    alert("Name and attributes can't be empty!");
+                    return;
+                }
+
+                // Update the exercise in the array
+                const index = exercises.findIndex(ex => ex.name === name);
+                if (index !== -1) {
+                    exercises[index] = { name: newName, attributes: newAttributes };
+                    saveToLocalStorage();
+                }
+
+                renderExercises();
+            });
+
+            // Cancel button
+            row.querySelector('.cancel-btn').addEventListener('click', () => {
+                renderExercises();
+            });
+        }
+
+        // Delete exercise
+        function deleteExercise(row) {
+            const name = row.querySelector('td:first-child').textContent;
+            if (confirm(`Delete "${name}"?`)) {
+                exercises = exercises.filter(ex => ex.name !== name);
+                saveToLocalStorage();
+                renderExercises();
+                if (exercises.length === 0) {
+                    emptyState.style.display = 'block';
+                    appInterface.style.display = 'none';
+                }
+            }
+        }
+
+        // Save to localStorage
+        function saveToLocalStorage() {
+            localStorage.setItem('exerciseDatabase', JSON.stringify(exercises));
+        }
+
+        // Add new exercise
+        addExerciseBtn.addEventListener('click', () => {
+            const newRow = document.createElement('tr');
+            newRow.classList.add('edit-mode');
+            newRow.innerHTML = `
+                <td><input type="text" placeholder="Exercise name"></td>
+                <td><input type="text" placeholder="Attributes (comma-separated)"></td>
+                <td>
+                    <button class="save-btn">Save</button>
+                    <button class="cancel-btn">Cancel</button>
+                </td>
+            `;
+            exerciseTableBody.prepend(newRow);
+
+            // Focus on name input
+            newRow.querySelector('td:first-child input').focus();
+
+            // Save button
+            newRow.querySelector('.save-btn').addEventListener('click', () => {
+                const nameInput = newRow.querySelector('td:first-child input');
+                const attrInput = newRow.querySelector('td:nth-child(2) input');
+                const name = nameInput.value.trim();
+                const attributes = attrInput.value.trim();
+
+                if (!name || !attributes) {
+                    alert("Name and attributes can't be empty!");
+                    return;
+                }
+
+                if (exercises.some(ex => ex.name === name)) {
+                    alert("Exercise with this name already exists!");
+                    return;
+                }
+
+                exercises.unshift({ name, attributes });
+                saveToLocalStorage();
+                emptyState.style.display = 'none';
+                appInterface.style.display = 'block';
+                renderExercises();
+            });
+
+            // Cancel button
+            newRow.querySelector('.cancel-btn').addEventListener('click', () => {
+                newRow.remove();
+                if (exercises.length === 0) {
+                    emptyState.style.display = 'block';
+                    appInterface.style.display = 'none';
+                }
+            });
+        });
+
+        // Search functionality (contiguous substring matching)
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            if (!searchTerm) {
+                renderExercises(exercises);
+                return;
+            }
+
+            const filtered = exercises.filter(ex => {
+                // Check exercise name
+                if (ex.name.toLowerCase().includes(searchTerm)) {
+                    return true;
+                }
+                
+                // Check individual attributes
+                return ex.attributes.split(',')
+                    .some(attr => attr.trim().toLowerCase().includes(searchTerm));
+            });
+            
+            renderExercises(filtered);
+        });
+
+        // Download JSON
         downloadBtn.addEventListener('click', () => {
             const dataStr = JSON.stringify(exercises, null, 2);
-            localStorage.setItem('exerciseDatabase', dataStr);
+            saveToLocalStorage();
             
             const blob = new Blob([dataStr], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
@@ -208,12 +383,8 @@
             URL.revokeObjectURL(url);
         });
 
-        // Initialize the page
-        if (exercises.length > 0) {
-            document.getElementById('emptyState').style.display = 'none';
-            document.getElementById('appInterface').style.display = 'block';
-            renderExercises();
-        }
+        // Load exercises when page loads
+        document.addEventListener('DOMContentLoaded', loadExercises);
     </script>
 </body>
 </html>
