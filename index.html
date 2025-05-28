@@ -316,27 +316,34 @@
             });
         });
 
-        // Search functionality (contiguous substring matching)
-        searchInput.addEventListener('input', () => {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-            if (!searchTerm) {
-                renderExercises(exercises);
-                return;
-            }
+        // Search functionality (multiple comma-separated terms)
+searchInput.addEventListener('input', () => {
+    const searchTerms = searchInput.value.toLowerCase()
+        .split(',')
+        .map(term => term.trim())
+        .filter(term => term.length > 0);
 
-            const filtered = exercises.filter(ex => {
-                // Check exercise name
-                if (ex.name.toLowerCase().includes(searchTerm)) {
-                    return true;
-                }
-                
-                // Check individual attributes
-                return ex.attributes.split(',')
-                    .some(attr => attr.trim().toLowerCase().includes(searchTerm));
-            });
+    if (searchTerms.length === 0) {
+        renderExercises(exercises);
+        return;
+    }
+
+    const filtered = exercises.filter(ex => {
+        // Check if ALL search terms match either name or attributes
+        return searchTerms.every(term => {
+            // Check exercise name
+            if (ex.name.toLowerCase().includes(term)) {
+                return true;
+            }
             
-            renderExercises(filtered);
+            // Check individual attributes
+            return ex.attributes.split(',')
+                .some(attr => attr.trim().toLowerCase().includes(term));
         });
+    });
+    
+    renderExercises(filtered);
+});
 
         // Upload JSON
         uploadBtn.addEventListener('click', () => {
