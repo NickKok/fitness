@@ -344,23 +344,30 @@
             });
         });
 
-        // Search functionality (contiguous substring matching)
+        // Updated Search Functionality (multiple comma-separated values)
         searchInput.addEventListener('input', () => {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-            if (!searchTerm) {
+            const searchString = searchInput.value.toLowerCase();
+            const searchTerms = searchString.split(',')
+                .map(term => term.trim())
+                .filter(term => term.length > 0);
+
+            if (searchTerms.length === 0) {
                 renderExercises(exercises);
                 return;
             }
 
             const filtered = exercises.filter(ex => {
-                // Check exercise name
-                if (ex.name.toLowerCase().includes(searchTerm)) {
-                    return true;
-                }
-                
-                // Check individual attributes
-                return ex.attributes.split(',')
-                    .some(attr => attr.trim().toLowerCase().includes(searchTerm));
+                // Check if ALL search terms match either name or attributes
+                return searchTerms.every(term => {
+                    // Check exercise name
+                    if (ex.name.toLowerCase().includes(term)) {
+                        return true;
+                    }
+                    
+                    // Check individual attributes
+                    return ex.attributes.split(',')
+                        .some(attr => attr.trim().toLowerCase().includes(term));
+                });
             });
             
             renderExercises(filtered);
