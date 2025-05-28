@@ -2,18 +2,129 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- ... (keep existing head content) ... -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise Database Manager</title>
     <style>
-        /* Add this to your existing styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #eaeaea;
+            border-radius: 5px;
+        }
+        input, button, select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            position: sticky;
+            top: 0;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        .action-buttons button {
+            margin-right: 5px;
+            padding: 5px 8px;
+            font-size: 12px;
+        }
+        .edit-mode {
+            background-color: #fffde7;
+        }
+        .download-btn {
+            background-color: #e67e22;
+        }
+        .download-btn:hover {
+            background-color: #d35400;
+        }
+        .add-btn {
+            background-color: #9b59b6;
+        }
+        .add-btn:hover {
+            background-color: #8e44ad;
+        }
+        .delete-btn {
+            background-color: #e74c3c;
+        }
+        .delete-btn:hover {
+            background-color: #c0392b;
+        }
+        .save-btn {
+            background-color: #2ecc71;
+        }
+        .cancel-btn {
+            background-color: #95a5a6;
+        }
+        .search-container {
+            flex-grow: 1;
+        }
+        .search-container input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #777;
+        }
         .home-btn {
             background-color: #9b59b6;
             color: white;
             padding: 8px 15px;
-            border: none;
             border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-left: 10px;
+            text-decoration: none;
+            display: inline-block;
         }
         .home-btn:hover {
             background-color: #8e44ad;
@@ -22,12 +133,11 @@
 </head>
 <body>
     <div class="container">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="header-container">
             <h1>Exercise Database Manager</h1>
-            <button onclick="window.location.href='index.html'" class="home-btn">Home</button>
+            <a href="index.html" class="home-btn">Home</a>
         </div>
         
-        <!-- Remove the upload button from controls div -->
         <div class="controls">
             <div class="search-container">
                 <input type="text" id="searchInput" placeholder="Search exercises or attributes...">
@@ -36,7 +146,24 @@
             <button id="downloadBtn" class="download-btn">Download JSON</button>
         </div>
         
-        <!-- ... (rest of your existing HTML) ... -->
+        <div id="emptyState" class="empty-state">
+            <p>No exercise data loaded. Please upload a JSON file from the home page to begin.</p>
+        </div>
+        
+        <div id="appInterface" style="display: none;">
+            <table id="exerciseTable">
+                <thead>
+                    <tr>
+                        <th>Exercise Name</th>
+                        <th>Attributes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="exerciseTableBody">
+                    <!-- Exercises will be loaded here -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>
@@ -46,12 +173,23 @@
         if (savedData) {
             try {
                 exercises = JSON.parse(savedData);
+                if (exercises.length > 0) {
+                    document.getElementById('emptyState').style.display = 'none';
+                    document.getElementById('appInterface').style.display = 'block';
+                    renderExercises();
+                }
             } catch (e) {
                 console.error("Error parsing saved data:", e);
             }
         }
 
-        // ... (keep all your existing JavaScript) ...
+        // DOM Elements
+        const exerciseTableBody = document.getElementById('exerciseTableBody');
+        const searchInput = document.getElementById('searchInput');
+        const addExerciseBtn = document.getElementById('addExerciseBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        // ... (keep all your existing JavaScript functions exactly as they were) ...
 
         // Update download to also save to localStorage
         downloadBtn.addEventListener('click', () => {
@@ -70,7 +208,12 @@
             URL.revokeObjectURL(url);
         });
 
-        // ... (rest of your existing JavaScript) ...
+        // Initialize the page
+        if (exercises.length > 0) {
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('appInterface').style.display = 'block';
+            renderExercises();
+        }
     </script>
 </body>
 </html>
