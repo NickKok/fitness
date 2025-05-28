@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise Database Manager</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #eaeaea;
+            border-radius: 5px;
+        }
+        input, button, select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            position: sticky;
+            top: 0;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        .action-buttons button {
+            margin-right: 5px;
+            padding: 5px 8px;
+            font-size: 12px;
+        }
+        .edit-mode {
+            background-color: #fffde7;
+        }
+        #fileInput {
+            display: none;
+        }
+        .file-upload-btn {
+            background-color: #2ecc71;
+        }
+        .file-upload-btn:hover {
+            background-color: #27ae60;
+        }
+        .download-btn {
+            background-color: #e67e22;
+        }
+        .download-btn:hover {
+            background-color: #d35400;
+        }
+        .add-btn {
+            background-color: #9b59b6;
+        }
+        .add-btn:hover {
+            background-color: #8e44ad;
+        }
+        .delete-btn {
+            background-color: #e74c3c;
+        }
+        .delete-btn:hover {
+            background-color: #c0392b;
+        }
+        .save-btn {
+            background-color: #2ecc71;
+        }
+        .cancel-btn {
+            background-color: #95a5a6;
+        }
+        .search-container {
+            flex-grow: 1;
+        }
+        .search-container input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Exercise Database Manager</h1>
+        
+        <div class="controls">
+            <button id="uploadBtn" class="file-upload-btn">Upload JSON Database</button>
+            <input type="file" id="fileInput" accept=".json">
+        </div>
+        
+        <div id="emptyState" class="empty-state">
+            <p>No exercise data loaded. Please upload a JSON file to begin.</p>
+        </div>
+        
+        <div id="appInterface" style="display: none;">
+            <div class="controls">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search exercises or attributes...">
+                </div>
+                <button id="addExerciseBtn" class="add-btn">Add New Exercise</button>
+                <button id="downloadBtn" class="download-btn">Download JSON</button>
+            </div>
+            
+            <table id="exerciseTable">
+                <thead>
+                    <tr>
+                        <th>Exercise Name</th>
+                        <th>Attributes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="exerciseTableBody">
+                    <!-- Exercises will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Empty initial state
+        let exercises = [];
+
+        // DOM Elements
+        const emptyState = document.getElementById('emptyState');
+        const appInterface = document.getElementById('appInterface');
+        const exerciseTableBody = document.getElementById('exerciseTableBody');
+        const searchInput = document.getElementById('searchInput');
+        const addExerciseBtn = document.getElementById('addExerciseBtn');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const fileInput = document.getElementById('fileInput');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        // Toggle UI between empty and loaded states
+        function toggleUIState() {
+            if (exercises.length > 0) {
+                emptyState.style.display = 'none';
+                appInterface.style.display = 'block';
+                renderExercises();
+            } else {
+                emptyState.style.display = 'block';
+                appInterface.style.display = 'none';
+            }
+        }
+
+        // Render exercises table
+        function renderExercises(exercisesToRender = exercises) {
+            exerciseTableBody.innerHTML = '';
+            exercisesToRender.forEach(exercise => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${exercise.name}</td>
+                    <td>${exercise.attributes}</td>
+                    <td class="action-buttons">
+                        <button class="edit-btn">Edit</button>
+                        <button class="delete-btn">Delete</button>
+                    </td>
+                `;
+                exerciseTableBody.appendChild(row);
+            });
+            addEventListeners();
+        }
+
+        // Add event listeners to buttons
+        function addEventListeners() {
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const row = e.target.closest('tr');
+                    editExercise(row);
+                });
+            });
+
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const row = e.target.closest('tr');
+                    deleteExercise(row);
+                });
+            });
+        }
+
+        // Edit exercise
+        function editExercise(row) {
+            const cells = row.querySelectorAll('td');
+            const name = cells[0].textContent;
+            const attributes = cells[1].textContent;
+
+            cells[0].innerHTML = `<input type="text" value="${name}">`;
+            cells[1].innerHTML = `<input type="text" value="${attributes}">`;
+            cells[2].innerHTML = `
+                <button class="save-btn">Save</button>
+                <button class="cancel-btn">Cancel</button>
+            `;
+
+            row.classList.add('edit-mode');
+
+            // Save button
+            row.querySelector('.save-btn').addEventListener('click', () => {
+                const newName = row.querySelector('td:first-child input').value.trim();
+                const newAttributes = row.querySelector('td:nth-child(2) input').value.trim();
+
+                if (!newName || !newAttributes) {
+                    alert("Name and attributes can't be empty!");
+                    return;
+                }
+
+                // Update the exercise in the array
+                const index = exercises.findIndex(ex => ex.name === name);
+                if (index !== -1) {
+                    exercises[index] = { name: newName, attributes: newAttributes };
+                }
+
+                renderExercises();
+            });
+
+            // Cancel button
+            row.querySelector('.cancel-btn').addEventListener('click', () => {
+                renderExercises();
+            });
+        }
+
+        // Delete exercise
+        function deleteExercise(row) {
+            const name = row.querySelector('td:first-child').textContent;
+            if (confirm(`Delete "${name}"?`)) {
+                exercises = exercises.filter(ex => ex.name !== name);
+                renderExercises();
+                if (exercises.length === 0) {
+                    toggleUIState();
+                }
+            }
+        }
+
+        // Add new exercise
+        addExerciseBtn.addEventListener('click', () => {
+            const newRow = document.createElement('tr');
+            newRow.classList.add('edit-mode');
+            newRow.innerHTML = `
+                <td><input type="text" placeholder="Exercise name"></td>
+                <td><input type="text" placeholder="Attributes (comma-separated)"></td>
+                <td>
+                    <button class="save-btn">Save</button>
+                    <button class="cancel-btn">Cancel</button>
+                </td>
+            `;
+            exerciseTableBody.prepend(newRow);
+
+            // Focus on name input
+            newRow.querySelector('td:first-child input').focus();
+
+            // Save button
+            newRow.querySelector('.save-btn').addEventListener('click', () => {
+                const nameInput = newRow.querySelector('td:first-child input');
+                const attrInput = newRow.querySelector('td:nth-child(2) input');
+                const name = nameInput.value.trim();
+                const attributes = attrInput.value.trim();
+
+                if (!name || !attributes) {
+                    alert("Name and attributes can't be empty!");
+                    return;
+                }
+
+                if (exercises.some(ex => ex.name === name)) {
+                    alert("Exercise with this name already exists!");
+                    return;
+                }
+
+                exercises.unshift({ name, attributes });
+                renderExercises();
+            });
+
+            // Cancel button
+            newRow.querySelector('.cancel-btn').addEventListener('click', () => {
+                newRow.remove();
+            });
+        });
+
+        // Search functionality (multiple comma-separated terms)
+searchInput.addEventListener('input', () => {
+    const searchTerms = searchInput.value.toLowerCase()
+        .split(',')
+        .map(term => term.trim())
+        .filter(term => term.length > 0);
+
+    if (searchTerms.length === 0) {
+        renderExercises(exercises);
+        return;
+    }
+
+    const filtered = exercises.filter(ex => {
+        // Check if ALL search terms match either name or attributes
+        return searchTerms.every(term => {
+            // Check exercise name
+            if (ex.name.toLowerCase().includes(term)) {
+                return true;
+            }
+            
+            // Check individual attributes
+            return ex.attributes.split(',')
+                .some(attr => attr.trim().toLowerCase().includes(term));
+        });
+    });
+    
+    renderExercises(filtered);
+});
+
+        // Upload JSON
+        uploadBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const data = JSON.parse(event.target.result);
+                    
+                    // Validate the uploaded JSON structure
+                    if (Array.isArray(data) && data.every(item => 
+                        item.name && typeof item.name === 'string' &&
+                        item.attributes && typeof item.attributes === 'string'
+                    )) {
+                        exercises = data;
+                        toggleUIState();
+                        alert("Exercises loaded successfully!");
+                    } else {
+                        alert("Invalid JSON format! Expected array of {name: string, attributes: string} objects");
+                    }
+                } catch (error) {
+                    alert("Error parsing JSON file: " + error.message);
+                    console.error("Upload error:", error);
+                }
+            };
+            reader.onerror = () => {
+                alert("Error reading file!");
+            };
+            reader.readAsText(file);
+            
+            // Reset file input to allow re-uploading same file
+            fileInput.value = '';
+        });
+
+        // Download JSON
+        downloadBtn.addEventListener('click', () => {
+            const dataStr = JSON.stringify(exercises, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'exercise-database.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+        // Initial state
+        toggleUIState();
+    </script>
+</body>
+</html>
