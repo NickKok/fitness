@@ -62,6 +62,10 @@
             margin-bottom: 15px;
             background: white;
             cursor: pointer;
+            transition: all 0.2s;
+        }
+        .routine-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         .routine-header {
             display: flex;
@@ -168,9 +172,15 @@
             gap: 10px;
             margin-bottom: 10px;
             align-items: center;
+            flex-wrap: wrap;
+        }
+        .exercise-edit-item > div {
+            flex: 1;
+            min-width: 200px;
         }
         .exercise-edit-item input {
             flex: 1;
+            min-width: 100px;
         }
         .modal-actions {
             display: flex;
@@ -186,6 +196,10 @@
             background-color: #e74c3c;
             padding: 5px 8px;
             font-size: 12px;
+        }
+        select {
+            width: 100%;
+            padding: 8px 12px;
         }
     </style>
 </head>
@@ -240,6 +254,7 @@
         // Initialize variables
         let routines = [];
         let selectedRoutineId = null;
+        let exerciseDatabase = [];
 
         // DOM Elements
         const searchInput = document.getElementById('searchInput');
@@ -255,24 +270,43 @@
         const cancelEditBtn = document.getElementById('cancelEditBtn');
         const saveEditBtn = document.getElementById('saveEditBtn');
 
-        // Load routines from localStorage on page load
-        function loadRoutines() {
-            const savedData = localStorage.getItem('routines');
-            if (savedData) {
+        // Load data from localStorage and exercise database
+        async function loadData() {
+            // Load routines from localStorage
+            const savedRoutines = localStorage.getItem('routines');
+            if (savedRoutines) {
                 try {
-                    routines = JSON.parse(savedData);
+                    routines = JSON.parse(savedRoutines);
                     if (routines.length > 0) {
                         renderRoutines(routines);
                         saveBtn.disabled = false;
                     }
                 } catch (e) {
-                    console.error("Error parsing saved data:", e);
+                    console.error("Error parsing routines data:", e);
                     alert("Error loading routines data");
                 }
             }
+
+            // Load exercise database
+            try {
+                const response = await fetch('exercise-database.json');
+                if (!response.ok) throw new Error("Failed to load exercise database");
+                exerciseDatabase = await response.json();
+                
+                if (!Array.isArray(exerciseDatabase)) {
+                    throw new Error("Exercise database is not an array");
+                }
+                
+                // Sort exercises alphabetically
+                exerciseDatabase.sort((a, b) => a.name.localeCompare(b.name));
+            } catch (e) {
+                console.error("Error loading exercise database:", e);
+                alert("Error loading exercise database. Please make sure exercise-database.json exists and contains valid data.");
+                window.location.href = "index.html";
+            }
         }
 
-        // Render routines
+        // Render routines list
         function renderRoutines(routinesToRender) {
             routinesContainer.innerHTML = '';
             
@@ -294,7 +328,7 @@
                 routineCard.innerHTML = `
                     <div class="routine-header">
                         <h3 class="routine-title">${routine.name}</h3>
-                        <div>${routine.exercises.length} exercises</div>
+                        <div>${routine.exercises.length} ${routine.exercises.length === 1 ? 'exercise' : 'exercises'}</div>
                     </div>
                     <div class="exercise-preview">
                         ${exercisePreview.map(ex => `<span>${ex}</span>`).join('')}
@@ -331,17 +365,41 @@
             editModal.style.display = 'flex';
         }
 
-        // Add exercise edit item to modal
-        function addExerciseEditItem(exercise = { name: '', reps: '', time: '', comments: '' }, index) {
+        // Add exercise edit item to modal with exercise selection
+        function addExerciseEditItem(exercise = null, index) {
             const exerciseItem = document.createElement('div');
             exerciseItem.className = 'exercise-edit-item';
+            
+            // Get the current exercise name if editing an existing exercise
+            const currentExerciseName = exercise?.name || '';
+            
+            // Create the exercise select dropdown with all options
+            let selectOptions = '<option value="">Select an exercise</option>';
+            
+            exerciseDatabase.forEach(ex => {
+                const isSelected = ex.name === currentExerciseName ? 'selected' : '';
+                selectOptions += `
+                    <option value="${ex.name}" ${isSelected} data-attributes="${ex.attributes || ''}">
+                        ${ex.name}${ex.attributes ? ` (${ex.attributes})` : ''}
+                    </option>
+                `;
+            });
+            
             exerciseItem.innerHTML = `
-                <input type="text" placeholder="Exercise name" value="${exercise.name}" data-field="name">
-                <input type="text" placeholder="Reps (e.g. 3x12)" value="${exercise.reps}" data-field="reps">
-                <input type="text" placeholder="Time (seconds)" value="${exercise.time}" data-field="time">
-                <input type="text" placeholder="Comments" value="${exercise.comments}" data-field="comments">
+                <div>
+                    <select class="exercise-select" required>
+                        ${selectOptions}
+                    </select>
+                </div>
+                <input type="text" placeholder="Reps (e.g. 3x12)" 
+                       value="${exercise?.reps || ''}" data-field="reps">
+                <input type="text" placeholder="Time (seconds)" 
+                       value="${exercise?.time || ''}" data-field="time">
+                <input type="text" placeholder="Notes" 
+                       value="${exercise?.comments || ''}" data-field="comments">
                 <button class="remove-exercise-btn" data-index="${index}">Remove</button>
             `;
+            
             exercisesEditContainer.appendChild(exerciseItem);
             
             // Add event listener to remove button
@@ -363,19 +421,34 @@
             // Collect all exercises
             const exerciseItems = exercisesEditContainer.querySelectorAll('.exercise-edit-item');
             const exercises = [];
+            let hasEmptySelection = false;
             
             exerciseItems.forEach(item => {
-                const inputs = item.querySelectorAll('input');
-                const exercise = {};
+                const select = item.querySelector('.exercise-select');
+                const selectedExercise = select.value;
                 
-                inputs.forEach(input => {
-                    exercise[input.dataset.field] = input.value.trim();
-                });
-                
-                if (exercise.name) {
-                    exercises.push(exercise);
+                if (!selectedExercise) {
+                    hasEmptySelection = true;
+                    select.style.border = '1px solid red';
+                    return;
+                } else {
+                    select.style.border = '';
                 }
+                
+                const exercise = {
+                    name: selectedExercise,
+                    reps: item.querySelector('[data-field="reps"]').value.trim(),
+                    time: item.querySelector('[data-field="time"]').value.trim(),
+                    comments: item.querySelector('[data-field="comments"]').value.trim()
+                };
+                
+                exercises.push(exercise);
             });
+            
+            if (hasEmptySelection) {
+                alert("Please select an exercise for all items");
+                return;
+            }
             
             if (exercises.length === 0) {
                 alert("Please add at least one exercise");
@@ -396,9 +469,14 @@
 
         // Save routines to localStorage
         function saveRoutines() {
-            localStorage.setItem('routines', JSON.stringify(routines, null, 2));
-            alert("Routines saved successfully!");
-            saveBtn.disabled = true;
+            try {
+                localStorage.setItem('routines', JSON.stringify(routines, null, 2));
+                alert("Routines saved successfully!");
+                saveBtn.disabled = true;
+            } catch (e) {
+                console.error("Failed to save routines:", e);
+                alert("Failed to save routines. Storage may be full.");
+            }
         }
 
         // Search functionality
@@ -416,10 +494,12 @@
 
             const filtered = routines.filter(routine => {
                 return searchTerms.every(term => {
+                    // Check routine name
                     if (routine.name.toLowerCase().includes(term)) {
                         return true;
                     }
                     
+                    // Check exercise names and comments
                     return routine.exercises.some(ex => 
                         ex.name.toLowerCase().includes(term) || 
                         (ex.comments && ex.comments.toLowerCase().includes(term))
@@ -473,7 +553,7 @@
         saveEditBtn.addEventListener('click', saveEditedRoutine);
 
         // Initialize page
-        document.addEventListener('DOMContentLoaded', loadRoutines);
+        document.addEventListener('DOMContentLoaded', loadData);
     </script>
 </body>
 </html>
