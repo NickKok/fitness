@@ -73,22 +73,12 @@
         tr:hover {
             background-color: #f9f9f9;
         }
-        .action-buttons button {
-            margin-right: 5px;
-            padding: 5px 8px;
-            font-size: 12px;
-        }
         .search-container {
             flex-grow: 1;
         }
         .search-container input {
             width: 100%;
             box-sizing: border-box;
-        }
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: #777;
         }
         .home-btn {
             background-color: #9b59b6;
@@ -144,6 +134,12 @@
         }
         input[type="number"] {
             width: 80px;
+        }
+        .no-exercises {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-style: italic;
         }
     </style>
 </head>
@@ -247,7 +243,7 @@
             
             if (!results || results.length === 0) {
                 const row = document.createElement('tr');
-                row.innerHTML = `<td colspan="3" style="text-align: center;">No exercises found</td>`;
+                row.innerHTML = `<td colspan="3" class="no-exercises">No exercises found</td>`;
                 exerciseTableBody.appendChild(row);
                 return;
             }
@@ -314,7 +310,7 @@
             
             if (currentRoutine.exercises.length === 0) {
                 const row = document.createElement('tr');
-                row.innerHTML = `<td colspan="5" style="text-align: center;">No exercises in routine yet</td>`;
+                row.innerHTML = `<td colspan="5" class="no-exercises">No exercises in routine yet</td>`;
                 routineTableBody.appendChild(row);
                 return;
             }
@@ -366,7 +362,7 @@
             }
             
             // Get existing routines or create new array
-            let routines = JSON.parse(localStorage.getItem('routines') || [];
+            let routines = JSON.parse(localStorage.getItem('routines') || '[]');
             
             // Check if routine with this name already exists
             const existingIndex = routines.findIndex(r => r.name === currentRoutine.name);
@@ -388,36 +384,35 @@
                 name: "",
                 exercises: []
             };
+            selectedExercises.clear();
             routineName.value = "";
             renderRoutine();
+            renderSearchResults(exercises);
         }
 
         // Search functionality (multiple comma-separated values)
         searchInput.addEventListener('input', () => {
-            const searchString = searchInput.value.toLowerCase();
-            const searchTerms = searchString.split(',')
-                .map(term => term.trim())
-                .filter(term => term.length > 0);
-
-            if (searchTerms.length === 0) {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            
+            if (!searchTerm) {
                 renderSearchResults(exercises);
                 return;
             }
+            
+            const searchTerms = searchTerm.split(',')
+                .map(term => term.trim())
+                .filter(term => term.length > 0);
 
-            const filtered = exercises.filter(ex => {
+            const filtered = exercises.filter(exercise => {
                 // Check if ALL search terms match either name or attributes
                 return searchTerms.every(term => {
                     // Check exercise name
-                    if (ex.name.toLowerCase().includes(term)) {
+                    if (exercise.name.toLowerCase().includes(term)) {
                         return true;
                     }
                     
-                    // Check attributes
-                    if (ex.attributes.toLowerCase().includes(term)) {
-                        return true;
-                    }
-                    
-                    return false;
+                    // Check individual attributes
+                    return exercise.attributes.toLowerCase().includes(term);
                 });
             });
             
