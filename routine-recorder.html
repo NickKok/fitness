@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routine Recorder</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        h1 {
+            color: #2c3e50;
+            margin: 0;
+        }
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #eaeaea;
+            border-radius: 5px;
+        }
+        input, button, select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .scrollable-table {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            position: sticky;
+            top: 0;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        .search-container {
+            flex-grow: 1;
+        }
+        .search-container input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .home-btn {
+            background-color: #9b59b6;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .home-btn:hover {
+            background-color: #8e44ad;
+        }
+        .upload-btn {
+            background-color: #2ecc71;
+        }
+        .upload-btn:hover {
+            background-color: #27ae60;
+        }
+        .edit-btn {
+            background-color: #e67e22;
+        }
+        .edit-btn:hover {
+            background-color: #d35400;
+        }
+        .print-btn {
+            background-color: #3498db;
+        }
+        .print-btn:hover {
+            background-color: #2980b9;
+        }
+        .save-btn {
+            background-color: #2ecc71;
+        }
+        .save-btn:hover {
+            background-color: #27ae60;
+        }
+        #fileInput {
+            display: none;
+        }
+        .routine-card {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: white;
+        }
+        .routine-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .routine-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 0;
+        }
+        .exercise-preview {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .exercise-preview span {
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 5px;
+            padding: 3px 8px;
+            background: #f0f0f0;
+            border-radius: 3px;
+        }
+        .no-routines {
+            text-align: center;
+            padding: 40px;
+            color: #777;
+            font-style: italic;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .selected {
+            background-color: #e6f7ff;
+            border-color: #91d5ff;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .print-section, .print-section * {
+                visibility: visible;
+            }
+            .print-section {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-container">
+            <h1>Routine Recorder</h1>
+            <a href="index.html" class="home-btn">Home</a>
+        </div>
+        
+        <div class="controls no-print">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search routines by name or exercises (comma-separated)...">
+            </div>
+            <button id="uploadBtn" class="upload-btn">Upload Routines JSON</button>
+            <input type="file" id="fileInput" accept=".json">
+        </div>
+        
+        <div id="routinesContainer">
+            <!-- Routines will be loaded here -->
+            <div class="no-routines">No routines loaded. Please upload a routines JSON file.</div>
+        </div>
+        
+        <div class="controls no-print" style="margin-top: 20px;">
+            <div class="button-group">
+                <button id="editBtn" class="edit-btn" disabled>Edit Selected Routine</button>
+                <button id="printBtn" class="print-btn" disabled>Print Selected Routine</button>
+                <button id="saveBtn" class="save-btn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize variables
+        let routines = [];
+        let selectedRoutineId = null;
+
+        // DOM Elements
+        const searchInput = document.getElementById('searchInput');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const fileInput = document.getElementById('fileInput');
+        const routinesContainer = document.getElementById('routinesContainer');
+        const editBtn = document.getElementById('editBtn');
+        const printBtn = document.getElementById('printBtn');
+        const saveBtn = document.getElementById('saveBtn');
+
+        // Load routines from localStorage
+        function loadRoutines() {
+            const savedData = localStorage.getItem('routines');
+            if (savedData) {
+                try {
+                    routines = JSON.parse(savedData);
+                    renderRoutines(routines);
+                } catch (e) {
+                    console.error("Error parsing routines data:", e);
+                    showMessage("Error loading routines", "error");
+                }
+            }
+        }
+
+        // Render routines
+        function renderRoutines(routinesToRender) {
+            if (!routinesToRender || routinesToRender.length === 0) {
+                routinesContainer.innerHTML = '<div class="no-routines">No routines found</div>';
+                editBtn.disabled = true;
+                printBtn.disabled = true;
+                return;
+            }
+            
+            routinesContainer.innerHTML = '';
+            
+            routinesToRender.forEach((routine, index) => {
+                const routineCard = document.createElement('div');
+                routineCard.className = `routine-card ${selectedRoutineId === index ? 'selected' : ''}`;
+                routineCard.dataset.id = index;
+                
+                // Get first 3 exercises for preview
+                const exercisePreview = routine.exercises.slice(0, 3).map(ex => ex.name);
+                
+                routineCard.innerHTML = `
+                    <div class="routine-header">
+                        <h3 class="routine-title">${routine.name}</h3>
+                        <div>${routine.exercises.length} exercises</div>
+                    </div>
+                    <div class="exercise-preview">
+                        ${exercisePreview.map(ex => `<span>${ex}</span>`).join('')}
+                        ${routine.exercises.length > 3 ? '<span>...</span>' : ''}
+                    </div>
+                `;
+                
+                routineCard.addEventListener('click', () => {
+                    selectedRoutineId = index;
+                    document.querySelectorAll('.routine-card').forEach(card => {
+                        card.classList.remove('selected');
+                    });
+                    routineCard.classList.add('selected');
+                    editBtn.disabled = false;
+                    printBtn.disabled = false;
+                });
+                
+                routinesContainer.appendChild(routineCard);
+            });
+        }
+
+        // Edit selected routine
+        function editSelectedRoutine() {
+            if (selectedRoutineId === null) return;
+            
+            const routine = routines[selectedRoutineId];
+            const newName = prompt("Edit routine name:", routine.name);
+            
+            if (newName !== null) {
+                routines[selectedRoutineId].name = newName;
+                renderRoutines(routines);
+            }
+        }
+
+        // Print selected routine
+        function printSelectedRoutine() {
+            if (selectedRoutineId === null) return;
+            
+            const routine = routines[selectedRoutineId];
+            const printWindow = window.open('', '', 'width=800,height=600');
+            
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>${routine.name}</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; padding: 20px; }
+                            h1 { color: #2c3e50; }
+                            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                            th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+                            th { background-color: #f2f2f2; }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>${routine.name}</h1>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Exercise</th>
+                                    <th>Reps</th>
+                                    <th>Time</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${routine.exercises.map(ex => `
+                                    <tr>
+                                        <td>${ex.name}</td>
+                                        <td>${ex.reps || '-'}</td>
+                                        <td>${ex.time ? ex.time + ' sec' : '-'}</td>
+                                        <td>${ex.comments || '-'}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                        <script>
+                            window.onload = function() {
+                                setTimeout(function() {
+                                    window.print();
+                                    window.close();
+                                }, 200);
+                            };
+                        </script>
+                    </body>
+                </html>
+            `);
+            printWindow.document.close();
+        }
+
+        // Save routines to localStorage
+        function saveRoutines() {
+            localStorage.setItem('routines', JSON.stringify(routines, null, 2));
+            showMessage("Routines saved successfully!", "success");
+        }
+
+        // Search functionality
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            
+            if (!searchTerm) {
+                renderRoutines(routines);
+                return;
+            }
+            
+            const searchTerms = searchTerm.split(',')
+                .map(term => term.trim())
+                .filter(term => term.length > 0);
+
+            const filtered = routines.filter(routine => {
+                // Check if ALL search terms match either name or exercises
+                return searchTerms.every(term => {
+                    // Check routine name
+                    if (routine.name.toLowerCase().includes(term)) {
+                        return true;
+                    }
+                    
+                    // Check exercise names
+                    return routine.exercises.some(ex => 
+                        ex.name.toLowerCase().includes(term) || 
+                        (ex.comments && ex.comments.toLowerCase().includes(term))
+                    );
+                });
+            });
+            
+            renderRoutines(filtered);
+        });
+
+        // Upload routines JSON
+        uploadBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const data = JSON.parse(event.target.result);
+                    if (Array.isArray(data)) {
+                        routines = data;
+                        localStorage.setItem('routines', JSON.stringify(routines));
+                        renderRoutines(routines);
+                        showMessage("Routines loaded successfully!", "success");
+                    } else {
+                        showMessage("Invalid format: Expected array of routines", "error");
+                    }
+                } catch (error) {
+                    showMessage("Error: Invalid JSON file", "error");
+                    console.error("Error parsing JSON:", error);
+                }
+            };
+            reader.readAsText(file);
+        });
+
+        // Event listeners
+        editBtn.addEventListener('click', editSelectedRoutine);
+        printBtn.addEventListener('click', printSelectedRoutine);
+        saveBtn.addEventListener('click', saveRoutines);
+
+        // Helper function to show messages
+        function showMessage(message, type) {
+            alert(message);
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', loadRoutines);
+    </script>
+</body>
+</html>
