@@ -112,6 +112,9 @@
             color: #666;
             margin-bottom: 15px;
         }
+        .file-type-buttons {
+            margin: 15px 0;
+        }
     </style>
 </head>
 <body>
@@ -122,15 +125,20 @@
             <h2>Data Management</h2>
             
             <div class="data-upload">
-                <h3>Load Data Files</h3>
-                <button id="uploadBtn" class="button">Select JSON Files</button>
-                <input type="file" id="fileInput" accept=".json" multiple>
+                <h3>Upload JSON Files</h3>
+                <button id="uploadBtn" class="button">Select JSON File</button>
+                <input type="file" id="fileInput" accept=".json">
+                <div class="file-type-buttons">
+                    <button id="uploadExercisesBtn" class="button">Upload Exercise Database</button>
+                    <button id="uploadRoutinesBtn" class="button">Upload Routines</button>
+                </div>
                 <div id="uploadStatus" class="status-message"></div>
             </div>
             
             <div class="data-download" style="margin-top: 30px;">
-                <h3>Download Data Files</h3>
-                <button id="downloadAllBtn" class="button button-success">Download All Data as ZIP</button>
+                <h3>Download JSON Files</h3>
+                <button id="downloadExercisesBtn" class="button">Download Exercise Database</button>
+                <button id="downloadRoutinesBtn" class="button">Download Routines</button>
                 <div id="downloadStatus" class="status-message"></div>
             </div>
         </div>
@@ -156,16 +164,21 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script>
         // DOM Elements
         const uploadBtn = document.getElementById('uploadBtn');
+        const uploadExercisesBtn = document.getElementById('uploadExercisesBtn');
+        const uploadRoutinesBtn = document.getElementById('uploadRoutinesBtn');
         const fileInput = document.getElementById('fileInput');
         const uploadStatus = document.getElementById('uploadStatus');
-        const downloadAllBtn = document.getElementById('downloadAllBtn');
+        const downloadExercisesBtn = document.getElementById('downloadExercisesBtn');
+        const downloadRoutinesBtn = document.getElementById('downloadRoutinesBtn');
         const downloadStatus = document.getElementById('downloadStatus');
         const routineBuilderCard = document.getElementById('routineBuilderCard');
         const routineRecorderCard = document.getElementById('routineRecorderCard');
+
+        // Current upload type (exercises or routines)
+        let currentUploadType = null;
 
         // Check for existing data
         function checkForData() {
@@ -183,94 +196,80 @@
             }
         }
 
-        // Handle file upload
-        uploadBtn.addEventListener('click', () => fileInput.click());
+        // Setup upload buttons
+        uploadExercisesBtn.addEventListener('click', () => {
+            currentUploadType = 'exercises';
+            fileInput.click();
+        });
 
+        uploadRoutinesBtn.addEventListener('click', () => {
+            currentUploadType = 'routines';
+            fileInput.click();
+        });
+
+        // Handle file upload
         fileInput.addEventListener('change', async (e) => {
-            const files = e.target.files;
-            if (!files.length) return;
+            const file = e.target.files[0];
+            if (!file) return;
             
-            let exerciseDataFound = false;
-            let routineDataFound = false;
-            
-            for (const file of files) {
-                try {
-                    const data = await readFileAsJSON(file);
-                    
-                    if (Array.isArray(data) {
-                        // Determine file type by content
-                        if (data.length > 0) {
-                            const firstItem = data[0];
-                            
-                            if (firstItem.name && firstItem.attributes) {
-                                // Exercise database format
-                                localStorage.setItem('exerciseDatabase', JSON.stringify(data));
-                                exerciseDataFound = true;
-                                showStatus(uploadStatus, `Loaded exercise database (${data.length} items)`, "success");
-                            } else if (firstItem.name && firstItem.exercises) {
-                                // Routines format
-                                localStorage.setItem('routines', JSON.stringify(data));
-                                routineDataFound = true;
-                                showStatus(uploadStatus, `Loaded routines (${data.length} routines)`, "success");
-                            }
-                        }
-                    }
-                } catch (error) {
-                    showStatus(uploadStatus, `Error processing ${file.name}: ${error.message}`, "error");
-                    console.error(error);
+            try {
+                const data = await readFileAsJSON(file);
+                
+                if (!Array.isArray(data)) {
+                    throw new Error("File should contain a JSON array");
                 }
-            }
-            
-            if (exerciseDataFound) {
-                routineBuilderCard.classList.remove('disabled');
-                routineRecorderCard.classList.remove('disabled');
+                
+                if (currentUploadType === 'exercises') {
+                    // Validate exercise database format
+                    if (data.length > 0 && !data[0].name) {
+                        throw new Error("Invalid exercise database format");
+                    }
+                    localStorage.setItem('exerciseDatabase', JSON.stringify(data));
+                    routineBuilderCard.classList.remove('disabled');
+                    routineRecorderCard.classList.remove('disabled');
+                    showStatus(uploadStatus, `Loaded exercise database (${data.length} items)`, "success");
+                } 
+                else if (currentUploadType === 'routines') {
+                    // Validate routines format
+                    if (data.length > 0 && !data[0].exercises) {
+                        throw new Error("Invalid routines format");
+                    }
+                    localStorage.setItem('routines', JSON.stringify(data));
+                    showStatus(uploadStatus, `Loaded routines (${data.length} routines)`, "success");
+                }
+                
+            } catch (error) {
+                showStatus(uploadStatus, `Error: ${error.message}`, "error");
+                console.error(error);
             }
             
             // Reset file input
             fileInput.value = '';
+            currentUploadType = null;
         });
 
-        // Download all data as ZIP
-        downloadAllBtn.addEventListener('click', async () => {
-            try {
-                const zip = new JSZip();
-                let hasData = false;
-                
-                // Add exercise database if exists
-                const exerciseData = localStorage.getItem('exerciseDatabase');
-                if (exerciseData) {
-                    zip.file("exercise-database.json", exerciseData);
-                    hasData = true;
-                }
-                
-                // Add routines if exist
-                const routineData = localStorage.getItem('routines');
-                if (routineData) {
-                    zip.file("workout-routines.json", routineData);
-                    hasData = true;
-                }
-                
-                if (!hasData) {
-                    showStatus(downloadStatus, "No data found to download", "error");
-                    return;
-                }
-                
-                const content = await zip.generateAsync({ type: "blob" });
-                const url = URL.createObjectURL(content);
-                
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'fitness-app-data.zip';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                
-                showStatus(downloadStatus, "All data downloaded as ZIP", "success");
-            } catch (error) {
-                showStatus(downloadStatus, `Download failed: ${error.message}`, "error");
-                console.error(error);
+        // Download exercise database
+        downloadExercisesBtn.addEventListener('click', () => {
+            const exerciseData = localStorage.getItem('exerciseDatabase');
+            if (!exerciseData) {
+                showStatus(downloadStatus, "No exercise database found", "error");
+                return;
             }
+            
+            downloadJSON('exercise-database.json', exerciseData);
+            showStatus(downloadStatus, "Exercise database downloaded", "success");
+        });
+
+        // Download routines
+        downloadRoutinesBtn.addEventListener('click', () => {
+            const routineData = localStorage.getItem('routines');
+            if (!routineData) {
+                showStatus(downloadStatus, "No routines found", "error");
+                return;
+            }
+            
+            downloadJSON('workout-routines.json', routineData);
+            showStatus(downloadStatus, "Routines downloaded", "success");
         });
 
         // Helper functions
@@ -281,12 +280,25 @@
                     try {
                         resolve(JSON.parse(e.target.result));
                     } catch (error) {
-                        reject(new Error("Invalid JSON"));
+                        reject(new Error("Invalid JSON format"));
                     }
                 };
                 reader.onerror = () => reject(new Error("Error reading file"));
                 reader.readAsText(file);
             });
+        }
+
+        function downloadJSON(filename, jsonString) {
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
 
         function showStatus(element, message, type) {
