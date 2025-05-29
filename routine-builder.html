@@ -138,6 +138,13 @@
             margin-top: 0;
             color: #2980b9;
         }
+        input[type="checkbox"] {
+            transform: scale(1.3);
+            margin: 0;
+        }
+        input[type="number"] {
+            width: 80px;
+        }
     </style>
 </head>
 <body>
@@ -160,7 +167,7 @@
                 <table id="exerciseTable">
                     <thead>
                         <tr>
-                            <th>Select</th>
+                            <th width="50px">Select</th>
                             <th>Exercise Name</th>
                             <th>Attributes</th>
                         </tr>
@@ -179,10 +186,10 @@
             <table id="routineTable">
                 <thead>
                     <tr>
-                        <th>Remove</th>
+                        <th width="50px">Remove</th>
                         <th>Exercise Name</th>
-                        <th>Reps</th>
-                        <th>Time (seconds)</th>
+                        <th width="120px">Reps</th>
+                        <th width="120px">Time (sec)</th>
                         <th>Comments</th>
                     </tr>
                 </thead>
@@ -222,9 +229,11 @@
             if (savedData) {
                 try {
                     exercises = JSON.parse(savedData);
+                    renderSearchResults(exercises); // Show all exercises initially
                 } catch (e) {
                     console.error("Error parsing exercise data:", e);
                     alert("Error loading exercise database");
+                    window.location.href = "index.html";
                 }
             } else {
                 alert("No exercise database found. Please upload one from the home page.");
@@ -235,9 +244,18 @@
         // Render search results
         function renderSearchResults(results) {
             exerciseTableBody.innerHTML = '';
+            
+            if (!results || results.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="3" style="text-align: center;">No exercises found</td>`;
+                exerciseTableBody.appendChild(row);
+                return;
+            }
+            
             results.forEach(exercise => {
                 const row = document.createElement('tr');
-                const isChecked = selectedExercises.has(exercise.name);
+                const isChecked = selectedExercises.has(exercise.name) || 
+                                 currentRoutine.exercises.some(ex => ex.name === exercise.name);
                 row.innerHTML = `
                     <td><input type="checkbox" ${isChecked ? 'checked' : ''} data-name="${exercise.name}"></td>
                     <td>${exercise.name}</td>
@@ -254,6 +272,9 @@
                         selectedExercises.add(exerciseName);
                     } else {
                         selectedExercises.delete(exerciseName);
+                        // Also remove from current routine if present
+                        currentRoutine.exercises = currentRoutine.exercises.filter(ex => ex.name !== exerciseName);
+                        renderRoutine();
                     }
                 });
             });
@@ -261,23 +282,43 @@
 
         // Process selected exercises into routine
         function processSelectedExercises() {
+            if (selectedExercises.size === 0) {
+                alert("Please select at least one exercise");
+                return;
+            }
+
             selectedExercises.forEach(exerciseName => {
                 // Only add if not already in routine
                 if (!currentRoutine.exercises.some(ex => ex.name === exerciseName)) {
-                    currentRoutine.exercises.push({
-                        name: exerciseName,
-                        reps: "",
-                        time: "",
-                        comments: ""
-                    });
+                    const exercise = exercises.find(ex => ex.name === exerciseName);
+                    if (exercise) {
+                        currentRoutine.exercises.push({
+                            name: exerciseName,
+                            reps: "",
+                            time: "",
+                            comments: "",
+                            attributes: exercise.attributes
+                        });
+                    }
                 }
             });
+            
+            selectedExercises.clear();
             renderRoutine();
+            renderSearchResults(exercises); // Refresh search results to update checkboxes
         }
 
         // Render current routine
         function renderRoutine() {
             routineTableBody.innerHTML = '';
+            
+            if (currentRoutine.exercises.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="5" style="text-align: center;">No exercises in routine yet</td>`;
+                routineTableBody.appendChild(row);
+                return;
+            }
+            
             currentRoutine.exercises.forEach((exercise, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -304,6 +345,15 @@
 
         // Save routine to localStorage
         function saveRoutine() {
+            // Update input values before saving
+            document.querySelectorAll('#routineTableBody tr').forEach((row, index) => {
+                if (currentRoutine.exercises[index]) {
+                    currentRoutine.exercises[index].reps = row.querySelector('td:nth-child(3) input').value;
+                    currentRoutine.exercises[index].time = row.querySelector('td:nth-child(4) input').value;
+                    currentRoutine.exercises[index].comments = row.querySelector('td:nth-child(5) input').value;
+                }
+            });
+            
             currentRoutine.name = routineName.value.trim();
             if (!currentRoutine.name) {
                 alert("Please enter a name for your routine");
@@ -314,13 +364,6 @@
                 alert("Please add at least one exercise to your routine");
                 return;
             }
-            
-            // Update input values before saving
-            document.querySelectorAll('#routineTableBody tr').forEach((row, index) => {
-                currentRoutine.exercises[index].reps = row.querySelector('td:nth-child(3) input').value;
-                currentRoutine.exercises[index].time = row.querySelector('td:nth-child(4) input').value;
-                currentRoutine.exercises[index].comments = row.querySelector('td:nth-child(5) input').value;
-            });
             
             // Get existing routines or create new array
             let routines = JSON.parse(localStorage.getItem('routines') || [];
@@ -339,6 +382,14 @@
             // Save to localStorage
             localStorage.setItem('routines', JSON.stringify(routines, null, 2));
             alert(`Routine "${currentRoutine.name}" saved successfully!`);
+            
+            // Reset for new routine
+            currentRoutine = {
+                name: "",
+                exercises: []
+            };
+            routineName.value = "";
+            renderRoutine();
         }
 
         // Search functionality (multiple comma-separated values)
@@ -349,7 +400,7 @@
                 .filter(term => term.length > 0);
 
             if (searchTerms.length === 0) {
-                renderSearchResults([]);
+                renderSearchResults(exercises);
                 return;
             }
 
@@ -361,9 +412,12 @@
                         return true;
                     }
                     
-                    // Check individual attributes
-                    return ex.attributes.split(',')
-                        .some(attr => attr.trim().toLowerCase().includes(term));
+                    // Check attributes
+                    if (ex.attributes.toLowerCase().includes(term)) {
+                        return true;
+                    }
+                    
+                    return false;
                 });
             });
             
@@ -374,16 +428,12 @@
         processBtn.addEventListener('click', processSelectedExercises);
         backBtn.addEventListener('click', () => {
             searchInput.value = '';
-            renderSearchResults([]);
+            renderSearchResults(exercises);
         });
         saveBtn.addEventListener('click', saveRoutine);
 
         // Initialize page
-        document.addEventListener('DOMContentLoaded', () => {
-            loadExercises();
-            renderSearchResults([]);
-            renderRoutine();
-        });
+        document.addEventListener('DOMContentLoaded', loadExercises);
     </script>
 </body>
 </html>
