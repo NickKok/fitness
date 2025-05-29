@@ -62,6 +62,10 @@
             margin-bottom: 15px;
             background: white;
             cursor: pointer;
+            transition: all 0.2s;
+        }
+        .routine-card:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         .routine-header {
             display: flex;
@@ -127,6 +131,12 @@
         .save-btn:hover {
             background-color: #27ae60;
         }
+        .delete-btn {
+            background-color: #e74c3c;
+        }
+        .delete-btn:hover {
+            background-color: #c0392b;
+        }
         #fileInput {
             display: none;
         }
@@ -147,6 +157,22 @@
         }
         .home-btn:hover {
             background-color: #8e44ad;
+        }
+        .status-message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            display: block;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            display: block;
         }
         @media print {
             body * {
@@ -174,6 +200,8 @@
             <a href="index.html" class="home-btn">Home</a>
         </div>
         
+        <div id="statusMessage" class="status-message"></div>
+        
         <div class="controls no-print">
             <div class="search-container">
                 <input type="text" id="searchInput" placeholder="Search routines by name or exercises (comma-separated)...">
@@ -188,8 +216,9 @@
         
         <div class="controls no-print" style="margin-top: 20px;">
             <div class="button-group">
-                <button id="editBtn" class="edit-btn" disabled>Edit Selected Routine</button>
-                <button id="printBtn" class="print-btn" disabled>Print Selected Routine</button>
+                <button id="editBtn" class="edit-btn" disabled>Edit Routine Name</button>
+                <button id="deleteBtn" class="delete-btn" disabled>Delete Routine</button>
+                <button id="printBtn" class="print-btn" disabled>Print Routine</button>
                 <button id="saveBtn" class="save-btn" disabled>Save Changes</button>
             </div>
         </div>
@@ -206,74 +235,111 @@
         const fileInput = document.getElementById('fileInput');
         const routinesContainer = document.getElementById('routinesContainer');
         const editBtn = document.getElementById('editBtn');
+        const deleteBtn = document.getElementById('deleteBtn');
         const printBtn = document.getElementById('printBtn');
         const saveBtn = document.getElementById('saveBtn');
+        const statusMessage = document.getElementById('statusMessage');
 
         // Load routines from localStorage on page load
         function loadRoutines() {
-            const savedData = localStorage.getItem('routines');
-            if (savedData) {
-                try {
-                    routines = JSON.parse(savedData);
-                    if (Array.isArray(routines) && routines.length > 0) {
-                        renderRoutines(routines);
-                        saveBtn.disabled = false;
-                    }
-                } catch (e) {
-                    console.error("Error parsing routines data:", e);
-                    showMessage("Error loading routines", "error");
+            try {
+                const savedData = localStorage.getItem('routines');
+                if (!savedData) {
+                    showMessage("No routines found in storage. Upload a JSON file to begin.", "info");
+                    return;
                 }
+                
+                const parsed = JSON.parse(savedData);
+                if (!Array.isArray(parsed)) {
+                    throw new Error("Stored routines is not an array");
+                }
+
+                // Validate each routine
+                routines = parsed.filter(routine => 
+                    routine && 
+                    typeof routine.name === 'string' &&
+                    Array.isArray(routine.exercises)
+                );
+                
+                if (routines.length > 0) {
+                    renderRoutines(routines);
+                    saveBtn.disabled = false;
+                    showMessage(`Loaded ${routines.length} routines from storage`, "success");
+                } else {
+                    showMessage("No valid routines found in storage", "info");
+                }
+            } catch (e) {
+                console.error("Routine loading failed:", e);
+                showMessage("Corrupt routines data. Please upload a valid file.", "error");
+                localStorage.removeItem('routines'); // Clear bad data
             }
         }
 
-        // Render routines
+        // Render routines list
         function renderRoutines(routinesToRender) {
-            if (!routinesToRender || routinesToRender.length === 0) {
-                routinesContainer.innerHTML = '<div class="no-routines">No routines found</div>';
-                editBtn.disabled = true;
-                printBtn.disabled = true;
-                saveBtn.disabled = true;
-                return;
-            }
-            
             routinesContainer.innerHTML = '';
             
+            if (!routinesToRender?.length) {
+                routinesContainer.innerHTML = '<div class="no-routines">No routines found</div>';
+                disableActionButtons();
+                return;
+            }
+
+            // Reset selection if invalid
+            if (selectedRoutineId !== null && selectedRoutineId >= routinesToRender.length) {
+                selectedRoutineId = null;
+            }
+
             routinesToRender.forEach((routine, index) => {
                 const routineCard = document.createElement('div');
                 routineCard.className = `routine-card ${selectedRoutineId === index ? 'selected' : ''}`;
                 routineCard.dataset.id = index;
                 
                 // Get first 3 exercises for preview
-                const exercisePreview = routine.exercises.slice(0, 3).map(ex => ex.name);
+                const exercisePreview = routine.exercises.slice(0, 3).map(ex => ex?.name || 'Unnamed Exercise');
                 
                 routineCard.innerHTML = `
                     <div class="routine-header">
-                        <h3 class="routine-title">${routine.name}</h3>
-                        <div>${routine.exercises.length} exercises</div>
+                        <h3 class="routine-title">${escapeHtml(routine.name)}</h3>
+                        <div>${routine.exercises.length} ${routine.exercises.length === 1 ? 'exercise' : 'exercises'}</div>
                     </div>
                     <div class="exercise-preview">
-                        ${exercisePreview.map(ex => `<span>${ex}</span>`).join('')}
+                        ${exercisePreview.map(ex => `<span>${escapeHtml(ex)}</span>`).join('')}
                         ${routine.exercises.length > 3 ? '<span>...</span>' : ''}
                     </div>
                 `;
                 
                 routineCard.addEventListener('click', () => {
-                    selectedRoutineId = parseInt(routineCard.dataset.id);
-                    document.querySelectorAll('.routine-card').forEach(card => {
-                        card.classList.remove('selected');
-                    });
-                    routineCard.classList.add('selected');
-                    editBtn.disabled = false;
-                    printBtn.disabled = false;
+                    selectRoutine(index);
                 });
                 
                 routinesContainer.appendChild(routineCard);
             });
+
+            // If we have a valid selection, ensure it stays selected after re-render
+            if (selectedRoutineId !== null && selectedRoutineId < routinesToRender.length) {
+                const cards = document.querySelectorAll('.routine-card');
+                cards[selectedRoutineId]?.classList.add('selected');
+                enableActionButtons();
+            }
         }
 
-        // Edit selected routine
+        // Select a routine
+        function selectRoutine(index) {
+            selectedRoutineId = index;
+            document.querySelectorAll('.routine-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            document.querySelector(`.routine-card[data-id="${index}"]`)?.classList.add('selected');
+            enableActionButtons();
+        }
+
+        // Edit selected routine name
         function editSelectedRoutine() {
-            if (selectedRoutineId === null || selectedRoutineId >= routines.length) return;
+            if (selectedRoutineId === null || !routines[selectedRoutineId]) {
+                showMessage("No valid routine selected", "error");
+                return;
+            }
             
             const routine = routines[selectedRoutineId];
             const newName = prompt("Edit routine name:", routine.name);
@@ -282,30 +348,57 @@
                 routines[selectedRoutineId].name = newName.trim();
                 renderRoutines(routines);
                 saveBtn.disabled = false;
+                showMessage("Routine name updated", "success");
+            }
+        }
+
+        // Delete selected routine
+        function deleteSelectedRoutine() {
+            if (selectedRoutineId === null || !routines[selectedRoutineId]) {
+                showMessage("No valid routine selected", "error");
+                return;
+            }
+            
+            const routineName = routines[selectedRoutineId].name;
+            if (confirm(`Permanently delete "${routineName}"?`)) {
+                routines.splice(selectedRoutineId, 1);
+                selectedRoutineId = null;
+                renderRoutines(routines);
+                saveBtn.disabled = false;
+                showMessage(`Deleted "${routineName}"`, "success");
             }
         }
 
         // Print selected routine
         function printSelectedRoutine() {
-            if (selectedRoutineId === null || selectedRoutineId >= routines.length) return;
-            
+            if (selectedRoutineId === null || !routines[selectedRoutineId]) {
+                showMessage("No valid routine selected", "error");
+                return;
+            }
+
             const routine = routines[selectedRoutineId];
-            const printWindow = window.open('', '', 'width=800,height=600');
+            const printWin = window.open('', '_blank');
+            if (!printWin) {
+                showMessage("Popup blocked. Please allow popups to print.", "error");
+                return;
+            }
             
-            printWindow.document.write(`
+            printWin.document.write(`
+                <!DOCTYPE html>
                 <html>
                     <head>
-                        <title>${routine.name}</title>
+                        <title>${escapeHtml(routine.name)}</title>
                         <style>
                             body { font-family: Arial, sans-serif; padding: 20px; }
-                            h1 { color: #2c3e50; }
+                            h1 { color: #2c3e50; border-bottom: 1px solid #eee; padding-bottom: 10px; }
                             table { width: 100%; border-collapse: collapse; margin-top: 20px; }
                             th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
                             th { background-color: #f2f2f2; }
+                            .notes { margin-top: 20px; padding: 10px; background: #f9f9f9; border-radius: 4px; }
                         </style>
                     </head>
                     <body>
-                        <h1>${routine.name}</h1>
+                        <h1>${escapeHtml(routine.name)}</h1>
                         <table>
                             <thead>
                                 <tr>
@@ -318,14 +411,17 @@
                             <tbody>
                                 ${routine.exercises.map(ex => `
                                     <tr>
-                                        <td>${ex.name}</td>
-                                        <td>${ex.reps || '-'}</td>
-                                        <td>${ex.time ? ex.time + ' sec' : '-'}</td>
-                                        <td>${ex.comments || '-'}</td>
+                                        <td>${escapeHtml(ex.name || 'Unnamed Exercise')}</td>
+                                        <td>${escapeHtml(ex.reps || '-')}</td>
+                                        <td>${ex.time ? escapeHtml(ex.time) + ' sec' : '-'}</td>
+                                        <td>${escapeHtml(ex.comments || '-')}</td>
                                     </tr>
                                 `).join('')}
                             </tbody>
                         </table>
+                        <div class="notes">
+                            <p>Generated by Fitness App Hub on ${new Date().toLocaleDateString()}</p>
+                        </div>
                         <script>
                             window.onload = function() {
                                 setTimeout(function() {
@@ -337,91 +433,146 @@
                     </body>
                 </html>
             `);
-            printWindow.document.close();
+            printWin.document.close();
         }
 
         // Save routines to localStorage
         function saveRoutines() {
-            localStorage.setItem('routines', JSON.stringify(routines, null, 2));
-            showMessage("Routines saved successfully!", "success");
-            saveBtn.disabled = true;
+            try {
+                localStorage.setItem('routines', JSON.stringify(routines, null, 2));
+                showMessage(`${routines.length} routines saved successfully!`, "success");
+                saveBtn.disabled = true;
+            } catch (e) {
+                console.error("Failed to save routines:", e);
+                showMessage("Failed to save routines. Storage may be full.", "error");
+            }
         }
 
         // Search functionality
-        searchInput.addEventListener('input', () => {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-            
-            if (!searchTerm) {
+        function searchRoutines(term) {
+            if (!term) {
                 renderRoutines(routines);
                 return;
             }
             
-            const searchTerms = searchTerm.split(',')
-                .map(term => term.trim())
-                .filter(term => term.length > 0);
+            const searchTerms = term.split(',')
+                .map(t => t.trim().toLowerCase())
+                .filter(t => t.length > 0);
 
             const filtered = routines.filter(routine => {
-                // Check if ALL search terms match either name or exercises
                 return searchTerms.every(term => {
                     // Check routine name
                     if (routine.name.toLowerCase().includes(term)) {
                         return true;
                     }
                     
-                    // Check exercise names
+                    // Check exercise names and comments
                     return routine.exercises.some(ex => 
-                        ex.name.toLowerCase().includes(term) || 
+                        (ex.name && ex.name.toLowerCase().includes(term)) || 
                         (ex.comments && ex.comments.toLowerCase().includes(term))
                     );
                 });
             });
             
             renderRoutines(filtered);
-        });
+        }
 
         // Upload routines JSON
+        async function handleFileUpload(file) {
+            try {
+                const data = await parseUploadedFile(file);
+                if (!validateRoutinesData(data)) {
+                    throw new Error("Invalid routines format");
+                }
+                
+                routines = data;
+                localStorage.setItem('routines', JSON.stringify(routines));
+                renderRoutines(routines);
+                showMessage(`Successfully loaded ${routines.length} routines`, "success");
+                saveBtn.disabled = false;
+            } catch (error) {
+                showMessage(`Upload failed: ${error.message}`, "error");
+                console.error("Upload error:", error);
+            } finally {
+                fileInput.value = '';
+            }
+        }
+
+        // Helper functions
+        function enableActionButtons() {
+            editBtn.disabled = false;
+            deleteBtn.disabled = false;
+            printBtn.disabled = false;
+        }
+
+        function disableActionButtons() {
+            editBtn.disabled = true;
+            deleteBtn.disabled = true;
+            printBtn.disabled = true;
+            saveBtn.disabled = true;
+        }
+
+        function showMessage(message, type = "info") {
+            statusMessage.textContent = message;
+            statusMessage.className = `status-message ${type}`;
+            setTimeout(() => {
+                statusMessage.className = 'status-message';
+            }, 5000);
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.toString()
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        async function parseUploadedFile(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        resolve(JSON.parse(e.target.result));
+                    } catch (e) {
+                        reject(new Error("Invalid JSON format"));
+                    }
+                };
+                reader.onerror = () => reject(new Error("Failed to read file"));
+                reader.readAsText(file);
+            });
+        }
+
+        function validateRoutinesData(data) {
+            return Array.isArray(data) && data.every(routine => 
+                routine && 
+                typeof routine.name === 'string' &&
+                Array.isArray(routine.exercises)
+            );
+        }
+
+        // Event listeners
+        searchInput.addEventListener('input', () => {
+            searchRoutines(searchInput.value.trim().toLowerCase());
+        });
+
         uploadBtn.addEventListener('click', () => {
             fileInput.click();
         });
 
         fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                try {
-                    const data = JSON.parse(event.target.result);
-                    if (Array.isArray(data)) {
-                        routines = data;
-                        localStorage.setItem('routines', JSON.stringify(routines));
-                        renderRoutines(routines);
-                        showMessage("Routines loaded successfully!", "success");
-                        saveBtn.disabled = false;
-                        fileInput.value = ''; // Reset file input
-                    } else {
-                        showMessage("Invalid format: Expected array of routines", "error");
-                    }
-                } catch (error) {
-                    showMessage("Error: Invalid JSON file", "error");
-                    console.error("Error parsing JSON:", error);
-                }
-            };
-            reader.onerror = () => {
-                showMessage("Error reading file", "error");
-            };
-            reader.readAsText(file);
+            if (file) {
+                handleFileUpload(file);
+            }
         });
 
-        // Event listeners
         editBtn.addEventListener('click', editSelectedRoutine);
+        deleteBtn.addEventListener('click', deleteSelectedRoutine);
         printBtn.addEventListener('click', printSelectedRoutine);
         saveBtn.addEventListener('click', saveRoutines);
-
-        // Helper function to show messages
-        function showMessage(message, type) {
-            alert(`${type === "error" ? "Error: " : ""}${message}`);
-        }
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', loadRoutines);
