@@ -55,81 +55,13 @@
         button:hover {
             background-color: #2980b9;
         }
-        .scrollable-table {
-            max-height: 400px;
-            overflow-y: auto;
-            margin-top: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-            position: sticky;
-            top: 0;
-        }
-        tr:hover {
-            background-color: #f9f9f9;
-        }
-        .search-container {
-            flex-grow: 1;
-        }
-        .search-container input {
-            width: 100%;
-            box-sizing: border-box;
-        }
-        .home-btn {
-            background-color: #9b59b6;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 4px;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .home-btn:hover {
-            background-color: #8e44ad;
-        }
-        .upload-btn {
-            background-color: #2ecc71;
-        }
-        .upload-btn:hover {
-            background-color: #27ae60;
-        }
-        .edit-btn {
-            background-color: #e67e22;
-        }
-        .edit-btn:hover {
-            background-color: #d35400;
-        }
-        .print-btn {
-            background-color: #3498db;
-        }
-        .print-btn:hover {
-            background-color: #2980b9;
-        }
-        .save-btn {
-            background-color: #2ecc71;
-        }
-        .save-btn:hover {
-            background-color: #27ae60;
-        }
-        #fileInput {
-            display: none;
-        }
         .routine-card {
             border: 1px solid #ddd;
             border-radius: 4px;
             padding: 15px;
             margin-bottom: 15px;
             background: white;
+            cursor: pointer;
         }
         .routine-header {
             display: flex;
@@ -171,6 +103,51 @@
             background-color: #e6f7ff;
             border-color: #91d5ff;
         }
+        .upload-btn {
+            background-color: #2ecc71;
+        }
+        .upload-btn:hover {
+            background-color: #27ae60;
+        }
+        .edit-btn {
+            background-color: #e67e22;
+        }
+        .edit-btn:hover {
+            background-color: #d35400;
+        }
+        .print-btn {
+            background-color: #3498db;
+        }
+        .print-btn:hover {
+            background-color: #2980b9;
+        }
+        .save-btn {
+            background-color: #2ecc71;
+        }
+        .save-btn:hover {
+            background-color: #27ae60;
+        }
+        #fileInput {
+            display: none;
+        }
+        .search-container {
+            flex-grow: 1;
+        }
+        .search-container input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .home-btn {
+            background-color: #9b59b6;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .home-btn:hover {
+            background-color: #8e44ad;
+        }
         @media print {
             body * {
                 visibility: hidden;
@@ -206,7 +183,6 @@
         </div>
         
         <div id="routinesContainer">
-            <!-- Routines will be loaded here -->
             <div class="no-routines">No routines loaded. Please upload a routines JSON file.</div>
         </div>
         
@@ -214,7 +190,7 @@
             <div class="button-group">
                 <button id="editBtn" class="edit-btn" disabled>Edit Selected Routine</button>
                 <button id="printBtn" class="print-btn" disabled>Print Selected Routine</button>
-                <button id="saveBtn" class="save-btn">Save Changes</button>
+                <button id="saveBtn" class="save-btn" disabled>Save Changes</button>
             </div>
         </div>
     </div>
@@ -233,13 +209,16 @@
         const printBtn = document.getElementById('printBtn');
         const saveBtn = document.getElementById('saveBtn');
 
-        // Load routines from localStorage
+        // Load routines from localStorage on page load
         function loadRoutines() {
             const savedData = localStorage.getItem('routines');
             if (savedData) {
                 try {
                     routines = JSON.parse(savedData);
-                    renderRoutines(routines);
+                    if (Array.isArray(routines) && routines.length > 0) {
+                        renderRoutines(routines);
+                        saveBtn.disabled = false;
+                    }
                 } catch (e) {
                     console.error("Error parsing routines data:", e);
                     showMessage("Error loading routines", "error");
@@ -253,6 +232,7 @@
                 routinesContainer.innerHTML = '<div class="no-routines">No routines found</div>';
                 editBtn.disabled = true;
                 printBtn.disabled = true;
+                saveBtn.disabled = true;
                 return;
             }
             
@@ -278,7 +258,7 @@
                 `;
                 
                 routineCard.addEventListener('click', () => {
-                    selectedRoutineId = index;
+                    selectedRoutineId = parseInt(routineCard.dataset.id);
                     document.querySelectorAll('.routine-card').forEach(card => {
                         card.classList.remove('selected');
                     });
@@ -293,20 +273,21 @@
 
         // Edit selected routine
         function editSelectedRoutine() {
-            if (selectedRoutineId === null) return;
+            if (selectedRoutineId === null || selectedRoutineId >= routines.length) return;
             
             const routine = routines[selectedRoutineId];
             const newName = prompt("Edit routine name:", routine.name);
             
-            if (newName !== null) {
-                routines[selectedRoutineId].name = newName;
+            if (newName !== null && newName.trim() !== "") {
+                routines[selectedRoutineId].name = newName.trim();
                 renderRoutines(routines);
+                saveBtn.disabled = false;
             }
         }
 
         // Print selected routine
         function printSelectedRoutine() {
-            if (selectedRoutineId === null) return;
+            if (selectedRoutineId === null || selectedRoutineId >= routines.length) return;
             
             const routine = routines[selectedRoutineId];
             const printWindow = window.open('', '', 'width=800,height=600');
@@ -363,6 +344,7 @@
         function saveRoutines() {
             localStorage.setItem('routines', JSON.stringify(routines, null, 2));
             showMessage("Routines saved successfully!", "success");
+            saveBtn.disabled = true;
         }
 
         // Search functionality
@@ -415,6 +397,8 @@
                         localStorage.setItem('routines', JSON.stringify(routines));
                         renderRoutines(routines);
                         showMessage("Routines loaded successfully!", "success");
+                        saveBtn.disabled = false;
+                        fileInput.value = ''; // Reset file input
                     } else {
                         showMessage("Invalid format: Expected array of routines", "error");
                     }
@@ -422,6 +406,9 @@
                     showMessage("Error: Invalid JSON file", "error");
                     console.error("Error parsing JSON:", error);
                 }
+            };
+            reader.onerror = () => {
+                showMessage("Error reading file", "error");
             };
             reader.readAsText(file);
         });
@@ -433,7 +420,7 @@
 
         // Helper function to show messages
         function showMessage(message, type) {
-            alert(message);
+            alert(`${type === "error" ? "Error: " : ""}${message}`);
         }
 
         // Initialize page
