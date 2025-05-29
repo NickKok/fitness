@@ -81,6 +81,15 @@
         .edit-mode {
             background-color: #fffde7;
         }
+        .edit-mode td:nth-child(1) input {
+            width: calc(100% - 24px);
+            box-sizing: border-box;
+        }
+        .edit-mode td:nth-child(2) input {
+            width: calc(100% - 24px);
+            min-width: 300px;
+            box-sizing: border-box;
+        }
         .download-btn {
             background-color: #e67e22;
         }
@@ -139,7 +148,7 @@
         
         <div class="controls">
             <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Search exercises or attributes...">
+                <input type="text" id="searchInput" placeholder="Search exercises or attributes (comma-separated)...">
             </div>
             <button id="addExerciseBtn" class="add-btn">Add New Exercise</button>
             <button id="downloadBtn" class="download-btn">Download JSON</button>
@@ -248,6 +257,9 @@
 
             row.classList.add('edit-mode');
 
+            // Auto-focus on name field
+            cells[0].querySelector('input').focus();
+
             // Save button
             row.querySelector('.save-btn').addEventListener('click', () => {
                 const newName = row.querySelector('td:first-child input').value.trim();
@@ -344,7 +356,7 @@
             });
         });
 
-        // Updated Search Functionality (multiple comma-separated values)
+        // Search functionality (multiple comma-separated values)
         searchInput.addEventListener('input', () => {
             const searchString = searchInput.value.toLowerCase();
             const searchTerms = searchString.split(',')
