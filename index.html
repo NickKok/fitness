@@ -26,52 +26,23 @@
             color: #2c3e50;
             margin-bottom: 30px;
         }
-        .app-card {
-            background: #f9f9f9;
-            border-radius: 6px;
-            padding: 20px;
-            margin: 20px 0;
-            border-left: 4px solid #3498db;
-            text-align: left;
-            position: relative;
-        }
-        .app-card h2 {
-            margin-top: 0;
-            color: #2980b9;
-        }
-        .app-card p {
-            color: #666;
-        }
-        .launch-btn {
-            display: inline-block;
-            background-color: #3498db;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-            margin-right: 10px;
-        }
-        .launch-btn:hover {
-            background-color: #2980b9;
-        }
-        .coming-soon {
-            opacity: 0.7;
-        }
         .upload-section {
-            margin-top: 30px;
-            padding: 20px;
+            margin: 30px 0;
+            padding: 25px;
             background: #eef7ff;
             border-radius: 6px;
+            border: 2px dashed #3498db;
         }
         .file-upload-btn {
             background-color: #2ecc71;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 16px;
             transition: background-color 0.3s;
+            margin: 10px 0;
         }
         .file-upload-btn:hover {
             background-color: #27ae60;
@@ -79,23 +50,64 @@
         #fileInput {
             display: none;
         }
+        .status-message {
+            margin: 15px 0;
+            font-weight: bold;
+            min-height: 20px;
+        }
+        .success {
+            color: #2ecc71;
+        }
+        .error {
+            color: #e74c3c;
+        }
+        .app-card {
+            background: #f9f9f9;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+            text-align: left;
+            transition: opacity 0.3s;
+        }
+        .disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .launch-btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+        .launch-btn:hover {
+            background-color: #2980b9;
+        }
+        .coming-soon {
+            opacity: 0.7;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Fitness App Hub</h1>
         
-        <div class="app-card">
-            <h2>Exercise Database Manager</h2>
-            <p>Manage your exercise database with full CRUD functionality, search, and JSON import/export.</p>
-            <a href="database-manager.html" class="launch-btn">Launch Database Manager</a>
+        <div class="upload-section">
+            <h2>Load Exercise Database</h2>
+            <p>Upload your exercise database JSON file to get started:</p>
+            <button id="uploadBtn" class="file-upload-btn">Select JSON File</button>
+            <input type="file" id="fileInput" accept=".json">
+            <div id="statusMessage" class="status-message"></div>
         </div>
         
-        <div class="upload-section">
-            <h3>Initialize Database</h3>
-            <p>Upload your exercise database JSON file to get started:</p>
-            <button id="uploadBtn" class="file-upload-btn">Upload JSON File</button>
-            <input type="file" id="fileInput" accept=".json">
+        <div id="databaseCard" class="app-card disabled">
+            <h2>Exercise Database Manager</h2>
+            <p>Manage your exercise database with full CRUD functionality, search, and JSON export.</p>
+            <a href="database-manager.html" id="dbManagerLink" class="launch-btn">Launch Database Manager</a>
         </div>
         
         <div class="app-card coming-soon">
@@ -108,6 +120,16 @@
     <script>
         const uploadBtn = document.getElementById('uploadBtn');
         const fileInput = document.getElementById('fileInput');
+        const statusMessage = document.getElementById('statusMessage');
+        const databaseCard = document.getElementById('databaseCard');
+        const dbManagerLink = document.getElementById('dbManagerLink');
+
+        // Check if we already have data loaded
+        if (localStorage.getItem('exerciseDatabase')) {
+            enableDatabaseManager();
+            statusMessage.textContent = "Database found! You can access the manager below.";
+            statusMessage.className = "status-message success";
+        }
 
         uploadBtn.addEventListener('click', () => {
             fileInput.click();
@@ -120,15 +142,38 @@
             const reader = new FileReader();
             reader.onload = (event) => {
                 try {
+                    // Validate JSON structure
                     const data = JSON.parse(event.target.result);
-                    localStorage.setItem('exerciseDatabase', event.target.result);
-                    alert("Database uploaded successfully! You can now launch the manager.");
+                    if (Array.isArray(data) && data.every(item => 
+                        item.name && typeof item.name === 'string' &&
+                        item.attributes && typeof item.attributes === 'string'
+                    )) {
+                        // Save to localStorage and enable access
+                        localStorage.setItem('exerciseDatabase', event.target.result);
+                        enableDatabaseManager();
+                        showStatus("Database loaded successfully!", "success");
+                    } else {
+                        showStatus("Invalid format: Expected array of {name, attributes} objects", "error");
+                    }
                 } catch (error) {
-                    alert("Error: Invalid JSON file format");
+                    showStatus("Error: Invalid JSON file - " + error.message, "error");
                 }
+            };
+            reader.onerror = () => {
+                showStatus("Error reading file", "error");
             };
             reader.readAsText(file);
         });
+
+        function enableDatabaseManager() {
+            databaseCard.classList.remove('disabled');
+            dbManagerLink.style.pointerEvents = 'auto';
+        }
+
+        function showStatus(message, type) {
+            statusMessage.textContent = message;
+            statusMessage.className = "status-message " + type;
+        }
     </script>
 </body>
 </html>
