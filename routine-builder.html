@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routine Builder</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        h1 {
+            color: #2c3e50;
+            margin: 0;
+        }
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #eaeaea;
+            border-radius: 5px;
+        }
+        input, button, select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            position: sticky;
+            top: 0;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        .action-buttons button {
+            margin-right: 5px;
+            padding: 5px 8px;
+            font-size: 12px;
+        }
+        .search-container {
+            flex-grow: 1;
+        }
+        .search-container input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #777;
+        }
+        .home-btn {
+            background-color: #9b59b6;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .home-btn:hover {
+            background-color: #8e44ad;
+        }
+        .process-btn {
+            background-color: #2ecc71;
+        }
+        .process-btn:hover {
+            background-color: #27ae60;
+        }
+        .save-btn {
+            background-color: #e67e22;
+        }
+        .save-btn:hover {
+            background-color: #d35400;
+        }
+        .back-btn {
+            background-color: #95a5a6;
+        }
+        .back-btn:hover {
+            background-color: #7f8c8d;
+        }
+        .routine-name {
+            font-weight: bold;
+            margin: 15px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+        .section-title {
+            margin-top: 0;
+            color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-container">
+            <h1>Routine Builder</h1>
+            <a href="index.html" class="home-btn">Home</a>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">Search Exercises</h2>
+            <div class="controls">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search exercises or attributes (comma-separated)...">
+                </div>
+                <button id="processBtn" class="process-btn">Add Selected to Routine</button>
+            </div>
+            
+            <div id="searchResults">
+                <table id="exerciseTable">
+                    <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>Exercise Name</th>
+                            <th>Attributes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="exerciseTableBody">
+                        <!-- Search results will appear here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">Current Routine</h2>
+            <input type="text" id="routineName" class="routine-name" placeholder="Enter routine name">
+            
+            <table id="routineTable">
+                <thead>
+                    <tr>
+                        <th>Remove</th>
+                        <th>Exercise Name</th>
+                        <th>Reps</th>
+                        <th>Time (seconds)</th>
+                        <th>Comments</th>
+                    </tr>
+                </thead>
+                <tbody id="routineTableBody">
+                    <!-- Routine exercises will appear here -->
+                </tbody>
+            </table>
+            
+            <div class="controls" style="margin-top: 20px;">
+                <button id="backBtn" class="back-btn">Back to Search</button>
+                <button id="saveBtn" class="save-btn">Save Routine</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize variables
+        let exercises = [];
+        let currentRoutine = {
+            name: "",
+            exercises: []
+        };
+        let selectedExercises = new Set();
+
+        // DOM Elements
+        const searchInput = document.getElementById('searchInput');
+        const processBtn = document.getElementById('processBtn');
+        const exerciseTableBody = document.getElementById('exerciseTableBody');
+        const routineTableBody = document.getElementById('routineTableBody');
+        const routineName = document.getElementById('routineName');
+        const backBtn = document.getElementById('backBtn');
+        const saveBtn = document.getElementById('saveBtn');
+
+        // Load exercises from localStorage
+        function loadExercises() {
+            const savedData = localStorage.getItem('exerciseDatabase');
+            if (savedData) {
+                try {
+                    exercises = JSON.parse(savedData);
+                } catch (e) {
+                    console.error("Error parsing exercise data:", e);
+                    alert("Error loading exercise database");
+                }
+            } else {
+                alert("No exercise database found. Please upload one from the home page.");
+                window.location.href = "index.html";
+            }
+        }
+
+        // Render search results
+        function renderSearchResults(results) {
+            exerciseTableBody.innerHTML = '';
+            results.forEach(exercise => {
+                const row = document.createElement('tr');
+                const isChecked = selectedExercises.has(exercise.name);
+                row.innerHTML = `
+                    <td><input type="checkbox" ${isChecked ? 'checked' : ''} data-name="${exercise.name}"></td>
+                    <td>${exercise.name}</td>
+                    <td>${exercise.attributes}</td>
+                `;
+                exerciseTableBody.appendChild(row);
+            });
+            
+            // Add event listeners to checkboxes
+            document.querySelectorAll('#exerciseTableBody input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    const exerciseName = e.target.getAttribute('data-name');
+                    if (e.target.checked) {
+                        selectedExercises.add(exerciseName);
+                    } else {
+                        selectedExercises.delete(exerciseName);
+                    }
+                });
+            });
+        }
+
+        // Process selected exercises into routine
+        function processSelectedExercises() {
+            selectedExercises.forEach(exerciseName => {
+                // Only add if not already in routine
+                if (!currentRoutine.exercises.some(ex => ex.name === exerciseName)) {
+                    currentRoutine.exercises.push({
+                        name: exerciseName,
+                        reps: "",
+                        time: "",
+                        comments: ""
+                    });
+                }
+            });
+            renderRoutine();
+        }
+
+        // Render current routine
+        function renderRoutine() {
+            routineTableBody.innerHTML = '';
+            currentRoutine.exercises.forEach((exercise, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><input type="checkbox" data-index="${index}"></td>
+                    <td>${exercise.name}</td>
+                    <td><input type="text" value="${exercise.reps}" placeholder="e.g. 3x12"></td>
+                    <td><input type="number" value="${exercise.time}" placeholder="Seconds"></td>
+                    <td><input type="text" value="${exercise.comments}" placeholder="Notes"></td>
+                `;
+                routineTableBody.appendChild(row);
+            });
+            
+            // Add event listeners to remove checkboxes
+            document.querySelectorAll('#routineTableBody input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    if (e.target.checked) {
+                        const index = parseInt(e.target.getAttribute('data-index'));
+                        currentRoutine.exercises.splice(index, 1);
+                        renderRoutine();
+                    }
+                });
+            });
+        }
+
+        // Save routine to localStorage
+        function saveRoutine() {
+            currentRoutine.name = routineName.value.trim();
+            if (!currentRoutine.name) {
+                alert("Please enter a name for your routine");
+                return;
+            }
+            
+            if (currentRoutine.exercises.length === 0) {
+                alert("Please add at least one exercise to your routine");
+                return;
+            }
+            
+            // Update input values before saving
+            document.querySelectorAll('#routineTableBody tr').forEach((row, index) => {
+                currentRoutine.exercises[index].reps = row.querySelector('td:nth-child(3) input').value;
+                currentRoutine.exercises[index].time = row.querySelector('td:nth-child(4) input').value;
+                currentRoutine.exercises[index].comments = row.querySelector('td:nth-child(5) input').value;
+            });
+            
+            // Get existing routines or create new array
+            let routines = JSON.parse(localStorage.getItem('routines') || [];
+            
+            // Check if routine with this name already exists
+            const existingIndex = routines.findIndex(r => r.name === currentRoutine.name);
+            if (existingIndex >= 0) {
+                if (!confirm(`A routine named "${currentRoutine.name}" already exists. Overwrite?`)) {
+                    return;
+                }
+                routines[existingIndex] = {...currentRoutine};
+            } else {
+                routines.push({...currentRoutine});
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('routines', JSON.stringify(routines, null, 2));
+            alert(`Routine "${currentRoutine.name}" saved successfully!`);
+        }
+
+        // Search functionality (multiple comma-separated values)
+        searchInput.addEventListener('input', () => {
+            const searchString = searchInput.value.toLowerCase();
+            const searchTerms = searchString.split(',')
+                .map(term => term.trim())
+                .filter(term => term.length > 0);
+
+            if (searchTerms.length === 0) {
+                renderSearchResults([]);
+                return;
+            }
+
+            const filtered = exercises.filter(ex => {
+                // Check if ALL search terms match either name or attributes
+                return searchTerms.every(term => {
+                    // Check exercise name
+                    if (ex.name.toLowerCase().includes(term)) {
+                        return true;
+                    }
+                    
+                    // Check individual attributes
+                    return ex.attributes.split(',')
+                        .some(attr => attr.trim().toLowerCase().includes(term));
+                });
+            });
+            
+            renderSearchResults(filtered);
+        });
+
+        // Event listeners
+        processBtn.addEventListener('click', processSelectedExercises);
+        backBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            renderSearchResults([]);
+        });
+        saveBtn.addEventListener('click', saveRoutine);
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            loadExercises();
+            renderSearchResults([]);
+            renderRoutine();
+        });
+    </script>
+</body>
+</html>
