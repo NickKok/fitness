@@ -62,10 +62,6 @@
             margin-bottom: 15px;
             background: white;
             cursor: pointer;
-            transition: all 0.2s;
-        }
-        .routine-card:hover {
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         .routine-header {
             display: flex;
@@ -172,9 +168,8 @@
             gap: 10px;
             margin-bottom: 10px;
             align-items: center;
-            flex-wrap: wrap;
         }
-        .exercise-edit-item > div {
+        .exercise-edit-item select {
             flex: 1;
             min-width: 200px;
         }
@@ -197,9 +192,14 @@
             padding: 5px 8px;
             font-size: 12px;
         }
-        select {
-            width: 100%;
-            padding: 8px 12px;
+        .status-message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
         }
     </style>
 </head>
@@ -209,6 +209,8 @@
             <h1>Routine Recorder</h1>
             <a href="index.html" class="home-btn">Home</a>
         </div>
+        
+        <div id="statusMessage" class="status-message" style="display: none;"></div>
         
         <div class="controls">
             <div class="search-container">
@@ -269,10 +271,30 @@
         const addExerciseBtn = document.getElementById('addExerciseBtn');
         const cancelEditBtn = document.getElementById('cancelEditBtn');
         const saveEditBtn = document.getElementById('saveEditBtn');
+        const statusMessage = document.getElementById('statusMessage');
 
-        // Load data from localStorage and exercise database
-        async function loadData() {
-            // Load routines from localStorage
+        // Load data from localStorage on page load
+        function loadData() {
+            // Load exercise database first
+            const savedExercises = localStorage.getItem('exerciseDatabase');
+            if (!savedExercises) {
+                showMessage("No exercise database found. Please upload one from the home page.", "error");
+                setTimeout(() => window.location.href = "index.html", 2000);
+                return;
+            }
+
+            try {
+                exerciseDatabase = JSON.parse(savedExercises);
+                if (!Array.isArray(exerciseDatabase)) {
+                    throw new Error("Exercise database is not an array");
+                }
+            } catch (e) {
+                showMessage("Error loading exercise database", "error");
+                console.error(e);
+                return;
+            }
+
+            // Load routines
             const savedRoutines = localStorage.getItem('routines');
             if (savedRoutines) {
                 try {
@@ -282,31 +304,23 @@
                         saveBtn.disabled = false;
                     }
                 } catch (e) {
-                    console.error("Error parsing routines data:", e);
-                    alert("Error loading routines data");
+                    showMessage("Error loading routines data", "error");
+                    console.error(e);
                 }
-            }
-
-            // Load exercise database
-            try {
-                const response = await fetch('exercise-database.json');
-                if (!response.ok) throw new Error("Failed to load exercise database");
-                exerciseDatabase = await response.json();
-                
-                if (!Array.isArray(exerciseDatabase)) {
-                    throw new Error("Exercise database is not an array");
-                }
-                
-                // Sort exercises alphabetically
-                exerciseDatabase.sort((a, b) => a.name.localeCompare(b.name));
-            } catch (e) {
-                console.error("Error loading exercise database:", e);
-                alert("Error loading exercise database. Please make sure exercise-database.json exists and contains valid data.");
-                window.location.href = "index.html";
             }
         }
 
-        // Render routines list
+        // Show status message
+        function showMessage(message, type) {
+            statusMessage.textContent = message;
+            statusMessage.className = `status-message ${type}`;
+            statusMessage.style.display = 'block';
+            setTimeout(() => {
+                statusMessage.style.display = 'none';
+            }, 3000);
+        }
+
+        // Render routines
         function renderRoutines(routinesToRender) {
             routinesContainer.innerHTML = '';
             
@@ -328,7 +342,7 @@
                 routineCard.innerHTML = `
                     <div class="routine-header">
                         <h3 class="routine-title">${routine.name}</h3>
-                        <div>${routine.exercises.length} ${routine.exercises.length === 1 ? 'exercise' : 'exercises'}</div>
+                        <div>${routine.exercises.length} exercises</div>
                     </div>
                     <div class="exercise-preview">
                         ${exercisePreview.map(ex => `<span>${ex}</span>`).join('')}
@@ -365,38 +379,32 @@
             editModal.style.display = 'flex';
         }
 
-        // Add exercise edit item to modal with exercise selection
+        // Add exercise edit item to modal with dropdown selection
         function addExerciseEditItem(exercise = null, index) {
             const exerciseItem = document.createElement('div');
             exerciseItem.className = 'exercise-edit-item';
             
-            // Get the current exercise name if editing an existing exercise
-            const currentExerciseName = exercise?.name || '';
-            
-            // Create the exercise select dropdown with all options
-            let selectOptions = '<option value="">Select an exercise</option>';
-            
-            exerciseDatabase.forEach(ex => {
-                const isSelected = ex.name === currentExerciseName ? 'selected' : '';
-                selectOptions += `
-                    <option value="${ex.name}" ${isSelected} data-attributes="${ex.attributes || ''}">
-                        ${ex.name}${ex.attributes ? ` (${ex.attributes})` : ''}
-                    </option>
-                `;
-            });
+            // Create exercise select dropdown
+            const selectHtml = `
+                <select class="exercise-select" required>
+                    <option value="">Select an exercise</option>
+                    ${exerciseDatabase.map(ex => `
+                        <option value="${ex.name}" 
+                                ${exercise?.name === ex.name ? 'selected' : ''}
+                                data-attributes="${ex.attributes || ''}">
+                            ${ex.name} ${ex.attributes ? `(${ex.attributes})` : ''}
+                        </option>
+                    `).join('')}
+                </select>
+            `;
             
             exerciseItem.innerHTML = `
-                <div>
-                    <select class="exercise-select" required>
-                        ${selectOptions}
-                    </select>
+                <div style="flex: 1; min-width: 200px;">
+                    ${selectHtml}
                 </div>
-                <input type="text" placeholder="Reps (e.g. 3x12)" 
-                       value="${exercise?.reps || ''}" data-field="reps">
-                <input type="text" placeholder="Time (seconds)" 
-                       value="${exercise?.time || ''}" data-field="time">
-                <input type="text" placeholder="Notes" 
-                       value="${exercise?.comments || ''}" data-field="comments">
+                <input type="text" placeholder="Reps (e.g. 3x12)" value="${exercise?.reps || ''}" data-field="reps">
+                <input type="text" placeholder="Time (seconds)" value="${exercise?.time || ''}" data-field="time">
+                <input type="text" placeholder="Comments" value="${exercise?.comments || ''}" data-field="comments">
                 <button class="remove-exercise-btn" data-index="${index}">Remove</button>
             `;
             
@@ -414,44 +422,43 @@
             
             const routineName = editRoutineName.value.trim();
             if (!routineName) {
-                alert("Please enter a routine name");
+                showMessage("Please enter a routine name", "error");
                 return;
             }
             
             // Collect all exercises
             const exerciseItems = exercisesEditContainer.querySelectorAll('.exercise-edit-item');
             const exercises = [];
-            let hasEmptySelection = false;
+            let hasErrors = false;
             
             exerciseItems.forEach(item => {
                 const select = item.querySelector('.exercise-select');
-                const selectedExercise = select.value;
+                const exerciseName = select.value.trim();
+                const reps = item.querySelector('[data-field="reps"]').value.trim();
+                const time = item.querySelector('[data-field="time"]').value.trim();
+                const comments = item.querySelector('[data-field="comments"]').value.trim();
                 
-                if (!selectedExercise) {
-                    hasEmptySelection = true;
-                    select.style.border = '1px solid red';
-                    return;
+                if (!exerciseName) {
+                    select.style.borderColor = 'red';
+                    hasErrors = true;
                 } else {
-                    select.style.border = '';
+                    select.style.borderColor = '';
+                    exercises.push({
+                        name: exerciseName,
+                        reps: reps,
+                        time: time,
+                        comments: comments
+                    });
                 }
-                
-                const exercise = {
-                    name: selectedExercise,
-                    reps: item.querySelector('[data-field="reps"]').value.trim(),
-                    time: item.querySelector('[data-field="time"]').value.trim(),
-                    comments: item.querySelector('[data-field="comments"]').value.trim()
-                };
-                
-                exercises.push(exercise);
             });
             
-            if (hasEmptySelection) {
-                alert("Please select an exercise for all items");
+            if (hasErrors) {
+                showMessage("Please select an exercise for all items", "error");
                 return;
             }
             
             if (exercises.length === 0) {
-                alert("Please add at least one exercise");
+                showMessage("Please add at least one exercise", "error");
                 return;
             }
             
@@ -465,32 +472,31 @@
             editModal.style.display = 'none';
             renderRoutines(routines);
             saveBtn.disabled = false;
+            showMessage("Routine updated successfully", "success");
         }
 
         // Save routines to localStorage
         function saveRoutines() {
             try {
                 localStorage.setItem('routines', JSON.stringify(routines, null, 2));
-                alert("Routines saved successfully!");
+                showMessage(`${routines.length} routines saved successfully!`, "success");
                 saveBtn.disabled = true;
             } catch (e) {
-                console.error("Failed to save routines:", e);
-                alert("Failed to save routines. Storage may be full.");
+                showMessage("Failed to save routines. Storage may be full.", "error");
+                console.error(e);
             }
         }
 
         // Search functionality
-        searchInput.addEventListener('input', () => {
-            const searchTerm = searchInput.value.toLowerCase();
-            
-            if (!searchTerm) {
+        function searchRoutines(term) {
+            if (!term) {
                 renderRoutines(routines);
                 return;
             }
             
-            const searchTerms = searchTerm.split(',')
-                .map(term => term.trim())
-                .filter(term => term.length > 0);
+            const searchTerms = term.toLowerCase().split(',')
+                .map(t => t.trim())
+                .filter(t => t.length > 0);
 
             const filtered = routines.filter(routine => {
                 return searchTerms.every(term => {
@@ -508,42 +514,51 @@
             });
             
             renderRoutines(filtered);
-        });
+        }
 
         // Upload routines JSON
+        function handleFileUpload(file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const data = JSON.parse(event.target.result);
+                    if (!Array.isArray(data)) {
+                        throw new Error("Expected array of routines");
+                    }
+                    
+                    routines = data;
+                    localStorage.setItem('routines', JSON.stringify(routines));
+                    renderRoutines(routines);
+                    showMessage(`Successfully loaded ${routines.length} routines`, "success");
+                    saveBtn.disabled = false;
+                } catch (error) {
+                    showMessage(`Upload failed: ${error.message}`, "error");
+                    console.error(error);
+                }
+            };
+            reader.onerror = () => {
+                showMessage("Error reading file", "error");
+            };
+            reader.readAsText(file);
+        }
+
+        // Event listeners
+        searchInput.addEventListener('input', () => {
+            searchRoutines(searchInput.value);
+        });
+
         uploadBtn.addEventListener('click', () => {
             fileInput.click();
         });
 
         fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                try {
-                    const data = JSON.parse(event.target.result);
-                    if (Array.isArray(data)) {
-                        routines = data;
-                        localStorage.setItem('routines', JSON.stringify(routines));
-                        renderRoutines(routines);
-                        alert("Routines loaded successfully!");
-                        saveBtn.disabled = false;
-                    } else {
-                        alert("Invalid format: Expected array of routines");
-                    }
-                } catch (error) {
-                    alert("Error: Invalid JSON file");
-                    console.error("Error parsing JSON:", error);
-                }
-            };
-            reader.onerror = () => {
-                alert("Error reading file");
-            };
-            reader.readAsText(file);
+            if (file) {
+                handleFileUpload(file);
+            }
+            fileInput.value = '';
         });
 
-        // Event listeners
         editBtn.addEventListener('click', openEditModal);
         saveBtn.addEventListener('click', saveRoutines);
         addExerciseBtn.addEventListener('click', () => addExerciseEditItem());
