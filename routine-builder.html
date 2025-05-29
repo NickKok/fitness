@@ -55,10 +55,16 @@
         button:hover {
             background-color: #2980b9;
         }
+        .scrollable-table {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
         }
         th, td {
             padding: 12px;
@@ -103,6 +109,12 @@
         .save-btn:hover {
             background-color: #d35400;
         }
+        .download-btn {
+            background-color: #3498db;
+        }
+        .download-btn:hover {
+            background-color: #2980b9;
+        }
         .back-btn {
             background-color: #95a5a6;
         }
@@ -141,6 +153,11 @@
             color: #777;
             font-style: italic;
         }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
     </style>
 </head>
 <body>
@@ -159,7 +176,7 @@
                 <button id="processBtn" class="process-btn">Add Selected to Routine</button>
             </div>
             
-            <div id="searchResults">
+            <div class="scrollable-table">
                 <table id="exerciseTable">
                     <thead>
                         <tr>
@@ -179,24 +196,29 @@
             <h2 class="section-title">Current Routine</h2>
             <input type="text" id="routineName" class="routine-name" placeholder="Enter routine name">
             
-            <table id="routineTable">
-                <thead>
-                    <tr>
-                        <th width="50px">Remove</th>
-                        <th>Exercise Name</th>
-                        <th width="120px">Reps</th>
-                        <th width="120px">Time (sec)</th>
-                        <th>Comments</th>
-                    </tr>
-                </thead>
-                <tbody id="routineTableBody">
-                    <!-- Routine exercises will appear here -->
-                </tbody>
-            </table>
+            <div class="scrollable-table">
+                <table id="routineTable">
+                    <thead>
+                        <tr>
+                            <th width="50px">Remove</th>
+                            <th>Exercise Name</th>
+                            <th width="120px">Reps</th>
+                            <th width="120px">Time (sec)</th>
+                            <th>Comments</th>
+                        </tr>
+                    </thead>
+                    <tbody id="routineTableBody">
+                        <!-- Routine exercises will appear here -->
+                    </tbody>
+                </table>
+            </div>
             
             <div class="controls" style="margin-top: 20px;">
-                <button id="backBtn" class="back-btn">Back to Search</button>
-                <button id="saveBtn" class="save-btn">Save Routine</button>
+                <div class="button-group">
+                    <button id="backBtn" class="back-btn">Back to Search</button>
+                    <button id="saveBtn" class="save-btn">Save Routine</button>
+                    <button id="downloadBtn" class="download-btn">Download Routines JSON</button>
+                </div>
             </div>
         </div>
     </div>
@@ -218,6 +240,7 @@
         const routineName = document.getElementById('routineName');
         const backBtn = document.getElementById('backBtn');
         const saveBtn = document.getElementById('saveBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
 
         // Load exercises from localStorage
         function loadExercises() {
@@ -390,6 +413,27 @@
             renderSearchResults(exercises);
         }
 
+        // Download routines as JSON file
+        function downloadRoutines() {
+            const routines = JSON.parse(localStorage.getItem('routines') || '[]');
+            if (routines.length === 0) {
+                alert("No routines to download");
+                return;
+            }
+            
+            const dataStr = JSON.stringify(routines, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'fitness-routines.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
         // Search functionality (multiple comma-separated values)
         searchInput.addEventListener('input', () => {
             const searchTerm = searchInput.value.toLowerCase().trim();
@@ -426,6 +470,7 @@
             renderSearchResults(exercises);
         });
         saveBtn.addEventListener('click', saveRoutine);
+        downloadBtn.addEventListener('click', downloadRoutines);
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', loadExercises);
