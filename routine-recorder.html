@@ -115,12 +115,6 @@
         .edit-btn:hover {
             background-color: #d35400;
         }
-        .print-btn {
-            background-color: #3498db;
-        }
-        .print-btn:hover {
-            background-color: #2980b9;
-        }
         .save-btn {
             background-color: #2ecc71;
         }
@@ -148,22 +142,50 @@
         .home-btn:hover {
             background-color: #8e44ad;
         }
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            .print-section, .print-section * {
-                visibility: visible;
-            }
-            .print-section {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-            }
-            .no-print {
-                display: none;
-            }
+        .edit-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .edit-modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .exercise-edit-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .exercise-edit-item input {
+            flex: 1;
+        }
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .add-exercise-btn {
+            background-color: #9b59b6;
+            margin-bottom: 15px;
+        }
+        .remove-exercise-btn {
+            background-color: #e74c3c;
+            padding: 5px 8px;
+            font-size: 12px;
         }
     </style>
 </head>
@@ -174,7 +196,7 @@
             <a href="index.html" class="home-btn">Home</a>
         </div>
         
-        <div class="controls no-print">
+        <div class="controls">
             <div class="search-container">
                 <input type="text" id="searchInput" placeholder="Search routines by name or exercises (comma-separated)...">
             </div>
@@ -186,11 +208,30 @@
             <div class="no-routines">No routines loaded. Please upload a routines JSON file.</div>
         </div>
         
-        <div class="controls no-print" style="margin-top: 20px;">
+        <div class="controls" style="margin-top: 20px;">
             <div class="button-group">
-                <button id="editBtn" class="edit-btn" disabled>Edit Routine Name</button>
-                <button id="printBtn" class="print-btn" disabled>Print Routine</button>
+                <button id="editBtn" class="edit-btn" disabled>Edit Routine</button>
                 <button id="saveBtn" class="save-btn" disabled>Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Routine Modal -->
+    <div id="editModal" class="edit-modal">
+        <div class="edit-modal-content">
+            <h2>Edit Routine</h2>
+            <div>
+                <label for="editRoutineName">Routine Name:</label>
+                <input type="text" id="editRoutineName" class="routine-name" style="width: 100%; margin-bottom: 20px;">
+            </div>
+            
+            <h3>Exercises</h3>
+            <button id="addExerciseBtn" class="add-exercise-btn">Add Exercise</button>
+            <div id="exercisesEditContainer"></div>
+            
+            <div class="modal-actions">
+                <button id="cancelEditBtn">Cancel</button>
+                <button id="saveEditBtn" class="save-btn">Save Changes</button>
             </div>
         </div>
     </div>
@@ -206,8 +247,13 @@
         const fileInput = document.getElementById('fileInput');
         const routinesContainer = document.getElementById('routinesContainer');
         const editBtn = document.getElementById('editBtn');
-        const printBtn = document.getElementById('printBtn');
         const saveBtn = document.getElementById('saveBtn');
+        const editModal = document.getElementById('editModal');
+        const editRoutineName = document.getElementById('editRoutineName');
+        const exercisesEditContainer = document.getElementById('exercisesEditContainer');
+        const addExerciseBtn = document.getElementById('addExerciseBtn');
+        const cancelEditBtn = document.getElementById('cancelEditBtn');
+        const saveEditBtn = document.getElementById('saveEditBtn');
 
         // Load routines from localStorage on page load
         function loadRoutines() {
@@ -233,7 +279,6 @@
             if (!routinesToRender || routinesToRender.length === 0) {
                 routinesContainer.innerHTML = '<div class="no-routines">No routines found</div>';
                 editBtn.disabled = true;
-                printBtn.disabled = true;
                 saveBtn.disabled = true;
                 return;
             }
@@ -264,28 +309,126 @@
                     });
                     routineCard.classList.add('selected');
                     editBtn.disabled = false;
-                    printBtn.disabled = false;
                 });
                 
                 routinesContainer.appendChild(routineCard);
             });
         }
 
-        // Edit selected routine
-        function editSelectedRoutine() {
+        // Open edit modal for selected routine
+        function openEditModal() {
             if (selectedRoutineId === null || selectedRoutineId >= routines.length) return;
             
             const routine = routines[selectedRoutineId];
-            const newName = prompt("Edit routine name:", routine.name);
+            editRoutineName.value = routine.name;
+            exercisesEditContainer.innerHTML = '';
             
-            if (newName !== null && newName.trim() !== "") {
-                routines[selectedRoutineId].name = newName.trim();
-                renderRoutines(routines);
-                saveBtn.disabled = false;
-            }
+            // Populate exercises
+            routine.exercises.forEach((exercise, index) => {
+                addExerciseEditItem(exercise, index);
+            });
+            
+            editModal.style.display = 'flex';
         }
 
-       
+        // Add exercise edit item to modal
+        function addExerciseEditItem(exercise = { name: '', reps: '', time: '', comments: '' }, index) {
+            const exerciseItem = document.createElement('div');
+            exerciseItem.className = 'exercise-edit-item';
+            exerciseItem.innerHTML = `
+                <input type="text" placeholder="Exercise name" value="${exercise.name}" data-field="name">
+                <input type="text" placeholder="Reps (e.g. 3x12)" value="${exercise.reps}" data-field="reps">
+                <input type="text" placeholder="Time (seconds)" value="${exercise.time}" data-field="time">
+                <input type="text" placeholder="Comments" value="${exercise.comments}" data-field="comments">
+                <button class="remove-exercise-btn" data-index="${index}">Remove</button>
+            `;
+            exercisesEditContainer.appendChild(exerciseItem);
+            
+            // Add event listener to remove button
+            exerciseItem.querySelector('.remove-exercise-btn').addEventListener('click', function() {
+                exerciseItem.remove();
+            });
+        }
+
+        // Save edited routine
+        function saveEditedRoutine() {
+            if (selectedRoutineId === null || selectedRoutineId >= routines.length) return;
+            
+            const routineName = editRoutineName.value.trim();
+            if (!routineName) {
+                alert("Please enter a routine name");
+                return;
+            }
+            
+            // Collect all exercises
+            const exerciseItems = exercisesEditContainer.querySelectorAll('.exercise-edit-item');
+            const exercises = [];
+            
+            exerciseItems.forEach(item => {
+                const inputs = item.querySelectorAll('input');
+                const exercise = {};
+                
+                inputs.forEach(input => {
+                    exercise[input.dataset.field] = input.value.trim();
+                });
+                
+                if (exercise.name) {
+                    exercises.push(exercise);
+                }
+            });
+            
+            if (exercises.length === 0) {
+                alert("Please add at least one exercise");
+                return;
+            }
+            
+            // Update the routine
+            routines[selectedRoutineId] = {
+                name: routineName,
+                exercises: exercises
+            };
+            
+            // Close modal and refresh display
+            editModal.style.display = 'none';
+            renderRoutines(routines);
+            saveBtn.disabled = false;
+        }
+
+        // Save routines to localStorage
+        function saveRoutines() {
+            localStorage.setItem('routines', JSON.stringify(routines, null, 2));
+            alert("Routines saved successfully!");
+            saveBtn.disabled = true;
+        }
+
+        // Search functionality
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            if (!searchTerm) {
+                renderRoutines(routines);
+                return;
+            }
+            
+            const searchTerms = searchTerm.split(',')
+                .map(term => term.trim())
+                .filter(term => term.length > 0);
+
+            const filtered = routines.filter(routine => {
+                return searchTerms.every(term => {
+                    if (routine.name.toLowerCase().includes(term)) {
+                        return true;
+                    }
+                    
+                    return routine.exercises.some(ex => 
+                        ex.name.toLowerCase().includes(term) || 
+                        (ex.comments && ex.comments.toLowerCase().includes(term))
+                    );
+                });
+            });
+            
+            renderRoutines(filtered);
+        });
 
         // Upload routines JSON
         uploadBtn.addEventListener('click', () => {
@@ -321,9 +464,13 @@
         });
 
         // Event listeners
-        editBtn.addEventListener('click', editSelectedRoutine);
-        printBtn.addEventListener('click', printSelectedRoutine);
+        editBtn.addEventListener('click', openEditModal);
         saveBtn.addEventListener('click', saveRoutines);
+        addExerciseBtn.addEventListener('click', () => addExerciseEditItem());
+        cancelEditBtn.addEventListener('click', () => {
+            editModal.style.display = 'none';
+        });
+        saveEditBtn.addEventListener('click', saveEditedRoutine);
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', loadRoutines);
