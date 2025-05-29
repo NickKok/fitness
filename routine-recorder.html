@@ -5,12 +5,194 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Routine Recorder</title>
     <style>
-        /* [Previous CSS remains exactly the same] */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        h1 {
+            color: #2c3e50;
+            margin: 0;
+        }
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #eaeaea;
+            border-radius: 5px;
+        }
+        input, button, select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .routine-card {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: white;
+            cursor: pointer;
+        }
+        .routine-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .routine-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 0;
+        }
+        .exercise-preview {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .exercise-preview span {
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 5px;
+            padding: 3px 8px;
+            background: #f0f0f0;
+            border-radius: 3px;
+        }
+        .no-routines {
+            text-align: center;
+            padding: 40px;
+            color: #777;
+            font-style: italic;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .selected {
+            background-color: #e6f7ff;
+            border-color: #91d5ff;
+        }
+        .upload-btn {
+            background-color: #2ecc71;
+        }
+        .upload-btn:hover {
+            background-color: #27ae60;
+        }
+        .edit-btn {
+            background-color: #e67e22;
+        }
+        .edit-btn:hover {
+            background-color: #d35400;
+        }
+        .print-btn {
+            background-color: #3498db;
+        }
+        .print-btn:hover {
+            background-color: #2980b9;
+        }
+        .save-btn {
+            background-color: #2ecc71;
+        }
+        .save-btn:hover {
+            background-color: #27ae60;
+        }
+        #fileInput {
+            display: none;
+        }
+        .search-container {
+            flex-grow: 1;
+        }
+        .search-container input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .home-btn {
+            background-color: #9b59b6;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .home-btn:hover {
+            background-color: #8e44ad;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .print-section, .print-section * {
+                visibility: visible;
+            }
+            .print-section {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .no-print {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- [Previous HTML structure remains exactly the same] -->
+        <div class="header-container">
+            <h1>Routine Recorder</h1>
+            <a href="index.html" class="home-btn">Home</a>
+        </div>
+        
+        <div class="controls no-print">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search routines by name or exercises (comma-separated)...">
+            </div>
+            <button id="uploadBtn" class="upload-btn">Upload Routines JSON</button>
+            <input type="file" id="fileInput" accept=".json">
+        </div>
+        
+        <div id="routinesContainer">
+            <div class="no-routines">No routines loaded. Please upload a routines JSON file.</div>
+        </div>
+        
+        <div class="controls no-print" style="margin-top: 20px;">
+            <div class="button-group">
+                <button id="editBtn" class="edit-btn" disabled>Edit Routine Name</button>
+                <button id="printBtn" class="print-btn" disabled>Print Routine</button>
+                <button id="saveBtn" class="save-btn" disabled>Save Changes</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -24,249 +206,215 @@
         const fileInput = document.getElementById('fileInput');
         const routinesContainer = document.getElementById('routinesContainer');
         const editBtn = document.getElementById('editBtn');
-        const deleteBtn = document.getElementById('deleteBtn');
         const printBtn = document.getElementById('printBtn');
         const saveBtn = document.getElementById('saveBtn');
-        const statusMessage = document.getElementById('statusMessage');
 
-        // Load routines from localStorage
+        // Load routines from localStorage on page load
         function loadRoutines() {
-            try {
-                const savedData = localStorage.getItem('routines');
-                if (!savedData) {
-                    showMessage("No routines found. Upload a JSON file to begin.", "info");
-                    return;
+            const savedData = localStorage.getItem('routines');
+            if (savedData) {
+                try {
+                    routines = JSON.parse(savedData);
+                    if (routines.length > 0) {
+                        renderRoutines(routines);
+                        saveBtn.disabled = false;
+                    }
+                } catch (e) {
+                    console.error("Error parsing saved data:", e);
+                    alert("Error loading routines data");
                 }
-
-                const parsed = JSON.parse(savedData);
-                if (!Array.isArray(parsed)) {
-                    throw new Error("Invalid data format");
-                }
-
-                routines = parsed;
-                renderRoutines(routines);
-                saveBtn.disabled = false;
-            } catch (e) {
-                console.error("Load error:", e);
-                showMessage("Error loading routines. Please upload a valid file.", "error");
-                localStorage.removeItem('routines');
             }
         }
 
-        // Render routines list
+        // Render routines
         function renderRoutines(routinesToRender) {
-            if (!routinesToRender || !Array.isArray(routinesToRender)) {
-                routinesContainer.innerHTML = '<div class="no-routines">No routines available</div>';
-                disableActionButtons();
-                return;
-            }
-
             routinesContainer.innerHTML = '';
             
-            if (routinesToRender.length === 0) {
+            if (!routinesToRender || routinesToRender.length === 0) {
                 routinesContainer.innerHTML = '<div class="no-routines">No routines found</div>';
-                disableActionButtons();
+                editBtn.disabled = true;
+                printBtn.disabled = true;
+                saveBtn.disabled = true;
                 return;
             }
-
+            
             routinesToRender.forEach((routine, index) => {
-                const card = document.createElement('div');
-                card.className = `routine-card ${selectedRoutineId === index ? 'selected' : ''}`;
-                card.dataset.index = index;
+                const routineCard = document.createElement('div');
+                routineCard.className = `routine-card ${selectedRoutineId === index ? 'selected' : ''}`;
+                routineCard.dataset.id = index;
                 
-                card.innerHTML = `
+                // Get first 3 exercises for preview
+                const exercisePreview = routine.exercises.slice(0, 3).map(ex => ex.name);
+                
+                routineCard.innerHTML = `
                     <div class="routine-header">
-                        <h3 class="routine-title">${routine.name || 'Unnamed Routine'}</h3>
-                        <div>${routine.exercises?.length || 0} exercises</div>
+                        <h3 class="routine-title">${routine.name}</h3>
+                        <div>${routine.exercises.length} exercises</div>
                     </div>
                     <div class="exercise-preview">
-                        ${routine.exercises?.slice(0, 3).map(ex => 
-                            `<span>${ex.name || 'Unnamed Exercise'}</span>`
-                        ).join('') || ''}
-                        ${routine.exercises?.length > 3 ? '<span>...</span>' : ''}
+                        ${exercisePreview.map(ex => `<span>${ex}</span>`).join('')}
+                        ${routine.exercises.length > 3 ? '<span>...</span>' : ''}
                     </div>
                 `;
-
-                card.addEventListener('click', () => {
-                    selectedRoutineId = index;
-                    document.querySelectorAll('.routine-card').forEach(c => c.classList.remove('selected'));
-                    card.classList.add('selected');
-                    enableActionButtons();
+                
+                routineCard.addEventListener('click', () => {
+                    selectedRoutineId = parseInt(routineCard.dataset.id);
+                    document.querySelectorAll('.routine-card').forEach(card => {
+                        card.classList.remove('selected');
+                    });
+                    routineCard.classList.add('selected');
+                    editBtn.disabled = false;
+                    printBtn.disabled = false;
                 });
-
-                routinesContainer.appendChild(card);
+                
+                routinesContainer.appendChild(routineCard);
             });
         }
 
-        // Enable/disable action buttons
-        function enableActionButtons() {
-            editBtn.disabled = false;
-            deleteBtn.disabled = false;
-            printBtn.disabled = false;
-            saveBtn.disabled = false;
-        }
-
-        function disableActionButtons() {
-            editBtn.disabled = true;
-            deleteBtn.disabled = true;
-            printBtn.disabled = true;
-            saveBtn.disabled = true;
-        }
-
-        // Edit routine name
+        // Edit selected routine
         function editSelectedRoutine() {
-            if (selectedRoutineId === null || !routines[selectedRoutineId]) return;
+            if (selectedRoutineId === null || selectedRoutineId >= routines.length) return;
             
-            const newName = prompt("Edit routine name:", routines[selectedRoutineId].name);
-            if (newName && newName.trim()) {
+            const routine = routines[selectedRoutineId];
+            const newName = prompt("Edit routine name:", routine.name);
+            
+            if (newName !== null && newName.trim() !== "") {
                 routines[selectedRoutineId].name = newName.trim();
                 renderRoutines(routines);
                 saveBtn.disabled = false;
-                showMessage("Routine updated", "success");
             }
         }
 
-        // Delete routine
-        function deleteSelectedRoutine() {
-            if (selectedRoutineId === null || !routines[selectedRoutineId]) return;
-            
-            if (confirm(`Delete "${routines[selectedRoutineId].name}"?`)) {
-                routines.splice(selectedRoutineId, 1);
-                selectedRoutineId = null;
-                renderRoutines(routines);
-                saveBtn.disabled = false;
-                showMessage("Routine deleted", "success");
-            }
-        }
-
-        // Print routine
+        // Print selected routine
         function printSelectedRoutine() {
-            if (selectedRoutineId === null || !routines[selectedRoutineId]) return;
+            if (selectedRoutineId === null || selectedRoutineId >= routines.length) return;
             
             const routine = routines[selectedRoutineId];
-            const printWin = window.open('', '_blank');
-            if (!printWin) {
-                showMessage("Please allow popups to print", "error");
-                return;
-            }
-
-            printWin.document.write(`
-                <!DOCTYPE html>
+            const printWindow = window.open('', '', 'width=800,height=600');
+            
+            printWindow.document.write(`
                 <html>
-                <head>
-                    <title>${routine.name}</title>
-                    <style>
-                        body { font-family: Arial; padding: 20px; }
-                        h1 { color: #333; }
-                        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-                        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
-                        th { background-color: #f2f2f2; }
-                    </style>
-                </head>
-                <body>
-                    <h1>${routine.name}</h1>
-                    <table>
-                        <tr><th>Exercise</th><th>Reps</th><th>Time</th><th>Notes</th></tr>
-                        ${routine.exercises.map(ex => `
-                            <tr>
-                                <td>${ex.name || ''}</td>
-                                <td>${ex.reps || '-'}</td>
-                                <td>${ex.time ? ex.time + 's' : '-'}</td>
-                                <td>${ex.comments || '-'}</td>
-                            </tr>
-                        `).join('')}
-                    </table>
-                    <script>
-                        setTimeout(() => {
-                            window.print();
-                            window.close();
-                        }, 200);
-                    </script>
-                </body>
+                    <head>
+                        <title>${routine.name}</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; padding: 20px; }
+                            h1 { color: #2c3e50; }
+                            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                            th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+                            th { background-color: #f2f2f2; }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>${routine.name}</h1>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Exercise</th>
+                                    <th>Reps</th>
+                                    <th>Time</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${routine.exercises.map(ex => `
+                                    <tr>
+                                        <td>${ex.name}</td>
+                                        <td>${ex.reps || '-'}</td>
+                                        <td>${ex.time ? ex.time + ' sec' : '-'}</td>
+                                        <td>${ex.comments || '-'}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                        <script>
+                            window.onload = function() {
+                                setTimeout(function() {
+                                    window.print();
+                                    window.close();
+                                }, 200);
+                            };
+                        </script>
+                    </body>
                 </html>
             `);
-            printWin.document.close();
+            printWindow.document.close();
         }
 
-        // Save routines
+        // Save routines to localStorage
         function saveRoutines() {
-            try {
-                localStorage.setItem('routines', JSON.stringify(routines));
-                showMessage("Routines saved successfully", "success");
-                saveBtn.disabled = true;
-            } catch (e) {
-                console.error("Save error:", e);
-                showMessage("Failed to save routines", "error");
-            }
+            localStorage.setItem('routines', JSON.stringify(routines, null, 2));
+            alert("Routines saved successfully!");
+            saveBtn.disabled = true;
         }
 
         // Search functionality
-        function searchRoutines(term) {
-            if (!term) {
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            if (!searchTerm) {
                 renderRoutines(routines);
                 return;
             }
+            
+            const searchTerms = searchTerm.split(',')
+                .map(term => term.trim())
+                .filter(term => term.length > 0);
 
-            const terms = term.toLowerCase().split(',').map(t => t.trim()).filter(t => t);
             const filtered = routines.filter(routine => {
-                return terms.every(t => {
-                    if (routine.name.toLowerCase().includes(t)) return true;
-                    return routine.exercises?.some(ex => 
-                        ex.name?.toLowerCase().includes(t) || 
-                        ex.comments?.toLowerCase().includes(t)
+                return searchTerms.every(term => {
+                    if (routine.name.toLowerCase().includes(term)) {
+                        return true;
+                    }
+                    
+                    return routine.exercises.some(ex => 
+                        ex.name.toLowerCase().includes(term) || 
+                        (ex.comments && ex.comments.toLowerCase().includes(term))
                     );
                 });
             });
-
+            
             renderRoutines(filtered);
-        }
+        });
 
-        // Handle file upload
-        function handleFileUpload(file) {
+        // Upload routines JSON
+        uploadBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
             const reader = new FileReader();
-            reader.onload = (e) => {
+            reader.onload = (event) => {
                 try {
-                    const data = JSON.parse(e.target.result);
-                    if (!Array.isArray(data)) {
-                        throw new Error("Invalid format");
+                    const data = JSON.parse(event.target.result);
+                    if (Array.isArray(data)) {
+                        routines = data;
+                        localStorage.setItem('routines', JSON.stringify(routines));
+                        renderRoutines(routines);
+                        alert("Routines loaded successfully!");
+                        saveBtn.disabled = false;
+                    } else {
+                        alert("Invalid format: Expected array of routines");
                     }
-
-                    routines = data;
-                    localStorage.setItem('routines', JSON.stringify(routines));
-                    renderRoutines(routines);
-                    showMessage(`Loaded ${routines.length} routines`, "success");
-                    saveBtn.disabled = false;
-                } catch (e) {
-                    console.error("Upload error:", e);
-                    showMessage("Invalid JSON file", "error");
+                } catch (error) {
+                    alert("Error: Invalid JSON file");
+                    console.error("Error parsing JSON:", error);
                 }
             };
-            reader.onerror = () => showMessage("Error reading file", "error");
+            reader.onerror = () => {
+                alert("Error reading file");
+            };
             reader.readAsText(file);
-        }
-
-        // Show status message
-        function showMessage(msg, type) {
-            statusMessage.textContent = msg;
-            statusMessage.className = `status-message ${type}`;
-            setTimeout(() => {
-                statusMessage.className = 'status-message';
-                statusMessage.textContent = '';
-            }, 3000);
-        }
+        });
 
         // Event listeners
-        searchInput.addEventListener('input', () => searchRoutines(searchInput.value));
-        uploadBtn.addEventListener('click', () => fileInput.click());
-        fileInput.addEventListener('change', (e) => {
-            if (e.target.files[0]) handleFileUpload(e.target.files[0]);
-        });
         editBtn.addEventListener('click', editSelectedRoutine);
-        deleteBtn.addEventListener('click', deleteSelectedRoutine);
         printBtn.addEventListener('click', printSelectedRoutine);
         saveBtn.addEventListener('click', saveRoutines);
 
-        // Initialize
+        // Initialize page
         document.addEventListener('DOMContentLoaded', loadRoutines);
     </script>
 </body>
