@@ -1,9 +1,0 @@
-[
-  {"name":"Cinderblock Rows","attributes":"chest,back, arms,core,xl, hamstrings, legs, full"},
-  {"name":"Cinderblock overhead press","attributes":"back, hamstrings, core, shoulders, full, chest, XL"},
-  // ... (previous entries unchanged) ...
-  {"name":"Glute Bridges","attributes":"glutes,core,hamstring,back,lite"},
-  // ... (other entries unchanged) ...
-  {"name":"Superman","attributes":"lower back,glutes,core,stability"},
-  {"name":"Wrist Rotations","attributes":"warmup"}
-]
