@@ -1,0 +1,14 @@
+name: Voice Note Parser
+on:
+  issue_comment:
+    types: [created]
+jobs:
+  parse:
+    if: contains(github.event.comment.body, 'APPROVE')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update JSON files
+        run: |
+          # Script to auto-merge approved changes
+          # (I’ll provide the exact script after repo setup)
