@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routine Builder</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        h1 {
+            color: #2c3e50;
+            margin: 0;
+        }
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #eaeaea;
+            border-radius: 5px;
+        }
+        input, button, select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .scrollable-table {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            position: sticky;
+            top: 0;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        .search-container {
+            flex-grow: 1;
+        }
+        .search-container input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .home-btn {
+            background-color: #9b59b6;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .home-btn:hover {
+            background-color: #8e44ad;
+        }
+        .process-btn {
+            background-color: #2ecc71;
+        }
+        .process-btn:hover {
+            background-color: #27ae60;
+        }
+        .save-btn {
+            background-color: #e67e22;
+        }
+        .save-btn:hover {
+            background-color: #d35400;
+        }
+        .download-btn {
+            background-color: #3498db;
+        }
+        .download-btn:hover {
+            background-color: #2980b9;
+        }
+        .back-btn {
+            background-color: #95a5a6;
+        }
+        .back-btn:hover {
+            background-color: #7f8c8d;
+        }
+        .routine-name {
+            font-weight: bold;
+            margin: 15px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+        .section-title {
+            margin-top: 0;
+            color: #2980b9;
+        }
+        input[type="checkbox"] {
+            transform: scale(1.3);
+            margin: 0;
+        }
+        input[type="number"] {
+            width: 80px;
+        }
+        .no-exercises {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-style: italic;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-container">
+            <h1>Routine Builder</h1>
+            <a href="index.html" class="home-btn">Home</a>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">Search Exercises</h2>
+            <div class="controls">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search exercises or attributes (comma-separated)...">
+                </div>
+                <button id="processBtn" class="process-btn">Add Selected to Routine</button>
+            </div>
+            
+            <div class="scrollable-table">
+                <table id="exerciseTable">
+                    <thead>
+                        <tr>
+                            <th width="50px">Select</th>
+                            <th>Exercise Name</th>
+                            <th>Attributes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="exerciseTableBody">
+                        <!-- Search results will appear here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">Current Routine</h2>
+            <input type="text" id="routineName" class="routine-name" placeholder="Enter routine name">
+            
+            <div class="scrollable-table">
+                <table id="routineTable">
+                    <thead>
+                        <tr>
+                            <th width="50px">Remove</th>
+                            <th>Exercise Name</th>
+                            <th width="120px">Reps</th>
+                            <th width="120px">Time (sec)</th>
+                            <th>Comments</th>
+                        </tr>
+                    </thead>
+                    <tbody id="routineTableBody">
+                        <!-- Routine exercises will appear here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="controls" style="margin-top: 20px;">
+                <div class="button-group">
+                    <button id="backBtn" class="back-btn">Back to Search</button>
+                    <button id="saveBtn" class="save-btn">Save Routine</button>
+                    <button id="downloadBtn" class="download-btn">Download Routines JSON</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize variables
+        let exercises = [];
+        let currentRoutine = {
+            name: "",
+            exercises: []
+        };
+        let selectedExercises = new Set();
+
+        // DOM Elements
+        const searchInput = document.getElementById('searchInput');
+        const processBtn = document.getElementById('processBtn');
+        const exerciseTableBody = document.getElementById('exerciseTableBody');
+        const routineTableBody = document.getElementById('routineTableBody');
+        const routineName = document.getElementById('routineName');
+        const backBtn = document.getElementById('backBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        // Load exercises from localStorage
+        function loadExercises() {
+            const savedData = localStorage.getItem('exerciseDatabase');
+            if (savedData) {
+                try {
+                    exercises = JSON.parse(savedData);
+                    renderSearchResults(exercises); // Show all exercises initially
+                } catch (e) {
+                    console.error("Error parsing exercise data:", e);
+                    alert("Error loading exercise database");
+                    window.location.href = "index.html";
+                }
+            } else {
+                alert("No exercise database found. Please upload one from the home page.");
+                window.location.href = "index.html";
+            }
+        }
+
+        // Render search results
+        function renderSearchResults(results) {
+            exerciseTableBody.innerHTML = '';
+            
+            if (!results || results.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="3" class="no-exercises">No exercises found</td>`;
+                exerciseTableBody.appendChild(row);
+                return;
+            }
+            
+            results.forEach(exercise => {
+                const row = document.createElement('tr');
+                const isChecked = selectedExercises.has(exercise.name) || 
+                                 currentRoutine.exercises.some(ex => ex.name === exercise.name);
+                row.innerHTML = `
+                    <td><input type="checkbox" ${isChecked ? 'checked' : ''} data-name="${exercise.name}"></td>
+                    <td>${exercise.name}</td>
+                    <td>${exercise.attributes}</td>
+                `;
+                exerciseTableBody.appendChild(row);
+            });
+            
+            // Add event listeners to checkboxes
+            document.querySelectorAll('#exerciseTableBody input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    const exerciseName = e.target.getAttribute('data-name');
+                    if (e.target.checked) {
+                        selectedExercises.add(exerciseName);
+                    } else {
+                        selectedExercises.delete(exerciseName);
+                        // Also remove from current routine if present
+                        currentRoutine.exercises = currentRoutine.exercises.filter(ex => ex.name !== exerciseName);
+                        renderRoutine();
+                    }
+                });
+            });
+        }
+
+        // Process selected exercises into routine
+        function processSelectedExercises() {
+            if (selectedExercises.size === 0) {
+                alert("Please select at least one exercise");
+                return;
+            }
+
+            selectedExercises.forEach(exerciseName => {
+                // Only add if not already in routine
+                if (!currentRoutine.exercises.some(ex => ex.name === exerciseName)) {
+                    const exercise = exercises.find(ex => ex.name === exerciseName);
+                    if (exercise) {
+                        currentRoutine.exercises.push({
+                            name: exerciseName,
+                            reps: "",
+                            time: "",
+                            comments: "",
+                            attributes: exercise.attributes
+                        });
+                    }
+                }
+            });
+            
+            selectedExercises.clear();
+            renderRoutine();
+            renderSearchResults(exercises); // Refresh search results to update checkboxes
+        }
+
+        // Render current routine
+        function renderRoutine() {
+            routineTableBody.innerHTML = '';
+            
+            if (currentRoutine.exercises.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="5" class="no-exercises">No exercises in routine yet</td>`;
+                routineTableBody.appendChild(row);
+                return;
+            }
+            
+            currentRoutine.exercises.forEach((exercise, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><input type="checkbox" data-index="${index}"></td>
+                    <td>${exercise.name}</td>
+                    <td><input type="text" value="${exercise.reps}" placeholder="e.g. 3x12"></td>
+                    <td><input type="number" value="${exercise.time}" placeholder="Seconds"></td>
+                    <td><input type="text" value="${exercise.comments}" placeholder="Notes"></td>
+                `;
+                routineTableBody.appendChild(row);
+            });
+            
+            // Add event listeners to remove checkboxes
+            document.querySelectorAll('#routineTableBody input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    if (e.target.checked) {
+                        const index = parseInt(e.target.getAttribute('data-index'));
+                        currentRoutine.exercises.splice(index, 1);
+                        renderRoutine();
+                    }
+                });
+            });
+        }
+
+        // Save routine to localStorage
+        function saveRoutine() {
+            // Update input values before saving
+            document.querySelectorAll('#routineTableBody tr').forEach((row, index) => {
+                if (currentRoutine.exercises[index]) {
+                    currentRoutine.exercises[index].reps = row.querySelector('td:nth-child(3) input').value;
+                    currentRoutine.exercises[index].time = row.querySelector('td:nth-child(4) input').value;
+                    currentRoutine.exercises[index].comments = row.querySelector('td:nth-child(5) input').value;
+                }
+            });
+            
+            currentRoutine.name = routineName.value.trim();
+            if (!currentRoutine.name) {
+                alert("Please enter a name for your routine");
+                return;
+            }
+            
+            if (currentRoutine.exercises.length === 0) {
+                alert("Please add at least one exercise to your routine");
+                return;
+            }
+            
+            // Get existing routines or create new array
+            let routines = JSON.parse(localStorage.getItem('routines') || '[]');
+            
+            // Check if routine with this name already exists
+            const existingIndex = routines.findIndex(r => r.name === currentRoutine.name);
+            if (existingIndex >= 0) {
+                if (!confirm(`A routine named "${currentRoutine.name}" already exists. Overwrite?`)) {
+                    return;
+                }
+                routines[existingIndex] = {...currentRoutine};
+            } else {
+                routines.push({...currentRoutine});
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('routines', JSON.stringify(routines, null, 2));
+            alert(`Routine "${currentRoutine.name}" saved successfully!`);
+            
+            // Reset for new routine
+            currentRoutine = {
+                name: "",
+                exercises: []
+            };
+            selectedExercises.clear();
+            routineName.value = "";
+            renderRoutine();
+            renderSearchResults(exercises);
+        }
+
+        // Download routines as JSON file
+        function downloadRoutines() {
+            const routines = JSON.parse(localStorage.getItem('routines') || '[]');
+            if (routines.length === 0) {
+                alert("No routines to download");
+                return;
+            }
+            
+            const dataStr = JSON.stringify(routines, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'fitness-routines.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Search functionality (multiple comma-separated values)
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            
+            if (!searchTerm) {
+                renderSearchResults(exercises);
+                return;
+            }
+            
+            const searchTerms = searchTerm.split(',')
+                .map(term => term.trim())
+                .filter(term => term.length > 0);
+
+            const filtered = exercises.filter(exercise => {
+                // Check if ALL search terms match either name or attributes
+                return searchTerms.every(term => {
+                    // Check exercise name
+                    if (exercise.name.toLowerCase().includes(term)) {
+                        return true;
+                    }
+                    
+                    // Check individual attributes
+                    return exercise.attributes.toLowerCase().includes(term);
+                });
+            });
+            
+            renderSearchResults(filtered);
+        });
+
+        // Event listeners
+        processBtn.addEventListener('click', processSelectedExercises);
+        backBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            renderSearchResults(exercises);
+        });
+        saveBtn.addEventListener('click', saveRoutine);
+        downloadBtn.addEventListener('click', downloadRoutines);
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', loadExercises);
+    </script>
+</body>
+</html>

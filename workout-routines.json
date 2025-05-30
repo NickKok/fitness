@@ -1,0 +1,172 @@
+[
+  {
+    "name": "Test 1",
+    "exercises": [
+      {
+        "name": "Ab Tucks",
+        "reps": "20",
+        "time": "",
+        "comments": ""
+      },
+      {
+        "name": "Plank Hold with Pushups",
+        "reps": "10",
+        "time": "20",
+        "comments": "20 sec then 1 pushup"
+      },
+      {
+        "name": "Push-ups",
+        "reps": "20",
+        "time": "",
+        "comments": "knee pushup as alt."
+      },
+      {
+        "name": "Butt kicks",
+        "reps": "",
+        "time": "",
+        "comments": ""
+      }
+    ]
+  },
+  {
+    "name": "Test 2",
+    "exercises": [
+      {
+        "name": "Bird Dog- Dynamic",
+        "reps": "",
+        "time": "",
+        "comments": ""
+      },
+      {
+        "name": "Boat Pose",
+        "reps": "",
+        "time": "",
+        "comments": ""
+      },
+      {
+        "name": "Bounce & Cross Punch",
+        "reps": "",
+        "time": "",
+        "comments": ""
+      }
+    ]
+  },
+  {
+    "name": "Nick's Cinderblock Routine",
+    "exercises": [
+      {
+        "name": "Cinderblock Rows",
+        "reps": "10x3",
+        "time": "",
+        "comments": "",
+        "attributes": "chest,back, arms,core,xl, hamstrings, legs, full"
+      },
+      {
+        "name": "Cinderblock overhead press",
+        "reps": "10x3",
+        "time": "",
+        "comments": "",
+        "attributes": "back, hamstrings, core, shoulders, full, chest, XL"
+      },
+      {
+        "name": "Cinderblock bicep curls",
+        "reps": "10x3",
+        "time": "",
+        "comments": "",
+        "attributes": "biceps, back, shoulders, core, XL"
+      },
+      {
+        "name": "Cinderblock / Farmers Carry",
+        "reps": "6 lengths",
+        "time": "",
+        "comments": "",
+        "attributes": "full, arms, legs, core, back, stability, cardio, XL"
+      }
+    ]
+  },
+  {
+    "name": "Full Body Tabata",
+    "description": "10 seconds rest, 20 seconds work. Repeat as many times as possible.",
+    "exercises": [
+      {
+        "name": "Jumping Jacks",
+        "time": "20",
+        "rest": "10",
+        "attributes": "warmup,cardio,full"
+      },
+      {
+        "name": "Squats",
+        "time": "20",
+        "rest": "10",
+        "attributes": "glutes,hamstrings,cardio,warmup,legs,lower,quads,stability"
+      },
+      {
+        "name": "Push-ups",
+        "time": "20",
+        "rest": "10",
+        "attributes": "core,upper,arms,chest,back,full"
+      },
+      {
+        "name": "Lunges",
+        "time": "20",
+        "rest": "10",
+        "attributes": "quads,stability,lower"
+      },
+      {
+        "name": "Plank",
+        "time": "20",
+        "rest": "10",
+        "attributes": "full,core,back,arms,shoulders,glutes"
+      },
+      {
+        "name": "High knees",
+        "time": "20",
+        "rest": "10",
+        "attributes": "cardio,warmup,legs"
+      },
+      {
+        "name": "Mountain Climbers",
+        "time": "20",
+        "rest": "10",
+        "attributes": "full,cardio,upper,arms,shoulders,chest,core,XL"
+      },
+      {
+        "name": "Glute Bridges",
+        "time": "20",
+        "rest": "10",
+        "attributes": "glutes,core,hamstring,back,lite"
+      },
+      {
+        "name": "Bicycle Crunches",
+        "time": "20",
+        "rest": "10",
+        "attributes": "core,abs,stability,XL"
+      },
+      {
+        "name": "Skaters",
+        "time": "20",
+        "rest": "10",
+        "attributes": "lower,stability,legs"
+      },
+      {
+        "name": "Inchworms",
+        "time": "20",
+        "rest": "10",
+        "attributes": "full,upper,back,cardio"
+      },
+      {
+        "name": "Elbow Plank",
+        "time": "20",
+        "rest": "10",
+        "attributes": "core,abs,lower,shoulders,chest,back,legs"
+      },
+      {
+        "name": "Superman",
+        "time": "20",
+        "rest": "120",
+        "attributes": "lower back,glutes,core,stability"
+      }
+    ],
+    "notes": "Repeat circuit as many times as possible."
+  }
+]
