@@ -1,266 +1,1106 @@
 [
-  {"name":"Ab Tucks","attributes":"abs,core,lite,floor"},
-  {"name":"Alternating Arm Raises","attributes":"warmup,lite"},
-  {"name":"Back Fists","attributes":"arms,upper,back,core,lite"},
-  {"name":"Back Step w/ fwd arm raises","attributes":"back,shoulders,legs,lite,triceps,warmup,arms"},
-  {"name":"Bear / Beast Hold","attributes":"yoga,back,legs,lower,core,glutes,full"},
-  {"name":"Bear Walk / Crawl","attributes":"back,legs,lower,core,XL,full"},
-  {"name":"Bicycle Crunches / Kicks","attributes":"core,abs,stability,XL"},
-  {"name":"Bicycle kicks - legs only","attributes":"core,abs,stability,lower,lite"},
-  {"name":"Bird Dog- Dynamic","attributes":"back,core,shoulders,glutes,arms"},
-  {"name":"Bird Dog- Static","attributes":"yoga,back,hamstrings,glutes,stability,core,lite,arms,legs,full"},
-  {"name":"Boat Pose","attributes":"yoga,core,stability"},
-  {"name":"Bounce & Cross Punch","attributes":"cardio,lite,calves,arms,legs,shoulders,warmup"},
-  {"name":"Bounce & Straight Punch","attributes":"cardio,lite,calves,arms,legs,shoulders,warmup"},
-  {"name":"Bounce & Up Punch","attributes":"cardio,lite,calves,arms,legs,shoulders,warmup"},
-  {"name":"Bridge Pose","attributes":"yoga"},
-  {"name":"Bunny hop","attributes":"core,upper,lower,legs,cardio,back,full,XL"},
-  {"name":"Burpee- Modified to step","attributes":"lite,full,cardio,chest,arms"},
-  {"name":"Burpees + Jump","attributes":"full,legs,cardio,upper"},
-  {"name":"Burpees + Push-up","attributes":"full,upper,cardio,back, XL"},
-  {"name":"Burpees + Push-up + Jump","attributes":"full,XL,cardio,upper,legs"},
-  {"name":"Burpees back and up","attributes":"full,upper,cardio,back"},
-  {"name":"Butt kicks","attributes":"legs,warmup,cardio,lite,hamstrings"},
-  {"name":"Calf raises","attributes":"calves,legs,quads,glutes"},
-  {"name":"Cat Cow","attributes":"yoga"},
-  {"name":"Chair Pose","attributes":"yoga"},
-  {"name":"Chair Twists","attributes":"yoga"},
-  {"name":"Chest opener with butt kicks","attributes":"yoga,legs,upper,lower,warmup,lite"},
-  {"name":"Child Pose","attributes":"yoga,stretching"},
-  {"name":"Cinderblock Rows","attributes":"chest,back, arms,core,xl, hamstrings, legs, full"},
-  {"name":"Cinderblock overhead press","attributes":"back, hamstrings, core, shoulders, full, chest, XL"},
-  {"name":"Cinderblock bicep curls","attributes":"biceps, back, shoulders, core, XL"},
-  {"name":"Cinderblock / Farmers Carry","attributes":"full, arms, legs, core, back, stability, cardio, XL"},
-  {"name":"Commando Plank / Plank Up & Down","attributes":"back,core,XL,shoulders,full,hamstrings,glutes,chest,arms,legs,obliques"},
-  {"name":"Cossack Squat","attributes":"lower,legs,quads,adductors,back,XL,core"},
-  {"name":"Crab walk","attributes":"legs,arms,core,back"},
-  {"name":"Crab walk FD+BK","attributes":"legs,arms,core,back,stability,XL"},
-  {"name":"Crawl","attributes":"arms,legs,back,lower,upper,XL"},
-  {"name":"Crawl FD+BK","attributes":"arms,legs,back,lower,upper"},
-  {"name":"Cross Punches","attributes":"cardio,lite,arms,shoulders"},
-  {"name":"Crow Pose","attributes":"yoga,upper,XL,core,shoulders,arms,stability"},
-  {"name":"Crunch Kicks on elbows","attributes":"abs,quads,lite"},
-  {"name":"Crunches","attributes":"abs,core"},
-  {"name":"Dancer Pose","attributes":"yoga,stability"},
-  {"name":"Deadlift single leg","attributes":"legs,stability,back,hamstrings,core"},
-  {"name":"Deadlift two legs","attributes":"legs,back,lite,hamstrings,core"},
-  {"name":"Diamond push-ups","attributes":"chest,triceps,arms,shoulders,back,XL"},
-  {"name":"Dip & Back Kick","attributes":"legs,cardio,lite,warmup"},
-  {"name":"Dip & Reach","attributes":"full,cardio,warmup,lite"},
-  {"name":"Disco Duck","attributes":"warmup,lite,spine"},
-  {"name":"Donkey Kick / Fire Hydrant Combo","attributes":"glutes,back,abductors,hamstrings,full,adductors,abductors,core"},
-  {"name":"Donkey Kicks","attributes":"glutes,abs,core,hamstrings,back"},
-  {"name":"Door Bar Chin-Up Negatives","attributes":"XL,shoulders,back,biceps,triceps,shoulders,upper,arms"},
-  {"name":"Door Bar Dead Hang","attributes":"upper,chest,shoulders,arms,biceps,back,XL"},
-  {"name":"Door Bar Hammer Grip Pull-Up Negatives","attributes":"XL,shoulders,back,biceps,triceps,shoulders,upper,arms"},
-  {"name":"Door Bar Pull-Up Negatives","attributes":"XL,shoulders,back,biceps,triceps,shoulders,upper,arms"},
-  {"name":"Down Dog w/ knee Push-Up","attributes":"arms,core,chest,shoulders,back"},
-  {"name":"Downward Dog Push-Up","attributes":"arms,core,chest,shoulders,XL"},
-  {"name":"Downward dog pushup + back kick","attributes":"arms,core,stretching,chest,shoulders,stability,hamstrings,XL"},
-  {"name":"Downward Facing Dog","attributes":"yoga,back,arms,legs,cooldown,stretching,stability,hamstrings"},
-  {"name":"Drawing Bow","attributes":"arms,core,upper,abs,qigung"},
-  {"name":"Dynamic side lunge","attributes":"back,core,legs,glutes,quads"},
-  {"name":"Elbow Plank","attributes":"core,abs,lower,shoulders,chest,back,legs"},
-  {"name":"Extended Triangle Pose","attributes":"yoga"},
-  {"name":"Fire Hydrants","attributes":"abductors,legs,lower,glutes"},
-  {"name":"Floor Touches","attributes":"lite,back,lower,quads,glutes,full"},
-  {"name":"Floor touches +knee tap","attributes":"lite,back,quads,cardio,full,stability"},
-  {"name":"Flutter kicks","attributes":"abs,core,stability,quads"},
-  {"name":"Forward Jumping squat","attributes":"quads,legs,stability,cardio"},
-  {"name":"Foward and backward Jumping squat","attributes":"quads,cardio,XL,legs"},
-  {"name":"Frog Crunches","attributes":"core,groin,abs"},
-  {"name":"Froggers","attributes":"full,arms,cardio,stability,XL,back,core,quads"},
-  {"name":"Front leg raises","attributes":"abs,quads,lite,stability,lower,legs"},
-  {"name":"Fwd fold","attributes":"yoga"},
-  {"name":"FWD lunges","attributes":"quads,stability,lower"},
-  {"name":"Garland Pose / Deep Squat","attributes":"yoga,groin,lower,legs"},
-  {"name":"Glute Bridges","attributes":"glutes,core,hamstring,back,lite"},
-  {"name":"Goddess Pose","attributes":"yoga"},
-  {"name":"Good Morning","attributes":"back,hamstrings,stretching"},
-  {"name":"Half cartwheels (cart wheels from low squat)","attributes":"lower,legs,cardio,adductors,quads"},
-  {"name":"Half handstand (heels up)","attributes":"lite,cardio,stability,back"},
-  {"name":"Half Lift & Fold","attributes":"yoga"},
-  {"name":"Hands to Knees- Crossover","attributes":"lite,warmup,lower,upper"},
-  {"name":"Handstands- 3/4","attributes":"full,lite,cardio,upper,lower,back"},
-  {"name":"Happy Baby Pose","attributes":"yoga"},
-  {"name":"Head Turns (L-R & U-D)","attributes":"warmup,lite,neck"},
-  {"name":"High knees","attributes":"cardio,warmup,legs"},
-  {"name":"High knees + clap","attributes":"cardio,legs,XL,stability"},
-  {"name":"High Lunge (Warrior 2)","attributes":"yoga"},
-  {"name":"Hip Openers","attributes":"Warmup"},
-  {"name":"Hip Rotations","attributes":"warmup"},
-  {"name":"Hip Thrust + single leg","attributes":"hamstrings,core,stability,glutes,XL"},
-  {"name":"Hook & Knee","attributes":"lite,full,warmup"},
-  {"name":"Hook Punches","attributes":"arms,warmup,core,lite"},
-  {"name":"Hundreds (100's)","attributes":"core,abs,arms,stability"},
-  {"name":"Inchworm","attributes":"full,upper,back,cardio"},
-  {"name":"Inchworm + push-up","attributes":"full,upper,back,XL"},
-  {"name":"Indian Pushup","attributes":"arms,upper,back,core,XL"},
-  {"name":"Jab+Cross","attributes":"cardio,full,core,legs,back"},
-  {"name":"Jack plank + froggers","attributes":"full,upper,core,back,stability"},
-  {"name":"Jog in Place","attributes":"warmup"},
-  {"name":"Jog in place + Down (squat) + Up (jump)","attributes":"legs,cardio,XL"},
-  {"name":"Jump Knee Tuck","attributes":"cardio,legs,glutes,hamstrings,full"},
-  {"name":"Jumping jacks","attributes":"warmup,cardio,full"},
-  {"name":"Jumping Lunges","attributes":"stability,quads,legs,cardio,core,XL"},
-  {"name":"Jumping squats","attributes":"quads,legs,cardio,stability,XL"},
-  {"name":"Kettlebell Bicep Curls","attributes":"kettlebell,back,shoulders,chest,biceps,arms,upper"},
-  {"name":"Kettlebell Goblet Squat","attributes":"kettlebell,upper,back,lower,legs,quads,full"},
-  {"name":"Kettlebell Goblet Tiptoe Squat","attributes":"kettlebell,upper,back,lower,legs,quads,full,XL"},
-  {"name":"Kettlebell Lunges","attributes":"kettlebell,shoulders,lower,quads,glutes,hamstrings"},
-  {"name":"Kettlebell Overhead Squat (2 arms)","attributes":"kettlebell,upper,back,lower,legs,quads,shoulders,core,full,XL"},
-  {"name":"Kettlebell Rows","attributes":"kettlebell,back,shoulders,core,chest,triceps,arms"},
-  {"name":"Kettlebell Shoulder Press","attributes":"kettlebell,back,shoulders,chest,arms,upper"},
-  {"name":"Kettlebell Side Lunge","attributes":"kettlebell,upper,back,lower,legs,quads,arms,full"},
-  {"name":"Kettlebell Side Swings","attributes":"kettlebell,arms,core,obliques,back,upper,full,XL"},
-  {"name":"Kettlebell Swing Double Handed","attributes":"kettlebell,upper,back,lower,legs,quads,shoulders,core,full"},
-  {"name":"Kettlebell Tricep Extensions","attributes":"kettlebell,arms,upper,triceps"},
-  {"name":"Knee & Ankle Rotations","attributes":"warmup"},
-  {"name":"Knee Diamond Push-ups","attributes":"chest,tricepd,arms,shoulders,back,legs,XL"},
-  {"name":"Knee Pull in","attributes":"legs,core,quads,hamstrings"},
-  {"name":"Knee Pushup","attributes":"core,upper,arms,chest,lite"},
-  {"name":"Knee Pushup / Child Pose Combo","attributes":"arms,back,chest,lite,core,shoulders,back"},
-  {"name":"Knee to elbow","attributes":"hips,legs,full,warmup"},
-  {"name":"Knee to hands","attributes":"back,cardio,lower,upper"},
-  {"name":"Knees to Elbow (Travoltas) (Cross Body Crunch)","attributes":"lite,full,cadio,warmup"},
-  {"name":"Leg raises","attributes":"abs,lite,stability,lower,core"},
-  {"name":"Leg Up Pose","attributes":"yoga"},
-  {"name":"LI cycle kicks","attributes":"core,stability,abs,hamstrings"},
-  {"name":"Low Plank Climbers","attributes":"XL,full,back,core,stability,cardio,adductors,abductors,glutes,hamstrings,upper,lower,shoulders,arms"},
-  {"name":"Low plank leg raises","attributes":"XL,back,core,abs,stability"},
-  {"name":"Low side lunges","attributes":"quads,stability,core"},
-  {"name":"Low side lunges(hands on floor)","attributes":"quads,stability,cardio"},
-  {"name":"Low squat walk","attributes":"quads,legs,upper,lower,XL"},
-  {"name":"Lunge Punch","attributes":"full,quads,lower,stability"},
-  {"name":"Lunges","attributes":"quads,stability,lower"},
-  {"name":"Lying Knees to Chest","attributes":"yoga"},
-  {"name":"Lying leg extensions","attributes":"core,legs,lite"},
-  {"name":"Lying leg raises","attributes":"abs,core,quads"},
-  {"name":"Lying Scissor Kicks","attributes":"core,abs,quads"},
-  {"name":"Lying side leg raises","attributes":"abs,quads,lite,stability,legs"},
-  {"name":"Lying side splits","attributes":"hamstring,legs,lower,glutes"},
-  {"name":"Lying single leg raises (L+R)","attributes":"core,lite,legs,abs,quads"},
-  {"name":"Lying V-leg extensions (splits)","attributes":"core,quads,abs,groin,hamstrings"},
-  {"name":"Marches","attributes":"lite,full,warmup,upper,lower"},
-  {"name":"Mod boat pose","attributes":"yoga,core,arms,quads"},
-  {"name":"Mountain Climbers","attributes":"full,cardio,upper,arms,shoulders,chest,core,XL"},
-  {"name":"Mountain Climbers - slow / steps","attributes":"full,cardio,upper,arms,shoulders,chest,core"},
-  {"name":"Mountain climbers + crossover","attributes":"full,cardio,upper,stability,XL"},
-  {"name":"Mountain Pose","attributes":"yoga"},
-  {"name":"Neck Warmup","attributes":"warmup"},
-  {"name":"Nordic Curl","attributes":"back,hamstrings,calves,lower,xl"},
-  {"name":"Oblique ab tucks - side to side ab tucks","attributes":"core,abs,stability"},
-  {"name":"Oblique bicycle kicks from ab tuck position (side-side cycle kicks)","attributes":"core,abs,quads,full,lower,legs,stability"},
-  {"name":"Oblique Side crunches","attributes":"obliques,legs,arms,core,shoulders"},
-  {"name":"Pacer Steps","attributes":"warmup,calves,legs,cardio,quads"},
-  {"name":"Pidgeon Pose","attributes":"yoga"},
-  {"name":"Pike Pushup (V- Pushup)","attributes":"chest,pecs,core,shoulders,upper,XL"},
-  {"name":"Plank & Toe Taps","attributes":"stability,core,upper,XL,pecs,chest,back"},
-  {"name":"Plank back kicks","attributes":"full,lower,core,abs,stability,XL"},
-  {"name":"Plank Hold","attributes":"full,core,back,arms,shoulders,glutes"},
-  {"name":"Plank Hold with Pushups","attributes":"shoulders,back,arms,core,chest"},
-  {"name":"Plank jack","attributes":"cardio,upper,back,legs,XL"},
-  {"name":"Plank rotation + toe touches","attributes":"upper,obliques,core,back,full,XL"},
-  {"name":"Plank Rotations","attributes":"core,stability,upper,obliques,full"},
-  {"name":"Plank Shoulder Taps","attributes":"core,stability,upper,obliques"},
-  {"name":"Plie squats","attributes":"legs,back,glutes,adductors"},
-  {"name":"Punch and butt kick","attributes":"cardio,legs,upper,lower,lite"},
-  {"name":"Punches","attributes":"abs,core,arms,upper"},
-  {"name":"Push-ups","attributes":"core,upper,arms,chest,back,full"},
-  {"name":"Pushups+ clap","attributes":"arms,chest,upper,core,back,XL"},
-  {"name":"Rabbit walk","attributes":"core,legs,upper,lower,back"},
-  {"name":"Renegade rows","attributes":"core,upper,arms,chest"},
-  {"name":"Reverse crunch","attributes":"core,abs"},
-  {"name":"Reverse Lunges","attributes":"quads,stability,lower"},
-  {"name":"Reverse Plank","attributes":"shoulders,core,back,arms,full,XL"},
-  {"name":"Savasana","attributes":"yoga"},
-  {"name":"Scissor jack","attributes":"full,warmup,cardio"},
-  {"name":"Scissor kicks","attributes":"core,abs,quads,lite"},
-  {"name":"Seal Claps","attributes":"upper,arms,lite,warmup"},
-  {"name":"Seal Jacks","attributes":"warmup,cardio,full"},
-  {"name":"Seated alt leg raises","attributes":"arms,core,upper,back"},
-  {"name":"Seated Punches","attributes":"abs,core,arms,legs"},
-  {"name":"Seated Side Stretch","attributes":"yoga"},
-  {"name":"Seated Side Twists","attributes":"yoga"},
-  {"name":"Seated Up Stretch","attributes":"yoga"},
-  {"name":"Seated Wide Leg Fwd Fold","attributes":"yoga"},
-  {"name":"Shadow boxing","attributes":"upper,lite,cardio,warmup"},
-  {"name":"Shadow boxing + kick","attributes":"cardio,lite,full,warmup"},
-  {"name":"Shadow boxing + side shifting","attributes":"cardio,lite,full"},
-  {"name":"Shoulder Rolls (F & B)","attributes":"back,lite,shoulders,chest,warmup"},
-  {"name":"Side balance jumps L+R","attributes":"full,legs,upper,cardio,stability"},
-  {"name":"Side elbow plank","attributes":"obliques,shoulders,arms,lite"},
-  {"name":"Side Iso Ab Crunch","attributes":"core,upper,obliques"},
-  {"name":"Side leg raises","attributes":"abs,legs,glutes,stability"},
-  {"name":"Side leg raises+squat","attributes":"abs,quads,core,lite,stability,legs"},
-  {"name":"Side lunges","attributes":"adductors,abductors,quads,calves,glutes,back,lower"},
-  {"name":"Side plank","attributes":"back,legs,core,glutes,arms,lite,obliques"},
-  {"name":"Side Shuffle w/ Toe touch / reach","attributes":"stability,back,core,upper,legs,warmup,full"},
-  {"name":"Side to side hop","attributes":"back,core,glutes,core,lower"},
-  {"name":"Side walk in plank","attributes":"XL,full,core,back,legs,shoulders,arms,stability,hamstrings,chest"},
-  {"name":"Sidekicks","attributes":"legs,quads,hamstrings,obliques,glutes,lite,core"},
-  {"name":"Sideways bear crawl","attributes":"arms,legs,back,lower,upper,XL"},
-  {"name":"Single leg calf raise","attributes":"calves,quads,legs,core,lite"},
-  {"name":"Single leg hops (L+R)","attributes":"legs,core,glutes,lower,back"},
-  {"name":"Situps- Frog","attributes":"core,abs"},
-  {"name":"Skater","attributes":"full,lite,cardio"},
-  {"name":"Skaters","attributes":"lower,stability,legs"},
-  {"name":"Skipping","attributes":"warmup,legs,quads,full, XL, calves, cardio"},
-  {"name":"Spiderman mountain climbers","attributes":"warmup,full,hips"},
-  {"name":"Spiderman push-ups","attributes":"XL,full"},
-  {"name":"Split Jacks","attributes":"warmup,cardio,full,XL"},
-  {"name":"Splits","attributes":"hamstrings,legs,back,lower"},
-  {"name":"Sprawl","attributes":"calves,legs,upper.lower,cardio,abs"},
-  {"name":"Squat / Side Leg Raise Combo","attributes":"lower,legs,obliques,stability,core"},
-  {"name":"Squat + kick","attributes":"cardio,quads"},
-  {"name":"Squat + reverse lunges","attributes":"XL,stability,glutes,hamstrings"},
-  {"name":"Squat hold","attributes":"glutes,hamstrings"},
-  {"name":"Squat hold+ Punch","attributes":"glutes,hamstring,arms,upper"},
-  {"name":"Squat Side Punches","attributes":"quads,upper,arms,core"},
-  {"name":"Squat+ side leg raise","attributes":"glutes,hamstring,cardio,abs,legs,stability"},
-  {"name":"Squat+Chair pose","attributes":"yoga,lower,legs,full,quads"},
-  {"name":"Squat+Front kick","attributes":"lower,stability,legs,quads,full"},
-  {"name":"Squats","attributes":"glutes,hamstrings,cardio,warmup,legs,lower,quads,stability"},
-  {"name":"Squat Jacks","attributes":"legs,back,warmup,cardio, XL"},
-  {"name":"Standing Back Leg raises","attributes":"abs,core,hamstrings,lite,legs,lower,stability,glutes"},
-  {"name":"Standing Backwards Bend","attributes":"back,upper,lower,shoulders,arms,lite"},
-  {"name":"Standing Front Leg Raises","attributes":"abs,core,quads,lite,legs,lower,stability,obliques"},
-  {"name":"Standing Side Leg raises","attributes":"abs,legs,lower,stability,glutes,obliques"},
-  {"name":"Standing Star Taps","attributes":"core,abs,legs,quads,arms,stability"},
-  {"name":"Standing Upward Stretch","attributes":"stretching,yoga"},
-  {"name":"Star Plank","attributes":"pecs,chest,core,full,XL,arms,legs,back,shoulders"},
-  {"name":"Star Plank (1/2 down)","attributes":"pecs,chest,core,full,XL,arms,legs,back,shoulders"},
-  {"name":"Step Jacks","attributes":"lite,warmup,full"},
-  {"name":"Straight leg standing crunch","attributes":"core,quads,back,arms,abs,legs,stability"},
-  {"name":"Straight leg toe touches","attributes":"upper,obliques,legs,core"},
-  {"name":"Straight Punches Standing","attributes":"arms,lite,cardio,warmup"},
-  {"name":"Sumo Ballerina Squat","attributes":"hamstrings,quads,calves,glutes,legs,lower,XL"},
-  {"name":"Sumo Squat / Chair Pose Combo","attributes":"lower,legs,back,quads,arms,hamstrings,glutes,calves,abductors,adductors,hips,xl"},
-  {"name":"Sumo squats","attributes":"glutes,hamstrings,cardio,lower,adductors,abductors,hips,back"},
-  {"name":"Supine Cycle crunches","attributes":"abs,core,hamstrings,stability"},
-  {"name":"Supine leg raises","attributes":"abs,back,core,stability"},
-  {"name":"Superman","attributes":"lower back,glutes,core,stability"},
-  {"name":"Three Legged Dog","attributes":"yoga"},
-  {"name":"Tip Toe Sumo Squat","attributes":"lower,legs,calves,glutes,quads,stability,XL"},
-  {"name":"Toe tap hops","attributes":"stability,core,abs,pecs,legs"},
-  {"name":"Toe Reaches (wide leg)","attributes":"warmup, back, lite"},
-  {"name":"Toe Touches (feet together)","attributes":"warmup"},
-  {"name":"Travoltas","attributes":"lite,warmup,cardio,full"},
-  {"name":"Tree Pose","attributes":"yoga,stability"},
-  {"name":"Tricep Dips","attributes":"triceps,shoulders,back,arms"},
-  {"name":"Tuck jump","attributes":"cardio,legs,lower"},
-  {"name":"Two-point plank","attributes":"full,core,arms,shoulders,back,stability,XL"},
-  {"name":"Uppercuts","attributes":"arms,core,abs,upper,back,cardio"},
-  {"name":"Upward Facing Dog","attributes":"yoga"},
-  {"name":"Walk backwards","attributes":"back,shoulders,legs,lower,stability,lite"},
-  {"name":"Walking lunges","attributes":"stability,legs,quads,cardio,core"},
-  {"name":"Walking squats (low)","attributes":"lower,legs.quads,upper"},
-  {"name":"Walking sumo squat (deep)","attributes":"lower,legs,glutes,hamstring,cardio"},
-  {"name":"Walking sumo squat (low)","attributes":"lower,legs,glutes,hamstrings,cardio"},
-  {"name":"Walking toe touches","attributes":"stability,core,quads,back"},
-  {"name":"Warm Up","attributes":"warmup"},
-  {"name":"Warrior I","attributes":"yoga"},
-  {"name":"Wide Pushup","attributes":"pecs,chest,arms,upper,core"},
-  {"name":"Wide Squats (Plie)","attributes":"glutes,adductors,legs,lower,stability"},
-  {"name":"Wrist Rotations","attributes":"warmup"}
+  {
+    "name": "Ab Tucks",
+    "description": "Isolated abdominal contraction in a tucked position.",
+    "attributes": ["upper", "abs", "core", "lite", "strength"]
+  },
+  {
+    "name": "Alternating Arm Raises",
+    "description": "Shoulder warm-up with controlled arm lifts.",
+    "attributes": ["upper", "shoulders", "arms", "lite", "warmup"]
+  },
+  {
+    "name": "Back Fists",
+    "description": "Martial-arts-inspired movement for upper-body engagement.",
+    "attributes": ["upper", "arms", "back", "core", "lite", "strength"]
+  },
+  {
+    "name": "Back Step w/ Forward Arm Raises",
+    "description": "Coordinated step-back with shoulder activation.",
+    "attributes": ["full", "back", "shoulders", "legs", "triceps", "arms", "lite", "warmup"]
+  },
+  {
+    "name": "Bear / Beast Hold",
+    "description": "Static quadruped position for core and shoulder stability.",
+    "attributes": ["full", "back", "legs", "core", "glutes", "strength"]
+  },
+  {
+    "name": "Bear Walk / Crawl",
+    "description": "Dynamic crawling movement for full-body strength.",
+    "attributes": ["full", "back", "legs", "core", "XL", "strength"]
+  },
+  {
+    "name": "Bicycle Crunches / Kicks",
+    "description": "Rotational core exercise targeting obliques.",
+    "attributes": ["upper", "core", "abs", "stability", "XL", "strength"]
+  },
+  {
+    "name": "Bicycle Kicks - Legs Only",
+    "description": "Supine leg cycling for lower abs and hip flexors.",
+    "attributes": ["upper", "core", "abs", "legs", "lite", "strength"]
+  },
+  {
+    "name": "Bird Dog - Dynamic",
+    "description": "Alternating limb extensions for core stability.",
+    "attributes": ["full", "back", "core", "shoulders", "glutes", "arms", "strength"]
+  },
+  {
+    "name": "Bird Dog - Static",
+    "description": "Held quadruped position for balance and endurance.",
+    "attributes": ["full", "back", "hamstrings", "glutes", "core", "arms", "legs", "strength"]
+  },
+  {
+    "name": "Boat Pose",
+    "description": "Yoga pose for core and hip flexor strength.",
+    "attributes": ["upper", "core", "stability", "yoga"]
+  },
+  {
+    "name": "Bounce & Cross Punch",
+    "description": "Cardio punch combination with light jumps.",
+    "attributes": ["full", "cardio", "calves", "arms", "legs", "shoulders", "lite", "warmup"]
+  },
+  {
+    "name": "Bounce & Straight Punch",
+    "description": "Vertical punch with rebound steps.",
+    "attributes": ["full", "cardio", "calves", "arms", "legs", "shoulders", "lite", "warmup"]
+  },
+  {
+    "name": "Bounce & Up Punch",
+    "description": "Overhead punches with dynamic footwork.",
+    "attributes": ["full", "cardio", "calves", "arms", "legs", "shoulders", "lite", "warmup"]
+  },
+  {
+    "name": "Bridge Pose",
+    "description": "Yoga backbend to open hips and chest.",
+    "attributes": ["full", "back", "glutes", "yoga"]
+  },
+  {
+    "name": "Bunny Hop",
+    "description": "Explosive jumps for power and cardio.",
+    "attributes": ["full", "core", "legs", "cardio", "back", "XL", "strength"]
+  },
+  {
+    "name": "Burpee - Modified to Step",
+    "description": "Low-impact burpee variation for beginners.",
+    "attributes": ["full", "lite", "cardio", "chest", "arms", "strength"]
+  },
+  {
+    "name": "Burpees + Jump",
+    "description": "Full-body explosive movement with vertical leap.",
+    "attributes": ["full", "legs", "cardio", "upper", "XL", "strength"]
+  },
+  {
+    "name": "Burpees + Push-up",
+    "description": "Burpee with added chest challenge.",
+    "attributes": ["full", "upper", "cardio", "back", "XL", "strength"]
+  },
+  {
+    "name": "Burpees + Push-up + Jump",
+    "description": "High-intensity burpee with plyometrics.",
+    "attributes": ["full", "XL", "cardio", "upper", "legs", "strength"]
+  },
+  {
+    "name": "Butt Kicks",
+    "description": "Running in place with heel-to-glute contact.",
+    "attributes": ["legs", "cardio", "hamstrings", "lite", "warmup"]
+  },
+  {
+    "name": "Calf Raises",
+    "description": "Ankle extension to strengthen calves.",
+    "attributes": ["legs", "calves", "quads", "glutes", "strength"]
+  },
+  {
+    "name": "Cat Cow",
+    "description": "Yoga spinal mobility sequence.",
+    "attributes": ["full", "back", "yoga"]
+  },
+  {
+    "name": "Chair Pose",
+    "description": "Yoga squat hold for leg endurance.",
+    "attributes": ["legs", "quads", "yoga"]
+  },
+  {
+    "name": "Chest Opener with Butt Kicks",
+    "description": "Combination of upper-body stretch and dynamic leg movement.",
+    "attributes": ["full", "legs", "upper", "lite", "warmup"]
+  },
+  {
+    "name": "Cinderblock Rows",
+    "description": "Bent-over rows using a cinderblock for resistance.",
+    "attributes": ["upper", "back", "arms", "core", "XL", "strength"]
+  },
+  {
+    "name": "Commando Plank",
+    "description": "Dynamic plank variation with forearm-to-hand transitions.",
+    "attributes": ["full", "core", "back", "shoulders", "XL", "strength"]
+  },
+  {
+    "name": "Cossack Squat",
+    "description": "Lateral squat for adductor mobility.",
+    "attributes": ["legs", "quads", "adductors", "back", "core", "XL", "strength"]
+  },
+  {
+    "name": "Crab Walk",
+    "description": "Reverse tabletop movement for shoulder and hip strength.",
+    "attributes": ["full", "legs", "arms", "core", "back", "strength"]
+  },
+  {
+    "name": "Cross Punches",
+    "description": "Horizontal punches for shoulder endurance.",
+    "attributes": ["upper", "cardio", "arms", "shoulders", "lite", "strength"]
+  },
+  {
+    "name": "Crow Pose",
+    "description": "Arm balance pose for core and wrist strength.",
+    "attributes": ["upper", "core", "shoulders", "arms", "XL", "yoga"]
+  },
+  {
+    "name": "Deadlift (Single Leg)",
+    "description": "Unilateral hip hinge for balance and hamstring focus.",
+    "attributes": ["legs", "hamstrings", "back", "core", "stability", "strength"]
+  },
+  {
+    "name": "Deadlift (Two Legs)",
+    "description": "Classic hip hinge for posterior chain strength.",
+    "attributes": ["legs", "hamstrings", "back", "core", "lite", "strength"]
+  },
+  {
+    "name": "Diamond Push-ups",
+    "description": "Close-hand push-up for triceps emphasis.",
+    "attributes": ["upper", "chest", "triceps", "arms", "shoulders", "back", "XL", "strength"]
+  },
+  {
+    "name": "Dip & Back Kick",
+    "description": "Coordinated dip and leg extension for mobility.",
+    "attributes": ["legs", "cardio", "lite", "warmup"]
+  },
+  {
+    "name": "Dip & Reach",
+    "description": "Dynamic dip with overhead reach.",
+    "attributes": ["full", "cardio", "warmup", "lite"]
+  },
+  {
+    "name": "Donkey Kick / Fire Hydrant Combo",
+    "description": "Glute activation sequence with hip abduction.",
+    "attributes": ["legs", "glutes", "back", "abductors", "hamstrings", "full", "adductors", "core"]
+  },
+  {
+    "name": "Donkey Kicks",
+    "description": "Isolated glute kickbacks.",
+    "attributes": ["legs", "glutes", "abs", "core", "hamstrings", "back", "strength"]
+  },
+  {
+    "name": "Downward Facing Dog",
+    "description": "Yoga pose for hamstring and shoulder flexibility.",
+    "attributes": ["full", "back", "arms", "legs", "yoga"]
+  },
+  {
+    "name": "Drawing Bow",
+    "description": "Qigong-inspired posture for upper-body tension.",
+    "attributes": ["upper", "arms", "core", "abs", "qigong"]
+  },
+  {
+    "name": "Dynamic Side Lunge",
+    "description": "Lateral lunge with dynamic movement.",
+    "attributes": ["legs", "back", "core", "glutes", "quads", "strength"]
+  },
+  {
+    "name": "Elbow Plank",
+    "description": "Forearm plank for core endurance.",
+    "attributes": ["full", "core", "abs", "shoulders", "chest", "back", "legs", "strength"]
+  },
+  {
+    "name": "Fire Hydrants",
+    "description": "Hip abduction for gluteus medius strength.",
+    "attributes": ["legs", "abductors", "glutes", "strength"]
+  },
+  {
+    "name": "Flutter Kicks",
+    "description": "Supine leg lifts for lower abs.",
+    "attributes": ["upper", "abs", "core", "quads", "strength"]
+  },
+
+  {
+    "name": "Forward Jumping Squat",
+    "description": "Plyometric squat with forward jump.",
+    "attributes": ["legs", "quads", "stability", "cardio", "strength"]
+  },
+  {
+    "name": "Frog Crunches",
+    "description": "Abdominal crunch with wide knee position.",
+    "attributes": ["upper", "core", "groin", "abs", "strength"]
+  },
+  {
+    "name": "Froggers",
+    "description": "Explosive squat-to-plank movement.",
+    "attributes": ["full", "arms", "cardio", "stability", "XL", "back", "core", "quads", "strength"]
+  },
+  {
+    "name": "Front Leg Raises",
+    "description": "Hip flexor and quadriceps isolation.",
+    "attributes": ["upper", "abs", "quads", "lite", "stability", "legs", "strength"]
+  },
+  {
+    "name": "Forward Lunges",
+    "description": "Basic lunge for unilateral leg strength.",
+    "attributes": ["legs", "quads", "stability", "strength"]
+  },
+  {
+    "name": "Glute Bridges",
+    "description": "Hip thrust for glute activation.",
+    "attributes": ["legs", "glutes", "core", "hamstrings", "back", "lite", "strength"]
+  },
+  {
+    "name": "Good Morning",
+    "description": "Hip hinge for hamstring flexibility.",
+    "attributes": ["legs", "back", "hamstrings", "stretching"]
+  },
+  {
+    "name": "High Knees",
+    "description": "Running in place with exaggerated knee lifts.",
+    "attributes": ["legs", "cardio", "warmup", "strength"]
+  },
+  {
+    "name": "Hip Thrust + Single Leg",
+    "description": "Advanced glute bridge variation.",
+    "attributes": ["legs", "hamstrings", "core", "stability", "glutes", "XL", "strength"]
+  },
+  {
+    "name": "Indian Pushup",
+    "description": "Dynamic yoga push-up for full-body strength.",
+    "attributes": ["full", "upper", "back", "core", "XL", "strength"]
+  },
+  {
+    "name": "Jumping Jacks",
+    "description": "Classic cardio warm-up.",
+    "attributes": ["full", "cardio", "warmup", "strength"]
+  },
+  {
+    "name": "Jumping Lunges",
+    "description": "Plyometric alternating lunge.",
+    "attributes": ["legs", "quads", "cardio", "core", "XL", "strength"]
+  },
+  {
+    "name": "Jumping Squats",
+    "description": "Explosive squat with vertical jump.",
+    "attributes": ["legs", "quads", "cardio", "XL", "strength"]
+  },
+  {
+    "name": "Kettlebell Swing",
+    "description": "Hip-driven swing for posterior chain power.",
+    "attributes": ["full", "legs", "hamstrings", "glutes", "back", "shoulders", "core", "XL", "strength"]
+  },
+  {
+    "name": "Knee Pushup",
+    "description": "Modified push-up for beginners.",
+    "attributes": ["upper", "core", "arms", "chest", "lite", "strength"]
+  },
+  {
+    "name": "Lunges",
+    "description": "Standard forward lunge.",
+    "attributes": ["legs", "quads", "stability", "strength"]
+  },
+  {
+    "name": "Mountain Climbers",
+    "description": "Dynamic plank with alternating knee drives.",
+    "attributes": ["full", "cardio", "arms", "shoulders", "chest", "core", "XL", "strength"]
+  },
+  {
+    "name": "Nordic Curl",
+    "description": "Eccentric hamstring curl.",
+    "attributes": ["legs", "back", "hamstrings", "calves", "XL", "strength"]
+  },
+  {
+    "name": "Plank Hold",
+    "description": "Basic core stabilization exercise.",
+    "attributes": ["full", "core", "back", "arms", "shoulders", "glutes", "strength"]
+  },
+  {
+    "name": "Push-ups",
+    "description": "Fundamental upper-body pushing movement.",
+    "attributes": ["upper", "core", "arms", "chest", "back", "strength"]
+  },
+  {
+    "name": "Reverse Lunges",
+    "description": "Lunge stepping backward for quad focus.",
+    "attributes": ["legs", "quads", "stability", "strength"]
+  },
+  {
+    "name": "Side Lunges",
+    "description": "Lateral lunge for adductor strength.",
+    "attributes": ["legs", "adductors", "quads", "glutes", "back", "strength"]
+  },
+  {
+    "name": "Squats",
+    "description": "Fundamental lower-body strength movement.",
+    "attributes": ["legs", "glutes", "hamstrings", "quads", "cardio", "strength"]
+  },
+  {
+    "name": "Superman",
+    "description": "Prone back extension for spinal erectors.",
+    "attributes": ["full", "back", "glutes", "core", "strength"]
+  },
+  {
+    "name": "Tricep Dips",
+    "description": "Bodyweight dip for triceps strength.",
+    "attributes": ["upper", "triceps", "shoulders", "back", "arms", "strength"]
+  },
+  {
+    "name": "Walking Lunges",
+    "description": "Forward-moving lunge variation.",
+    "attributes": ["legs", "quads", "cardio", "core", "strength"]
+  },
+  {
+    "name": "Walking Sumo Squat (Deep)",
+    "description": "Wide-stance squat walk for hip mobility.",
+    "attributes": ["legs", "glutes", "hamstrings", "adductors", "cardio", "strength"]
+  },
+  {
+    "name": "Warrior I",
+    "description": "Yoga pose for leg and shoulder strength.",
+    "attributes": ["legs", "shoulders", "yoga"]
+  },
+  {
+    "name": "Wide Pushup",
+    "description": "Push-up with hands wider than shoulders.",
+    "attributes": ["upper", "chest", "arms", "core", "strength"]
+  },
+  {
+    "name": "Wrist Rotations",
+    "description": "Joint mobility exercise for wrists.",
+    "attributes": ["arms", "lite", "warmup"]
+  },
+  {
+    "name": "Door Bar Chin-Up Negatives",
+    "description": "Eccentric chin-up for back and arm strength.",
+    "attributes": ["upper", "back", "biceps", "arms", "XL", "strength"]
+  },
+  {
+    "name": "Door Bar Dead Hang",
+    "description": "Static hang to improve grip and shoulder stability.",
+    "attributes": ["upper", "back", "shoulders", "arms", "XL", "strength"]
+  },
+  {
+    "name": "Down Dog w/ Knee Push-Up",
+    "description": "Yoga push-up hybrid for core and shoulders.",
+    "attributes": ["full", "core", "chest", "shoulders", "back", "strength"]
+  },
+  {
+    "name": "Downward Dog Push-Up",
+    "description": "Dynamic yoga push-up variation.",
+    "attributes": ["full", "core", "chest", "shoulders", "XL", "strength"]
+  },
+  {
+    "name": "Floor Touches",
+    "description": "Bend-and-reach movement for hamstring flexibility.",
+    "attributes": ["legs", "back", "hamstrings", "lite", "stretching"]
+  },
+  {
+    "name": "Half Handstand (Heels Up)",
+    "description": "Inverted pose for shoulder and core strength.",
+    "attributes": ["upper", "shoulders", "core", "lite", "stability"]
+  },
+  {
+    "name": "Handstands (3/4)",
+    "description": "Partial handstand for balance training.",
+    "attributes": ["full", "upper", "shoulders", "core", "stability"]
+  },
+  {
+    "name": "Hip Openers",
+    "description": "Dynamic stretches for hip mobility.",
+    "attributes": ["legs", "warmup", "mobility"]
+  },
+  {
+    "name": "Hook Punches",
+    "description": "Boxing-inspired rotational punches.",
+    "attributes": ["upper", "arms", "shoulders", "core", "cardio", "lite"]
+  },
+  {
+    "name": "Inchworm",
+    "description": "Forward fold to plank movement for hamstrings.",
+    "attributes": ["full", "upper", "back", "hamstrings", "cardio"]
+  },
+  {
+    "name": "Kettlebell Goblet Squat",
+    "description": "Front-loaded squat for leg and core strength.",
+    "attributes": ["legs", "quads", "glutes", "core", "strength"]
+  },
+  {
+    "name": "Kettlebell Overhead Squat",
+    "description": "Squat with overhead weight for full-body challenge.",
+    "attributes": ["full", "legs", "shoulders", "core", "XL", "strength"]
+  },
+  {
+    "name": "Low Plank Climbers",
+    "description": "Slow mountain climbers for core endurance.",
+    "attributes": ["full", "core", "cardio", "XL", "strength"]
+  },
+  {
+    "name": "Lying Leg Raises",
+    "description": "Supine leg lift for lower abs.",
+    "attributes": ["upper", "abs", "core", "strength"]
+  }
+][
+  {
+    "name": "Lying Scissor Kicks",
+    "description": "Alternating leg movements for lower abs.",
+    "attributes": ["upper", "abs", "core", "quads", "strength"]
+  },
+  {
+    "name": "Marches",
+    "description": "Stationary marching for warm-up.",
+    "attributes": ["legs", "lite", "warmup"]
+  },
+  {
+    "name": "Mod Boat Pose",
+    "description": "Modified yoga pose for core strength.",
+    "attributes": ["upper", "core", "arms", "quads", "yoga"]
+  },
+  {
+    "name": "Mountain Climbers - Slow",
+    "description": "Controlled plank knee drives for core stability.",
+    "attributes": ["full", "core", "cardio", "strength"]
+  },
+  {
+    "name": "Oblique Side Crunches",
+    "description": "Twisting crunch for oblique engagement.",
+    "attributes": ["upper", "obliques", "core", "strength"]
+  },
+  {
+    "name": "Pigeon Pose",
+    "description": "Yoga stretch for hip flexors and glutes.",
+    "attributes": ["legs", "glutes", "hips", "yoga", "stretching"]
+  },
+  {
+    "name": "Pike Pushup",
+    "description": "Incline push-up for shoulders.",
+    "attributes": ["upper", "shoulders", "arms", "chest", "XL", "strength"]
+  },
+  {
+    "name": "Plank Back Kicks",
+    "description": "Plank with alternating leg extensions.",
+    "attributes": ["full", "core", "glutes", "hamstrings", "XL", "strength"]
+  },
+  {
+    "name": "Plank Jack",
+    "description": "Jumping plank variation for cardio.",
+    "attributes": ["full", "cardio", "core", "XL", "strength"]
+  },
+  {
+    "name": "Plank Rotations",
+    "description": "Dynamic plank with torso twists.",
+    "attributes": ["full", "core", "obliques", "strength"]
+  },
+  {
+    "name": "Plank Shoulder Taps",
+    "description": "Plank with alternating shoulder touches.",
+    "attributes": ["full", "core", "stability", "strength"]
+  },
+  {
+    "name": "Punch and Butt Kick",
+    "description": "Boxing combo with leg engagement.",
+    "attributes": ["full", "cardio", "arms", "legs", "lite"]
+  },
+  {
+    "name": "Rabbit Walk",
+    "description": "Quadrupedal walk with rounded back.",
+    "attributes": ["full", "core", "back", "strength"]
+  },
+  {
+    "name": "Reverse Crunch",
+    "description": "Supine leg curl for lower abs.",
+    "attributes": ["upper", "abs", "core", "strength"]
+  },
+  {
+    "name": "Reverse Plank",
+    "description": "Posterior chain hold for glutes and shoulders.",
+    "attributes": ["full", "glutes", "shoulders", "core", "XL", "strength"]
+  },
+  {
+    "name": "Scissor Jacks",
+    "description": "Wide jumping jack variation.",
+    "attributes": ["full", "cardio", "warmup"]
+  },
+  {
+    "name": "Seated Leg Raises",
+    "description": "Seated alternating leg lifts for hip flexors.",
+    "attributes": ["upper", "core", "hip flexors", "strength"]
+  },
+  {
+    "name": "Shadow Boxing + Kick",
+    "description": "Boxing moves with added kicks.",
+    "attributes": ["full", "cardio", "arms", "legs", "lite"]
+  },
+  {
+    "name": "Side Balance Jumps",
+    "description": "Lateral jumps for leg power.",
+    "attributes": ["legs", "cardio", "stability", "XL"]
+  },
+  {
+    "name": "Side Elbow Plank",
+    "description": "Side plank on elbows for obliques.",
+    "attributes": ["upper", "obliques", "core", "strength"]
+  },
+  {
+    "name": "Side Leg Raises",
+    "description": "Lateral leg lifts for gluteus medius.",
+    "attributes": ["legs", "glutes", "abductors", "strength"]
+  },
+  {
+    "name": "Side Plank",
+    "description": "Static side hold for core stability.",
+    "attributes": ["full", "obliques", "core", "strength"]
+  },
+  {
+    "name": "Side Shuffle w/ Toe Touch",
+    "description": "Lateral movement with coordination challenge.",
+    "attributes": ["legs", "cardio", "stability", "warmup"]
+  },
+  {
+    "name": "Side Walk in Plank",
+    "description": "Plank with lateral steps for core endurance.",
+    "attributes": ["full", "core", "arms", "XL", "strength"]
+  },
+  {
+    "name": "Single Leg Calf Raise",
+    "description": "Unilateral calf strengthening.",
+    "attributes": ["legs", "calves", "stability", "strength"]
+  },
+  {
+    "name": "Skaters",
+    "description": "Lateral jumps for power and balance.",
+    "attributes": ["legs", "cardio", "stability", "strength"]
+  },
+  {
+    "name": "Spiderman Push-ups",
+    "description": "Push-up with knee-to-elbow movement.",
+    "attributes": ["full", "upper", "core", "XL", "strength"]
+  },
+  {
+    "name": "Split Jacks",
+    "description": "Wide-stance jumping jack variation.",
+    "attributes": ["full", "cardio", "warmup", "XL"]
+  },
+  {
+    "name": "Squat + Side Leg Raise",
+    "description": "Squat with added abduction for glutes.",
+    "attributes": ["legs", "glutes", "quads", "abductors", "strength"]
+  },
+  {
+    "name": "Squat Hold",
+    "description": "Isometric squat for endurance.",
+    "attributes": ["legs", "quads", "glutes", "strength"]
+  },
+  {
+    "name": "Standing Back Leg Raises",
+    "description": "Posterior leg lifts for glutes.",
+    "attributes": ["legs", "glutes", "hamstrings", "strength"]
+  },
+  {
+    "name": "Star Plank",
+    "description": "Wide-arm plank variation for core challenge.",
+    "attributes": ["full", "core", "arms", "XL", "strength"]
+  },
+  {
+    "name": "Step Jacks",
+    "description": "Low-impact jumping jack alternative.",
+    "attributes": ["lite", "cardio", "warmup"]
+  },
+  {
+    "name": "Sumo Ballerina Squat",
+    "description": "Deep squat with heel lift for calves.",
+    "attributes": ["legs", "glutes", "quads", "calves", "XL", "strength"]
+  },
+  {
+    "name": "Supine Leg Raises",
+    "description": "Lying leg lifts for lower abs.",
+    "attributes": ["upper", "abs", "core", "strength"]
+  },
+  {
+    "name": "Tip Toe Sumo Squat",
+    "description": "Sumo squat performed on toes.",
+    "attributes": ["legs", "calves", "glutes", "quads", "XL", "strength"]
+  },
+  {
+    "name": "Toe Tap Hops",
+    "description": "Quick foot taps for agility.",
+    "attributes": ["legs", "cardio", "stability", "lite"]
+  },
+  {
+    "name": "Tree Pose",
+    "description": "Yoga balance pose for stability.",
+    "attributes": ["legs", "stability", "yoga"]
+  },
+  {
+    "name": "Tuck Jump",
+    "description": "Explosive jump with knee tuck.",
+    "attributes": ["legs", "cardio", "XL", "strength"]
+  },
+  {
+    "name": "Two-Point Plank",
+    "description": "Alternating limb plank for core challenge.",
+    "attributes": ["full", "core", "stability", "XL", "strength"]
+  },
+  {
+    "name": "Upward Facing Dog",
+    "description": "Yoga backbend for spinal extension.",
+    "attributes": ["full", "back", "yoga"]
+  },
+  {
+    "name": "Warrior II",
+    "description": "Yoga pose for leg and shoulder endurance.",
+    "attributes": ["legs", "shoulders", "yoga"]
+  }
+][
+  {
+    "name": "Seated Side Stretch",
+    "description": "Yoga stretch for lateral flexibility.",
+    "attributes": ["full", "yoga", "stretching"]
+  },
+  {
+    "name": "Seated Side Twists",
+    "description": "Rotational stretch for spinal mobility.",
+    "attributes": ["full", "core", "yoga"]
+  },
+  {
+    "name": "Seated Up Stretch",
+    "description": "Seated forward reach for hamstrings.",
+    "attributes": ["legs", "hamstrings", "stretching"]
+  },
+  {
+    "name": "Seated Wide Leg Forward Fold",
+    "description": "Seated straddle stretch for inner thighs.",
+    "attributes": ["legs", "adductors", "yoga"]
+  },
+  {
+    "name": "Shadow Boxing",
+    "description": "Boxing combinations without equipment.",
+    "attributes": ["upper", "cardio", "arms", "lite"]
+  },
+  {
+    "name": "Shadow Boxing + Side Shifting",
+    "description": "Boxing footwork with lateral movement.",
+    "attributes": ["full", "cardio", "legs", "lite"]
+  },
+  {
+    "name": "Shoulder Rolls",
+    "description": "Circular shoulder movements for mobility.",
+    "attributes": ["upper", "shoulders", "warmup"]
+  },
+  {
+    "name": "Side Iso Ab Crunch",
+    "description": "Isolated side crunch for obliques.",
+    "attributes": ["upper", "obliques", "core", "strength"]
+  },
+  {
+    "name": "Side Leg Raises + Squat",
+    "description": "Combination move for glutes and quads.",
+    "attributes": ["legs", "glutes", "quads", "strength"]
+  },
+  {
+    "name": "Side Shuffle w/ Toe Touch",
+    "description": "Lateral shuffle with coordination challenge.",
+    "attributes": ["legs", "cardio", "stability"]
+  },
+  {
+    "name": "Side to Side Hop",
+    "description": "Quick lateral jumps for agility.",
+    "attributes": ["legs", "cardio", "stability", "XL"]
+  },
+  {
+    "name": "Sidekicks",
+    "description": "Martial-arts-inspired lateral kicks.",
+    "attributes": ["legs", "glutes", "cardio", "lite"]
+  },
+  {
+    "name": "Sideways Bear Crawl",
+    "description": "Lateral crawling for full-body engagement.",
+    "attributes": ["full", "core", "shoulders", "XL", "strength"]
+  },
+  {
+    "name": "Single Leg Hops",
+    "description": "Unilateral jumps for power.",
+    "attributes": ["legs", "cardio", "stability", "XL"]
+  },
+  {
+    "name": "Situps- Frog",
+    "description": "Wide-knee sit-up variation.",
+    "attributes": ["upper", "abs", "core", "strength"]
+  },
+  {
+    "name": "Skater",
+    "description": "Lateral leap for power and balance.",
+    "attributes": ["legs", "cardio", "stability"]
+  },
+  {
+    "name": "Skipping",
+    "description": "Rope-free skipping motion.",
+    "attributes": ["legs", "cardio", "XL", "warmup"]
+  },
+  {
+    "name": "Spiderman Mountain Climbers",
+    "description": "Knee-to-elbow plank variation.",
+    "attributes": ["full", "core", "cardio", "XL", "strength"]
+  },
+  {
+    "name": "Splits",
+    "description": "Static stretch for hamstrings and hips.",
+    "attributes": ["legs", "hamstrings", "stretching"]
+  },
+  {
+    "name": "Sprawl",
+    "description": "Burpee-to-plank movement.",
+    "attributes": ["full", "cardio", "XL", "strength"]
+  },
+  {
+    "name": "Squat + Kick",
+    "description": "Squat with front kick combination.",
+    "attributes": ["legs", "quads", "cardio", "strength"]
+  },
+  {
+    "name": "Squat + Reverse Lunges",
+    "description": "Compound lower-body sequence.",
+    "attributes": ["legs", "quads", "glutes", "XL", "strength"]
+  },
+  {
+    "name": "Squat Hold + Punch",
+    "description": "Isometric squat with upper-body work.",
+    "attributes": ["full", "legs", "arms", "strength"]
+  },
+  {
+    "name": "Squat Side Punches",
+    "description": "Squat with rotational punches.",
+    "attributes": ["full", "legs", "arms", "cardio"]
+  },
+  {
+    "name": "Squat+Chair Pose",
+    "description": "Yoga-inspired squat hold.",
+    "attributes": ["legs", "quads", "yoga", "strength"]
+  },
+  {
+    "name": "Squat+Front Kick",
+    "description": "Squat to front kick combination.",
+    "attributes": ["legs", "quads", "cardio", "strength"]
+  },
+  {
+    "name": "Squat Jacks",
+    "description": "Jumping squat with wide/narrow stance.",
+    "attributes": ["legs", "cardio", "XL", "strength"]
+  },
+  {
+    "name": "Standing Back Leg Raises",
+    "description": "Posterior leg lifts for glutes.",
+    "attributes": ["legs", "glutes", "hamstrings", "strength"]
+  },
+  {
+    "name": "Standing Backwards Bend",
+    "description": "Gentle backbend for spinal extension.",
+    "attributes": ["full", "back", "stretching"]
+  },
+  {
+    "name": "Standing Front Leg Raises",
+    "description": "Anterior leg lifts for hip flexors.",
+    "attributes": ["legs", "hip flexors", "strength"]
+  },
+  {
+    "name": "Standing Side Leg Raises",
+    "description": "Lateral leg lifts for gluteus medius.",
+    "attributes": ["legs", "glutes", "abductors", "strength"]
+  },
+  {
+    "name": "Standing Star Taps",
+    "description": "Dynamic reach and tap sequence.",
+    "attributes": ["full", "core", "stability"]
+  },
+  {
+    "name": "Star Plank (1/2 Down)",
+    "description": "Modified star plank for core endurance.",
+    "attributes": ["full", "core", "arms", "XL", "strength"]
+  },
+  {
+    "name": "Straight Leg Standing Crunch",
+    "description": "Standing ab engagement move.",
+    "attributes": ["upper", "abs", "core", "strength"]
+  },
+  {
+    "name": "Straight Leg Toe Touches",
+    "description": "Standing hamstring stretch.",
+    "attributes": ["legs", "hamstrings", "stretching"]
+  },
+  {
+    "name": "Straight Punches Standing",
+    "description": "Basic boxing punches in stance.",
+    "attributes": ["upper", "cardio", "arms", "lite"]
+  },
+  {
+    "name": "Sumo Ballerina Squat",
+    "description": "Deep squat with heel lift.",
+    "attributes": ["legs", "glutes", "calves", "XL", "strength"]
+  },
+  {
+    "name": "Sumo Squat / Chair Pose Combo",
+    "description": "Yoga-squat hybrid for endurance.",
+    "attributes": ["legs", "glutes", "quads", "yoga", "strength"]
+  },
+  {
+    "name": "Sumo Squats",
+    "description": "Wide-stance squat variation.",
+    "attributes": ["legs", "glutes", "adductors", "strength"]
+  },
+  {
+    "name": "Supine Cycle Crunches",
+    "description": "Supine bicycle motion for abs.",
+    "attributes": ["upper", "abs", "core", "strength"]
+  },
+  {
+    "name": "Three Legged Dog",
+    "description": "Yoga pose with leg lift.",
+    "attributes": ["full", "hamstrings", "yoga"]
+  },
+  {
+    "name": "Tip Toe Sumo Squat",
+    "description": "Sumo squat on toes for calf engagement.",
+    "attributes": ["legs", "calves", "glutes", "XL", "strength"]
+  },
+  {
+    "name": "Toe Reaches (Wide Leg)",
+    "description": "Wide-stance forward fold.",
+    "attributes": ["legs", "hamstrings", "stretching"]
+  },
+  {
+    "name": "Toe Touches (Feet Together)",
+    "description": "Standing forward fold stretch.",
+    "attributes": ["legs", "hamstrings", "stretching"]
+  },
+  {
+    "name": "Travoltas",
+    "description": "Cross-body knee-to-elbow movement.",
+    "attributes": ["full", "core", "cardio", "lite"]
+  },
+  {
+    "name": "Tree Pose",
+    "description": "Single-leg yoga balance pose.",
+    "attributes": ["legs", "stability", "yoga"]
+  },
+  {
+    "name": "Tuck Jump",
+    "description": "Explosive vertical jump with knee tuck.",
+    "attributes": ["legs", "cardio", "XL", "strength"]
+  },
+  {
+    "name": "Two-Point Plank",
+    "description": "Alternating limb plank for core challenge.",
+    "attributes": ["full", "core", "stability", "XL", "strength"]
+  }
+][
+  {
+    "name": "Uppercuts",
+    "description": "Vertical boxing punches for shoulders and core.",
+    "attributes": ["upper", "shoulders", "core", "cardio", "lite"]
+  },
+  {
+    "name": "Upward Facing Dog",
+    "description": "Yoga backbend for spinal extension.",
+    "attributes": ["full", "back", "yoga", "stretching"]
+  },
+  {
+    "name": "Walk Backwards",
+    "description": "Retro walking for coordination.",
+    "attributes": ["legs", "stability", "lite", "warmup"]
+  },
+  {
+    "name": "Walking Sumo Squat (Low)",
+    "description": "Wide-stance squat walk with low posture.",
+    "attributes": ["legs", "glutes", "hamstrings", "cardio", "strength"]
+  },
+  {
+    "name": "Walking Toe Touches",
+    "description": "Dynamic hamstring stretch while walking.",
+    "attributes": ["legs", "hamstrings", "stretching", "lite"]
+  },
+  {
+    "name": "Warrior I",
+    "description": "Yoga lunge pose for leg and shoulder strength.",
+    "attributes": ["legs", "shoulders", "yoga", "strength"]
+  },
+  {
+    "name": "Warrior II",
+    "description": "Yoga lateral lunge pose for endurance.",
+    "attributes": ["legs", "shoulders", "yoga", "strength"]
+  },
+  {
+    "name": "Wide Pushup",
+    "description": "Push-up with hands wider than shoulders.",
+    "attributes": ["upper", "chest", "shoulders", "strength"]
+  },
+  {
+    "name": "Wide Squats (Plie)",
+    "description": "Ballet-inspired squat for inner thighs.",
+    "attributes": ["legs", "adductors", "glutes", "strength"]
+  },
+  {
+    "name": "Wrist Rotations",
+    "description": "Joint mobility exercise for wrists.",
+    "attributes": ["arms", "warmup", "lite"]
+  },
+  {
+    "name": "Cinderblock Overhead Press",
+    "description": "Shoulder press using cinderblock.",
+    "attributes": ["upper", "shoulders", "arms", "XL", "strength"]
+  },
+  {
+    "name": "Cinderblock Bicep Curls",
+    "description": "Bicep curls with cinderblock.",
+    "attributes": ["upper", "biceps", "arms", "strength"]
+  },
+  {
+    "name": "Cinderblock / Farmers Carry",
+    "description": "Loaded carry for grip and core.",
+    "attributes": ["full", "arms", "core", "XL", "strength"]
+  },
+  {
+    "name": "Down Dog w/ Knee Push-Up",
+    "description": "Yoga push-up hybrid movement.",
+    "attributes": ["full", "core", "shoulders", "strength"]
+  },
+  {
+    "name": "Half Lift & Fold",
+    "description": "Yoga forward fold variation.",
+    "attributes": ["legs", "hamstrings", "yoga", "stretching"]
+  },
+  {
+    "name": "Happy Baby Pose",
+    "description": "Supine hip-opening yoga pose.",
+    "attributes": ["legs", "hips", "yoga", "stretching"]
+  },
+  {
+    "name": "Head Turns (L-R & U-D)",
+    "description": "Neck mobility exercises.",
+    "attributes": ["upper", "neck", "warmup", "lite"]
+  },
+  {
+    "name": "High Lunge (Warrior 2)",
+    "description": "Yoga lunge with arms extended.",
+    "attributes": ["legs", "shoulders", "yoga", "strength"]
+  },
+  {
+    "name": "Knee & Ankle Rotations",
+    "description": "Joint warm-up for lower body.",
+    "attributes": ["legs", "warmup", "lite"]
+  },
+  {
+    "name": "Knee to Hands",
+    "description": "Dynamic core and hip flexor movement.",
+    "attributes": ["full", "core", "hip flexors", "strength"]
+  },
+  {
+    "name": "Lying Knees to Chest",
+    "description": "Supine knee hug for lower back relief.",
+    "attributes": ["legs", "lower back", "stretching"]
+  },
+  {
+    "name": "Lying Leg Extensions",
+    "description": "Supine leg straightening for quads.",
+    "attributes": ["legs", "quads", "strength"]
+  },
+  {
+    "name": "Seated Alt Leg Raises",
+    "description": "Alternating seated leg lifts.",
+    "attributes": ["legs", "hip flexors", "strength"]
+  },
+  {
+    "name": "Sealed Jacks",
+    "description": "Low-impact jumping jack variation.",
+    "attributes": ["full", "cardio", "lite", "warmup"]
+  },
+  {
+    "name": "Seal Claps",
+    "description": "Dynamic arm movement for shoulders.",
+    "attributes": ["upper", "shoulders", "warmup", "lite"]
+  },
+  {
+    "name": "Side Kick",
+    "description": "Martial-arts-inspired lateral kick.",
+    "attributes": ["legs", "glutes", "cardio", "lite"]
+  },
+  {
+    "name": "Standing Upward Stretch",
+    "description": "Overhead reach for spinal decompression.",
+    "attributes": ["full", "stretching", "yoga"]
+  },
+  {
+    "name": "Extended Triangle Pose",
+    "description": "Yoga pose for hamstrings and obliques.",
+    "attributes": ["legs", "obliques", "yoga", "stretching"]
+  },
+  {
+    "name": "Goddess Pose",
+    "description": "Wide-stance yoga squat.",
+    "attributes": ["legs", "adductors", "yoga", "strength"]
+  },
+  {
+    "name": "Garland Pose / Deep Squat",
+    "description": "Yoga squat for hip mobility.",
+    "attributes": ["legs", "hips", "yoga", "stretching"]
+  },
+  {
+    "name": "Forward Fold",
+    "description": "Standing forward bend for hamstrings.",
+    "attributes": ["legs", "hamstrings", "yoga", "stretching"]
+  },
+  {
+    "name": "Half Handstand (Heels Up)",
+    "description": "Inverted pose prep for shoulders.",
+    "attributes": ["upper", "shoulders", "core", "stability"]
+  },
+  {
+    "name": "Low Plank Leg Raises",
+    "description": "Plank with alternating leg lifts.",
+    "attributes": ["full", "core", "glutes", "XL", "strength"]
+  },
+  {
+    "name": "Low Side Lunges (Hands on Floor)",
+    "description": "Lateral lunge with added stability challenge.",
+    "attributes": ["legs", "adductors", "core", "strength"]
+  },
+  {
+    "name": "Low Squat Walk",
+    "description": "Deep squat position walking.",
+    "attributes": ["legs", "quads", "glutes", "XL", "strength"]
+  },
+  {
+    "name": "Lunge Punch",
+    "description": "Lunge with rotational punch.",
+    "attributes": ["full", "legs", "arms", "cardio", "strength"]
+  },
+  {
+    "name": "Punches Standing",
+    "description": "Boxing punches in athletic stance.",
+    "attributes": ["full", "arms", "cardio", "lite"]
+  },
+  {
+    "name": "Savasana",
+    "description": "Final yoga relaxation pose.",
+    "attributes": ["full", "yoga", "cooldown"]
+  },
+  {
+    "name": "Spiderman Mountain Climbers",
+    "description": "Knee-to-elbow plank variation.",
+    "attributes": ["full", "core", "cardio", "XL", "strength"]
+  },
+  {
+    "name": "Squat Side Punches",
+    "description": "Squat hold with alternating punches.",
+    "attributes": ["full", "legs", "arms", "cardio"]
+  },
+  {
+    "name": "Star Plank",
+    "description": "Wide-arm plank variation.",
+    "attributes": ["full", "core", "arms", "XL", "strength"]
+  },
+  {
+    "name": "Sumo Squat + Side Leg Raise",
+    "description": "Compound lower-body movement.",
+    "attributes": ["legs", "glutes", "adductors", "XL", "strength"]
+  }
 ]
