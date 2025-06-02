@@ -1,0 +1,104 @@
+{
+  "workouts": [
+    {
+      "id": "workout_001",
+      "name": "Neri First Workout",
+      "description": "20-minute equipment-free routine for calorie burn, visceral fat focus, and shoulder mobility.",
+      "client": {
+        "name": "Neri",
+        "age": 47,
+        "goals": ["Burn calories", "Reduce visceral fat", "Improve shoulder mobility"],
+        "restrictions": ["Early-stage frozen shoulder", "No equipment"],
+        "frequency": "3x/week"
+      },
+      "structure": {
+        "warmup": {
+          "exercises": [
+            {
+              "name": "Arm Circles",
+              "reps": "10 each direction",
+              "notes": "Forward and backward"
+            },
+            {
+              "name": "Cat Cow",
+              "reps": 12,
+              "notes": "Focus on spinal mobility"
+            },
+            {
+              "name": "March in Place",
+              "duration_sec": 60,
+              "notes": "Only duration-based exercise in warmup"
+            }
+          ]
+        },
+        "circuit": {
+          "rounds": 3,
+          "exercises": [
+            {
+              "name": "Squat + Side Leg Raise",
+              "reps": 15,
+              "focus": ["legs", "glutes", "core"]
+            },
+            {
+              "name": "Mountain Climbers",
+              "reps": "20 total (10/side)",
+              "focus": ["cardio", "core"]
+            },
+            {
+              "name": "Bird Dog (Dynamic)",
+              "reps": 12,
+              "focus": ["core", "shoulder mobility"]
+            }
+          ],
+          "rest_between_exercises_sec": 30
+        },
+        "cooldown": {
+          "exercises": [
+            {
+              "name": "Child's Pose",
+              "duration_sec": 60,
+              "notes": "Duration specified for stretching"
+            },
+            {
+              "name": "Thread the Needle",
+              "reps": "5 each side"
+            }
+          ]
+        }
+      },
+      "notes": "Modify shoulder movements if pain occurs. Most exercises use reps unless duration is specified."
+    },
+    {
+      "id": "workout_002",
+      "name": "Anisa Strength Circuit",
+      "description": "Rep-based strength routine focusing on posterior chain.",
+      "client": {
+        "name": "Anisa",
+        "focus_areas": ["back", "glutes", "hamstrings"]
+      },
+      "structure": {
+        "circuit": {
+          "rounds": 4,
+          "exercises": [
+            {
+              "name": "Glute Bridges",
+              "reps": 15,
+              "tempo": "2 sec up, 1 sec hold"
+            },
+            {
+              "name": "Bird Dog (Static)",
+              "reps": "8 each side",
+              "hold_sec": 3
+            },
+            {
+              "name": "Floor Touches",
+              "reps": 12,
+              "notes": "Controlled eccentric"
+            }
+          ],
+          "rest_between_rounds_sec": 45
+        }
+      }
+    }
+  ]
+}
