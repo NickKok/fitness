@@ -48,6 +48,29 @@
             height: 300px;
             font-family: monospace;
         }
+        .printable-routine {
+            background: white;
+            padding: 20px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .printable-routine, .printable-routine * {
+                visibility: visible;
+            }
+            .printable-routine {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .no-print {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -73,6 +96,7 @@
         <button id="backToMain" class="button button-warning">← Back to Main Menu</button>
         <div id="routineList"></div>
         <div id="routineDetailEditor"></div>
+        <div id="printArea" class="hidden"></div>
     </div>
     
     <div id="exerciseEditor" class="editor-container hidden">
@@ -95,6 +119,7 @@
         const fileInfo = document.getElementById('fileInfo');
         const routineList = document.getElementById('routineList');
         const routineDetailEditor = document.getElementById('routineDetailEditor');
+        const printArea = document.getElementById('printArea');
         
         // Event listeners
         document.getElementById('loadFiles').addEventListener('click', loadFiles);
@@ -105,7 +130,7 @@
         document.getElementById('downloadBtn').addEventListener('click', downloadJSONs);
         
         // File loading function
-        function loadFiles() {
+        async function loadFiles() {
             const exerciseFile = document.getElementById('exerciseFile').files[0];
             const routineFile = document.getElementById('routineFile').files[0];
             
@@ -114,40 +139,51 @@
                 return;
             }
             
-            const promises = [
-                readFile(exerciseFile),
-                readFile(routineFile)
-            ];
-            
-            Promise.all(promises)
-                .then(([exerciseContent, routineContent]) => {
-                    try {
-                        exerciseData = JSON.parse(exerciseContent);
-                        routineData = JSON.parse(routineContent);
-                        
-                        fileInfo.innerHTML = `
-                            <p>✅ <strong>Exercises Loaded:</strong> ${exerciseData.length} exercises</p>
-                            <p>✅ <strong>Routines Loaded:</strong> ${routineData.workouts.length} routines</p>
-                        `;
-                        
-                        uploadSection.classList.add('hidden');
-                        mainMenu.classList.remove('hidden');
-                    } catch (e) {
-                        alert('Error parsing JSON files: ' + e.message);
-                    }
-                })
-                .catch(error => {
-                    alert('Error reading files: ' + error.message);
-                });
+            try {
+                // Read files sequentially with error handling
+                const exerciseContent = await readFile(exerciseFile);
+                exerciseData = parseJSON(exerciseContent, 'Exercise Database');
+                
+                const routineContent = await readFile(routineFile);
+                routineData = parseJSON(routineContent, 'Workout Routines');
+                
+                fileInfo.innerHTML = `
+                    <p>✅ <strong>Exercises Loaded:</strong> ${exerciseData.length} exercises</p>
+                    <p>✅ <strong>Routines Loaded:</strong> ${routineData.workouts.length} routines</p>
+                `;
+                
+                uploadSection.classList.add('hidden');
+                mainMenu.classList.remove('hidden');
+            } catch (error) {
+                alert('Error: ' + error.message);
+                console.error(error);
+            }
         }
-        
+
+        // Improved file reader with Promise
         function readFile(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
-                reader.onload = event => resolve(event.target.result);
-                reader.onerror = error => reject(error);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = () => reject(new Error(`Failed to read file: ${file.name}`));
                 reader.readAsText(file);
             });
+        }
+
+        // Robust JSON parsing with validation
+        function parseJSON(content, type) {
+            try {
+                const data = JSON.parse(content);
+                if (type === 'Exercise Database' && !Array.isArray(data)) {
+                    throw new Error('Exercise database should be an array');
+                }
+                if (type === 'Workout Routines' && !data.workouts) {
+                    throw new Error('Workout routines should have a workouts array');
+                }
+                return data;
+            } catch (e) {
+                throw new Error(`Invalid ${type} JSON: ${e.message}`);
+            }
         }
         
         // Editor functions
@@ -167,6 +203,7 @@
             routineEditor.classList.add('hidden');
             exerciseEditor.classList.add('hidden');
             mainMenu.classList.remove('hidden');
+            printArea.classList.add('hidden');
         }
         
         function renderRoutineList() {
@@ -206,10 +243,12 @@
                     <textarea id="routineStructure" rows="20">${JSON.stringify(routine.structure, null, 2)}</textarea>
                 </div>
                 <button id="saveRoutine" class="button">Save Changes</button>
+                <button id="printRoutine" class="button">Print Routine</button>
                 <button id="deleteRoutine" class="button button-warning">Delete Routine</button>
             `;
             
             document.getElementById('saveRoutine').addEventListener('click', saveRoutine);
+            document.getElementById('printRoutine').addEventListener('click', printRoutine);
             document.getElementById('deleteRoutine').addEventListener('click', deleteRoutine);
         }
         
@@ -239,6 +278,51 @@
             }
         }
         
+        function printRoutine() {
+            printArea.innerHTML = `
+                <div class="printable-routine">
+                    <h2>${currentRoutine.name}</h2>
+                    <p><strong>Description:</strong> ${currentRoutine.description}</p>
+                    <h3>Workout Structure</h3>
+                    ${renderPrintableRoutine(currentRoutine.structure)}
+                    <p><strong>Notes:</strong> ${currentRoutine.notes}</p>
+                    <p class="no-print">Printed on ${new Date().toLocaleString()}</p>
+                </div>
+            `;
+            printArea.classList.remove('hidden');
+            window.print();
+        }
+        
+        function renderPrintableRoutine(structure) {
+            let html = '';
+            
+            if (structure.warmup && structure.warmup.exercises.length > 0) {
+                html += '<h4>Warmup</h4><ul>';
+                structure.warmup.exercises.forEach(ex => {
+                    html += `<li>${ex.name}: ${ex.reps || ex.duration_sec}${ex.duration_sec ? ' seconds' : ' reps'}</li>`;
+                });
+                html += '</ul>';
+            }
+            
+            if (structure.circuit) {
+                html += `<h4>Circuit (${structure.circuit.rounds || 1} rounds)</h4><ul>`;
+                structure.circuit.exercises.forEach(ex => {
+                    html += `<li>${ex.name}: ${ex.reps || ex.duration_sec}${ex.duration_sec ? ' seconds' : ' reps'}</li>`;
+                });
+                html += '</ul>';
+            }
+            
+            if (structure.cooldown && structure.cooldown.exercises.length > 0) {
+                html += '<h4>Cooldown</h4><ul>';
+                structure.cooldown.exercises.forEach(ex => {
+                    html += `<li>${ex.name}: ${ex.reps || ex.duration_sec}${ex.duration_sec ? ' seconds' : ' reps'}</li>`;
+                });
+                html += '</ul>';
+            }
+            
+            return html;
+        }
+        
         function deleteRoutine() {
             if (confirm('Are you sure you want to delete this routine?')) {
                 const index = routineData.workouts.findIndex(r => r.id === currentRoutine.id);
@@ -254,4 +338,29 @@
         // Download functionality
         function downloadJSONs() {
             const exerciseBlob = new Blob([JSON.stringify(exerciseData, null, 2)], { type: 'application/json' });
-            const routineBlob = new Blob([JSON.stringify(routineData, null, 2)], { type: 'application/json
+            const routineBlob = new Blob([JSON.stringify(routineData, null, 2)], { type: 'application/json' });
+            
+            const exerciseUrl = URL.createObjectURL(exerciseBlob);
+            const routineUrl = URL.createObjectURL(routineBlob);
+            
+            const exerciseLink = document.createElement('a');
+            exerciseLink.href = exerciseUrl;
+            exerciseLink.download = 'exercise-database-updated.json';
+            
+            const routineLink = document.createElement('a');
+            routineLink.href = routineUrl;
+            routineLink.download = 'workout-routines-updated.json';
+            
+            document.body.appendChild(exerciseLink);
+            document.body.appendChild(routineLink);
+            exerciseLink.click();
+            routineLink.click();
+            document.body.removeChild(exerciseLink);
+            document.body.removeChild(routineLink);
+            
+            URL.revokeObjectURL(exerciseUrl);
+            URL.revokeObjectURL(routineUrl);
+        }
+    </script>
+</body>
+</html>
