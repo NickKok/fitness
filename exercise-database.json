@@ -1,5 +1,15 @@
 [
   {
+    "name": "Wall Ankle Mobilizations",
+    "description": "Improves ankle dorsiflexion for better knee alignment in squats/lunges.",
+    "attributes": ["ankles", "mobility", "warmup"]
+  },
+  {
+    "name": "Single-Leg Mini Squat Hold (Ankle Focus)",
+    "description": "Shallow unilateral squat to strengthen VMO and challenge ankle stability.",
+    "attributes": ["legs", "balance", "strength"]
+  },  
+  {
     "name": "Ab Tucks",
     "description": "Isolated abdominal contraction in a tucked position.",
     "attributes": ["upper", "abs", "core", "lite", "strength"]
