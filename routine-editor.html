@@ -5,59 +5,267 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Routine Editor</title>
     <style>
-        /* [Previous CSS remains the same] */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .button-secondary {
+            background-color: #008CBA;
+        }
+        .button-warning {
+            background-color: #f44336;
+        }
+        .editor-container {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: inherit;
+            box-sizing: border-box;
+            transition: border 0.3s;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .routine-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        .routine-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .routine-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: #4CAF50;
+        }
+        .routine-card h3 {
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 1.2em;
+        }
+        .exercise-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            background: #f9f9f9;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .exercise-item:hover {
+            background: #f0f0f0;
+        }
+        .exercise-info {
+            flex-grow: 1;
+        }
+        .exercise-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .exercise-details {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9em;
+            color: #666;
+        }
         .focus-area-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 5px;
-            margin-top: 5px;
+            margin-top: 8px;
         }
         .focus-tag {
-            background: #e0e0e0;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 12px;
+            background: #e0f7fa;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            color: #00796b;
+        }
+        .exercise-controls {
+            display: flex;
+            gap: 5px;
+        }
+        .exercise-controls button {
+            padding: 5px 10px;
+            font-size: 0.9em;
         }
         .exercise-editor {
-            background: #f5f5f5;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
+            background: #f0f7fa;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #008CBA;
         }
         .all-focus-areas {
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
-            margin: 10px 0;
+            gap: 8px;
+            margin: 15px 0;
         }
         .focus-option {
             background: #e0f7fa;
-            padding: 3px 8px;
-            border-radius: 5px;
+            padding: 5px 12px;
+            border-radius: 15px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+        .focus-option:hover {
+            background: #b2ebf2;
         }
         .focus-option.selected {
             background: #4CAF50;
             color: white;
         }
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin: 10px 0;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .hidden {
+            display: none;
+        }
+        .section-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 8px;
+            margin-top: 30px;
+        }
+        .client-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
     </style>
 </head>
 <body>
-    <!-- [Previous HTML structure remains the same until exercises section] -->
+    <h1>Routine Editor</h1>
+    <button id="backToMain" class="button button-warning">← Back to Main Menu</button>
     
-    <div class="section" id="exercisesSection">
-        <h3>Exercises</h3>
-        <div id="routineExercises"></div>
-        <button class="button add-exercise">+ Add Exercise</button>
+    <div class="editor-container">
+        <div id="routineList">
+            <h2>Your Routines</h2>
+            <div class="routine-list" id="routineCards"></div>
+            <button id="addRoutine" class="button button-secondary">+ Create New Routine</button>
+        </div>
+        
+        <div id="routineDetailEditor" class="hidden">
+            <div class="form-group">
+                <label for="routineName">Routine Name:</label>
+                <input type="text" id="routineName" placeholder="Enter routine name">
+            </div>
+            
+            <div class="form-group">
+                <label for="routineDesc">Description:</label>
+                <textarea id="routineDesc" placeholder="Describe the routine's purpose"></textarea>
+            </div>
+            
+            <div class="client-info">
+                <h3 class="section-title">Client Information</h3>
+                <div class="form-group">
+                    <label for="clientGoals">Goals:</label>
+                    <textarea id="clientGoals" placeholder="Enter client goals (comma separated)"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="clientRestrictions">Restrictions:</label>
+                    <textarea id="clientRestrictions" placeholder="Enter any restrictions"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="clientFrequency">Frequency:</label>
+                    <input type="text" id="clientFrequency" placeholder="e.g., 3x/week">
+                </div>
+            </div>
+            
+            <h3 class="section-title">Exercises</h3>
+            <div id="routineExercises"></div>
+            <button class="button add-exercise">+ Add Exercise</button>
+            
+            <div class="form-group">
+                <label for="routineNotes">Notes:</label>
+                <textarea id="routineNotes" placeholder="Any additional notes or modifications"></textarea>
+            </div>
+            
+            <div class="form-group" style="display: flex; gap: 10px;">
+                <button id="saveRoutine" class="button">Save Routine</button>
+                <button id="printRoutine" class="button button-secondary">Print Routine</button>
+                <button id="deleteRoutine" class="button button-warning">Delete Routine</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Load data
+        // Load data from localStorage
         let exerciseData = JSON.parse(localStorage.getItem('exerciseData')) || [];
         let routineData = JSON.parse(localStorage.getItem('routineData')) || { workouts: [] };
         let currentRoutine = null;
         let allFocusAreas = [];
+
+        // DOM elements
+        const routineCards = document.getElementById('routineCards');
+        const routineDetailEditor = document.getElementById('routineDetailEditor');
+        const routineList = document.getElementById('routineList');
+        const backToMain = document.getElementById('backToMain');
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
@@ -69,30 +277,109 @@
         function extractAllFocusAreas() {
             const areas = new Set();
             exerciseData.forEach(ex => {
-                ex.attributes?.forEach(attr => areas.add(attr));
+                if (ex.attributes) {
+                    ex.attributes.forEach(attr => areas.add(attr));
+                }
             });
             allFocusAreas = Array.from(areas).sort();
+        }
+
+        function renderRoutineList() {
+            routineCards.innerHTML = '';
+            
+            if (routineData.workouts.length === 0) {
+                routineCards.innerHTML = '<p>No routines found. Create your first routine!</p>';
+                return;
+            }
+            
+            routineData.workouts.forEach(routine => {
+                const card = document.createElement('div');
+                card.className = 'routine-card';
+                
+                const exerciseCount = routine.exercises ? routine.exercises.length : 0;
+                const focusAreas = routine.exercises 
+                    ? [...new Set(routine.exercises.flatMap(ex => ex.focusAreas || []))].join(', ')
+                    : '';
+                
+                card.innerHTML = `
+                    <h3>${routine.name}</h3>
+                    <p>${routine.description || 'No description'}</p>
+                    <div style="margin-top: 10px;">
+                        <small><strong>${exerciseCount}</strong> exercises</small>
+                        ${focusAreas ? `<div class="focus-area-tags" style="margin-top: 5px;">
+                            ${focusAreas.split(', ').map(area => `<span class="focus-tag">${area}</span>`).join('')}
+                        </div>` : ''}
+                    </div>
+                `;
+                card.addEventListener('click', () => editRoutine(routine));
+                routineCards.appendChild(card);
+            });
+        }
+
+        function setupEventListeners() {
+            backToMain.addEventListener('click', () => {
+                window.close();
+            });
+            
+            document.getElementById('addRoutine').addEventListener('click', addNewRoutine);
+            document.getElementById('saveRoutine').addEventListener('click', saveRoutine);
+            document.getElementById('printRoutine').addEventListener('click', printRoutine);
+            document.getElementById('deleteRoutine').addEventListener('click', deleteRoutine);
+            
+            document.querySelector('.add-exercise').addEventListener('click', addExerciseToRoutine);
+        }
+
+        function editRoutine(routine) {
+            currentRoutine = routine;
+            routineDetailEditor.classList.remove('hidden');
+            routineList.classList.add('hidden');
+            
+            // Fill form
+            document.getElementById('routineName').value = routine.name;
+            document.getElementById('routineDesc').value = routine.description || '';
+            document.getElementById('routineNotes').value = routine.notes || '';
+            
+            // Client info
+            if (routine.client) {
+                document.getElementById('clientGoals').value = 
+                    Array.isArray(routine.client.goals) ? routine.client.goals.join(', ') : '';
+                document.getElementById('clientRestrictions').value = 
+                    Array.isArray(routine.client.restrictions) ? routine.client.restrictions.join(', ') : '';
+                document.getElementById('clientFrequency').value = routine.client.frequency || '';
+            }
+            
+            // Render exercises
+            renderExercises(routine.exercises || []);
         }
 
         function renderExercises(exercises) {
             const container = document.getElementById('routineExercises');
             container.innerHTML = '';
             
+            if (exercises.length === 0) {
+                container.innerHTML = '<p>No exercises added yet.</p>';
+                return;
+            }
+            
             exercises.forEach((ex, index) => {
                 const exerciseItem = document.createElement('div');
                 exerciseItem.className = 'exercise-item';
                 
-                // Get exercise details from database
                 const exerciseDetails = exerciseData.find(e => e.name === ex.name) || {};
                 const focusAreas = ex.focusAreas || exerciseDetails.attributes || [];
                 
                 exerciseItem.innerHTML = `
-                    <div>
-                        <strong>${ex.name}</strong><br>
-                        ${ex.reps ? `${ex.reps} reps` : ''}${ex.duration_sec ? `${ex.duration_sec} sec` : ''}
-                        <div class="focus-area-tags">
-                            ${focusAreas.map(area => `<span class="focus-tag">${area}</span>`).join('')}
+                    <div class="exercise-info">
+                        <div class="exercise-name">${ex.name}</div>
+                        <div class="exercise-details">
+                            ${ex.reps ? `<span>${ex.reps} reps</span>` : ''}
+                            ${ex.duration_sec ? `<span>${ex.duration_sec} sec</span>` : ''}
                         </div>
+                        ${focusAreas.length > 0 ? `
+                            <div class="focus-area-tags">
+                                ${focusAreas.map(area => `<span class="focus-tag">${area}</span>`).join('')}
+                            </div>
+                        ` : ''}
                     </div>
                     <div class="exercise-controls">
                         <button class="button-secondary" data-index="${index}">Edit</button>
@@ -111,6 +398,90 @@
             });
         }
 
+        function addNewRoutine() {
+            currentRoutine = {
+                id: 'workout_' + Date.now(),
+                name: 'New Routine',
+                description: '',
+                exercises: [],
+                client: {
+                    goals: [],
+                    restrictions: [],
+                    frequency: ''
+                },
+                notes: ''
+            };
+            routineData.workouts.push(currentRoutine);
+            editRoutine(currentRoutine);
+        }
+
+        function addExerciseToRoutine() {
+            const exerciseSelect = document.createElement('select');
+            exerciseSelect.innerHTML = `
+                <option value="">-- Select Exercise --</option>
+                ${exerciseData.map(ex => 
+                    `<option value="${ex.name}">${ex.name} (${ex.attributes?.join(', ') || 'no focus areas'})</option>`
+                ).join('')}
+            `;
+            
+            const dialog = document.createElement('div');
+            dialog.className = 'exercise-editor';
+            dialog.innerHTML = `
+                <h4>Add New Exercise</h4>
+                <div class="form-group">
+                    <label>Exercise:</label>
+                    <div id="exercise-select-container"></div>
+                </div>
+                <div class="form-group">
+                    <label>Type:</label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="ex-type-new" value="reps" checked> Reps:
+                            <input type="text" id="ex-reps-new" value="10" style="width: 60px;">
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="ex-type-new" value="duration"> Duration (sec):
+                            <input type="text" id="ex-duration-new" value="30" style="width: 60px;">
+                        </label>
+                    </div>
+                </div>
+                <button class="button" id="save-new-exercise">Add Exercise</button>
+                <button class="button button-warning" id="cancel-new-exercise">Cancel</button>
+            `;
+            
+            dialog.querySelector('#exercise-select-container').appendChild(exerciseSelect);
+            document.getElementById('routineExercises').appendChild(dialog);
+            
+            // Save handler
+            document.getElementById('save-new-exercise').addEventListener('click', () => {
+                const exerciseName = exerciseSelect.value;
+                if (!exerciseName) {
+                    alert('Please select an exercise');
+                    return;
+                }
+                
+                const type = document.querySelector('input[name="ex-type-new"]:checked').value;
+                const newExercise = {
+                    name: exerciseName,
+                    focusAreas: exerciseData.find(e => e.name === exerciseName)?.attributes || []
+                };
+                
+                if (type === 'reps') {
+                    newExercise.reps = document.getElementById('ex-reps-new').value;
+                } else {
+                    newExercise.duration_sec = document.getElementById('ex-duration-new').value;
+                }
+                
+                currentRoutine.exercises.push(newExercise);
+                renderExercises(currentRoutine.exercises);
+            });
+            
+            // Cancel handler
+            document.getElementById('cancel-new-exercise').addEventListener('click', () => {
+                renderExercises(currentRoutine.exercises);
+            });
+        }
+
         function editExercise(index) {
             const exercise = currentRoutine.exercises[index];
             const exerciseDetails = exerciseData.find(e => e.name === exercise.name) || {};
@@ -120,14 +491,16 @@
             editor.innerHTML = `
                 <h4>Edit Exercise: ${exercise.name}</h4>
                 <div class="form-group">
-                    <label>Reps/Duration:</label>
-                    <div>
-                        <label><input type="radio" name="ex-type-${index}" value="reps" ${exercise.reps ? 'checked' : ''}> Reps:</label>
-                        <input type="text" id="ex-reps-${index}" value="${exercise.reps || ''}" style="width: 60px;">
-                    </div>
-                    <div>
-                        <label><input type="radio" name="ex-type-${index}" value="duration" ${exercise.duration_sec ? 'checked' : ''}> Duration (sec):</label>
-                        <input type="text" id="ex-duration-${index}" value="${exercise.duration_sec || ''}" style="width: 60px;">
+                    <label>Type:</label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="ex-type-${index}" value="reps" ${exercise.reps ? 'checked' : ''}> Reps:
+                            <input type="text" id="ex-reps-${index}" value="${exercise.reps || ''}" style="width: 60px;">
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="ex-type-${index}" value="duration" ${exercise.duration_sec ? 'checked' : ''}> Duration (sec):
+                            <input type="text" id="ex-duration-${index}" value="${exercise.duration_sec || ''}" style="width: 60px;">
+                        </label>
                     </div>
                 </div>
                 <div class="form-group">
@@ -139,7 +512,7 @@
                         `).join('')}
                     </div>
                 </div>
-                <button class="button" id="save-exercise-${index}">Save</button>
+                <button class="button" id="save-exercise-${index}">Save Changes</button>
                 <button class="button button-warning" id="cancel-exercise-${index}">Cancel</button>
             `;
             
@@ -177,33 +550,117 @@
             });
         }
 
-        function addExerciseToRoutine() {
-            const exerciseName = prompt('Enter exercise name:');
-            if (exerciseName) {
-                const isRepBased = confirm('Is this exercise rep-based? (Cancel for duration-based)');
-                
-                const newExercise = {
-                    name: exerciseName,
-                    focusAreas: []
-                };
-                
-                if (isRepBased) {
-                    newExercise.reps = "10";
-                } else {
-                    newExercise.duration_sec = "30";
-                }
-                
-                if (!currentRoutine.exercises) {
-                    currentRoutine.exercises = [];
-                }
-                
-                currentRoutine.exercises.push(newExercise);
+        function removeExercise(index) {
+            if (confirm('Delete this exercise from the routine?')) {
+                currentRoutine.exercises.splice(index, 1);
                 renderExercises(currentRoutine.exercises);
-                editExercise(currentRoutine.exercises.length - 1);
             }
         }
 
-        // [Rest of the functions remain similar but updated for the new structure]
+        function saveRoutine() {
+            // Basic validation
+            if (!document.getElementById('routineName').value) {
+                alert('Please enter a routine name');
+                return;
+            }
+            
+            currentRoutine.name = document.getElementById('routineName').value;
+            currentRoutine.description = document.getElementById('routineDesc').value;
+            currentRoutine.notes = document.getElementById('routineNotes').value;
+            
+            // Save client info
+            currentRoutine.client = {
+                goals: document.getElementById('clientGoals').value.split(',').map(s => s.trim()).filter(s => s),
+                restrictions: document.getElementById('clientRestrictions').value.split(',').map(s => s.trim()).filter(s => s),
+                frequency: document.getElementById('clientFrequency').value
+            };
+            
+            // Save back to localStorage
+            localStorage.setItem('routineData', JSON.stringify(routineData));
+            
+            alert('Routine saved successfully!');
+            renderRoutineList();
+            routineDetailEditor.classList.add('hidden');
+            routineList.classList.remove('hidden');
+        }
+
+        function printRoutine() {
+            const printWindow = window.open('', '_blank');
+            
+            const exercisesHtml = currentRoutine.exercises.map(ex => `
+                <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee;">
+                    <h4 style="margin: 0 0 5px 0;">${ex.name}</h4>
+                    <div style="display: flex; gap: 20px; margin-bottom: 5px;">
+                        ${ex.reps ? `<div><strong>Reps:</strong> ${ex.reps}</div>` : ''}
+                        ${ex.duration_sec ? `<div><strong>Duration:</strong> ${ex.duration_sec} sec</div>` : ''}
+                    </div>
+                    ${ex.focusAreas?.length > 0 ? `
+                        <div><strong>Focus Areas:</strong> ${ex.focusAreas.join(', ')}</div>
+                    ` : ''}
+                </div>
+            `).join('');
+            
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>${currentRoutine.name}</title>
+                    <style>
+                        body { font-family: Arial; padding: 25px; color: #333; }
+                        h1 { color: #2c3e50; border-bottom: 2px solid #4CAF50; padding-bottom: 10px; }
+                        .info-section { margin-bottom: 20px; }
+                        .client-info { background: #f5f5f5; padding: 15px; border-radius: 5px; margin: 15px 0; }
+                        .notes { font-style: italic; margin-top: 20px; }
+                        @page { size: auto; margin: 10mm; }
+                    </style>
+                </head>
+                <body>
+                    <h1>${currentRoutine.name}</h1>
+                    <div class="info-section">
+                        <p><strong>Description:</strong> ${currentRoutine.description || 'N/A'}</p>
+                    </div>
+                    
+                    <div class="client-info">
+                        <h3 style="margin-top: 0;">Client Information</h3>
+                        <p><strong>Goals:</strong> ${currentRoutine.client.goals.join(', ') || 'N/A'}</p>
+                        <p><strong>Restrictions:</strong> ${currentRoutine.client.restrictions.join(', ') || 'N/A'}</p>
+                        <p><strong>Frequency:</strong> ${currentRoutine.client.frequency || 'N/A'}</p>
+                    </div>
+                    
+                    <h3>Exercises</h3>
+                    ${exercisesHtml}
+                    
+                    ${currentRoutine.notes ? `
+                        <div class="notes">
+                            <h3>Notes</h3>
+                            <p>${currentRoutine.notes}</p>
+                        </div>
+                    ` : ''}
+                    
+                    <p style="text-align: right; font-size: 0.8em; margin-top: 30px;">
+                        Generated on ${new Date().toLocaleString()}
+                    </p>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.focus();
+            setTimeout(() => {
+                printWindow.print();
+            }, 500);
+        }
+
+        function deleteRoutine() {
+            if (confirm('Are you sure you want to delete this routine? This cannot be undone.')) {
+                const index = routineData.workouts.findIndex(r => r.id === currentRoutine.id);
+                if (index !== -1) {
+                    routineData.workouts.splice(index, 1);
+                    localStorage.setItem('routineData', JSON.stringify(routineData));
+                    routineDetailEditor.classList.add('hidden');
+                    routineList.classList.remove('hidden');
+                    renderRoutineList();
+                }
+            }
+        }
     </script>
 </body>
 </html>
