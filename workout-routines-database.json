@@ -5,96 +5,142 @@
       "name": "Knee Strengthening Protocol 2.0",
       "description": "Enhanced routine targeting knee stability through ankle mobility, VMO activation, and posterior chain strength.",
       "client": {
-        "goals": ["Improve knee stability", "Strengthen posterior chain", "Enhance joint resilience"],
-        "restrictions": ["Avoid excessive knee flexion if pain occurs"],
+        "goals": [
+          "Improve knee stability",
+          "Strengthen posterior chain",
+          "Enhance joint resilience"
+        ],
+        "restrictions": [
+          "Avoid excessive knee flexion if pain occurs"
+        ],
         "frequency": "3x/week"
       },
       "exercises": [
         {
           "name": "Wall Ankle Mobilizations",
           "reps": "8 each side",
-          "focusAreas": ["ankles", "calves"],
+          "focusAreas": [
+            "ankles",
+            "calves"
+          ],
           "phase": "warmup",
           "notes": "Hold 2 seconds at end-range"
         },
         {
           "name": "Heel Walks",
           "duration_sec": 30,
-          "focusAreas": ["tibialis anterior"],
+          "focusAreas": [
+            "tibialis anterior"
+          ],
           "phase": "warmup",
           "notes": "Focus on controlled steps"
         },
         {
           "name": "Single Leg Glute Bridges",
           "reps": "10-12 per leg",
-          "focusAreas": ["glutes", "hamstrings"],
+          "focusAreas": [
+            "glutes",
+            "hamstrings"
+          ],
           "phase": "main"
         },
         {
           "name": "Deadlift (Single Leg)",
           "reps": "10-12 per leg",
-          "focusAreas": ["hamstrings", "balance"],
+          "focusAreas": [
+            "hamstrings",
+            "balance"
+          ],
           "phase": "main"
         },
         {
           "name": "Standing Side Leg Raises",
           "reps": "20 per side",
-          "focusAreas": ["glutes", "abductors"],
+          "focusAreas": [
+            "glutes",
+            "abductors"
+          ],
           "phase": "main"
         },
         {
           "name": "Single Leg Calf Raise",
           "reps": "10-15 per leg",
-          "focusAreas": ["calves", "ankle stability"],
+          "focusAreas": [
+            "calves",
+            "ankle stability"
+          ],
           "phase": "main"
         },
         {
           "name": "Quadruped Hip Extensions",
           "reps": "10-15 per leg",
-          "focusAreas": ["glutes", "core"],
+          "focusAreas": [
+            "glutes",
+            "core"
+          ],
           "phase": "main"
         },
         {
           "name": "Static Lunge Pulse",
           "reps": "10-12 per leg",
-          "focusAreas": ["quads", "glutes"],
+          "focusAreas": [
+            "quads",
+            "glutes"
+          ],
           "phase": "main"
         },
         {
           "name": "Side Lunges",
           "reps": "10 per side",
-          "focusAreas": ["adductors", "quads"],
+          "focusAreas": [
+            "adductors",
+            "quads"
+          ],
           "phase": "main"
         },
         {
           "name": "Tip-Toe Squats",
           "reps": 10,
-          "focusAreas": ["calves", "quads"],
+          "focusAreas": [
+            "calves",
+            "quads"
+          ],
           "phase": "main"
         },
         {
           "name": "Single-Leg Mini Squat Hold",
           "duration_sec": "10-15 per leg",
-          "focusAreas": ["VMO", "ankle stability"],
+          "focusAreas": [
+            "VMO",
+            "ankle stability"
+          ],
           "phase": "main",
           "notes": "Add pulses if too easy"
         },
         {
           "name": "Wall Sit",
           "duration_sec": "30-60",
-          "focusAreas": ["isometric", "quads"],
+          "focusAreas": [
+            "isometric",
+            "quads"
+          ],
           "phase": "main"
         },
         {
           "name": "Toe-to-Wall Tibialis Raises",
           "reps": 12,
-          "focusAreas": ["tibialis anterior"],
+          "focusAreas": [
+            "tibialis anterior"
+          ],
           "phase": "cooldown"
         },
         {
           "name": "Child's Pose",
           "duration_sec": 45,
-          "focusAreas": ["stretching", "relaxation"],
+          "focusAreas": [
+            "stretching",
+            "relaxation"
+          ],
           "phase": "cooldown",
           "notes": "Focus on deep breathing"
         }
