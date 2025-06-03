@@ -1,93 +1,107 @@
 {
-  "id": "workout_001",
-  "name": "Knee Strengthening Protocol 2.0",
-  "description": "Enhanced routine targeting knee stability through ankle mobility, VMO activation, and posterior chain strength.",
-  "client": {
-    "goals": ["Improve knee stability", "Strengthen posterior chain", "Enhance joint resilience"],
-    "restrictions": ["Avoid excessive knee flexion if pain occurs"],
-    "frequency": "3x/week"
-  },
-  "structure": {
-    "warmup": {
+  "workouts": [
+    {
+      "id": "workout_003",
+      "name": "Knee Strengthening Protocol 2.0",
+      "description": "Enhanced routine targeting knee stability through ankle mobility, VMO activation, and posterior chain strength.",
+      "client": {
+        "goals": ["Improve knee stability", "Strengthen posterior chain", "Enhance joint resilience"],
+        "restrictions": ["Avoid excessive knee flexion if pain occurs"],
+        "frequency": "3x/week"
+      },
       "exercises": [
         {
           "name": "Wall Ankle Mobilizations",
           "reps": "8 each side",
+          "focusAreas": ["ankles", "calves"],
+          "phase": "warmup",
           "notes": "Hold 2 seconds at end-range"
         },
         {
           "name": "Heel Walks",
           "duration_sec": 30,
+          "focusAreas": ["tibialis anterior"],
+          "phase": "warmup",
           "notes": "Focus on controlled steps"
-        }
-      ]
-    },
-    "circuit": {
-      "rounds": 3,
-      "exercises": [
+        },
         {
           "name": "Single Leg Glute Bridges",
           "reps": "10-12 per leg",
-          "focus": ["glutes", "hamstrings"]
+          "focusAreas": ["glutes", "hamstrings"],
+          "phase": "main"
         },
         {
           "name": "Deadlift (Single Leg)",
           "reps": "10-12 per leg",
-          "focus": ["hamstrings", "balance"]
+          "focusAreas": ["hamstrings", "balance"],
+          "phase": "main"
         },
         {
           "name": "Standing Side Leg Raises",
           "reps": "20 per side",
-          "focus": ["glutes", "abductors"]
+          "focusAreas": ["glutes", "abductors"],
+          "phase": "main"
         },
         {
           "name": "Single Leg Calf Raise",
           "reps": "10-15 per leg",
-          "focus": ["calves", "ankle stability"]
+          "focusAreas": ["calves", "ankle stability"],
+          "phase": "main"
         },
         {
           "name": "Quadruped Hip Extensions",
           "reps": "10-15 per leg",
-          "focus": ["glutes", "core"]
+          "focusAreas": ["glutes", "core"],
+          "phase": "main"
         },
         {
           "name": "Static Lunge Pulse",
           "reps": "10-12 per leg",
-          "focus": ["quads", "glutes"]
+          "focusAreas": ["quads", "glutes"],
+          "phase": "main"
         },
         {
           "name": "Side Lunges",
           "reps": "10 per side",
-          "focus": ["adductors", "quads"]
+          "focusAreas": ["adductors", "quads"],
+          "phase": "main"
         },
         {
           "name": "Tip-Toe Squats",
           "reps": 10,
-          "focus": ["calves", "quads"]
+          "focusAreas": ["calves", "quads"],
+          "phase": "main"
         },
         {
           "name": "Single-Leg Mini Squat Hold",
           "duration_sec": "10-15 per leg",
-          "focus": ["VMO", "ankle stability"],
+          "focusAreas": ["VMO", "ankle stability"],
+          "phase": "main",
           "notes": "Add pulses if too easy"
-        }
-      ],
-      "rest_between_rounds_sec": 60
-    },
-    "cooldown": {
-      "exercises": [
+        },
+        {
+          "name": "Wall Sit",
+          "duration_sec": "30-60",
+          "focusAreas": ["isometric", "quads"],
+          "phase": "main"
+        },
         {
           "name": "Toe-to-Wall Tibialis Raises",
           "reps": 12,
-          "focus": ["tibialis anterior"]
+          "focusAreas": ["tibialis anterior"],
+          "phase": "cooldown"
         },
         {
           "name": "Child's Pose",
           "duration_sec": 45,
+          "focusAreas": ["stretching", "relaxation"],
+          "phase": "cooldown",
           "notes": "Focus on deep breathing"
         }
-      ]
+      ],
+      "notes": "Perform exercises in order. Modify reps if experiencing knee discomfort. The single-leg focus enhances stability while protecting joints.",
+      "circuitRounds": 3,
+      "restBetweenRoundsSec": 60
     }
-  },
-  "notes": "Perform exercises in order. Modify reps if experiencing knee discomfort. The single-leg focus enhances stability while protecting joints."
+  ]
 }
