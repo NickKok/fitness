@@ -2,202 +2,68 @@
   "workouts": [
     {
       "id": "workout_001",
-      "name": "Neri First Workout",
-      "description": "20-minute equipment-free routine for calorie burn, visceral fat focus, and shoulder mobility.",
+      "name": "Neri Knee Strengthening",
+      "description": "Full routine focusing on knee stability and strength",
       "client": {
-        "name": "Neri",
-        "age": 47,
-        "goals": ["Burn calories", "Reduce visceral fat", "Improve shoulder mobility"],
-        "restrictions": ["Early-stage frozen shoulder", "No equipment"],
+        "goals": ["Improve knee stability", "Strengthen posterior chain"],
+        "restrictions": ["Avoid excessive knee flexion"],
         "frequency": "3x/week"
       },
-      "structure": {
-        "warmup": {
-          "exercises": [
-            {
-              "name": "Arm Circles",
-              "reps": "10 each direction",
-              "notes": "Forward and backward"
-            },
-            {
-              "name": "Cat Cow",
-              "reps": 12,
-              "notes": "Focus on spinal mobility"
-            },
-            {
-              "name": "March in Place",
-              "duration_sec": 60,
-              "notes": "Only duration-based exercise in warmup"
-            }
-          ]
-        },
-        "circuit": {
-          "rounds": 3,
-          "exercises": [
-            {
-              "name": "Squat + Side Leg Raise",
-              "reps": 15,
-              "focus": ["legs", "glutes", "core"]
-            },
-            {
-              "name": "Mountain Climbers",
-              "reps": "20 total (10/side)",
-              "focus": ["cardio", "core"]
-            },
-            {
-              "name": "Bird Dog (Dynamic)",
-              "reps": 12,
-              "focus": ["core", "shoulder mobility"]
-            }
-          ],
-          "rest_between_exercises_sec": 30
-        },
-        "cooldown": {
-          "exercises": [
-            {
-              "name": "Child's Pose",
-              "duration_sec": 60,
-              "notes": "Duration specified for stretching"
-            },
-            {
-              "name": "Thread the Needle",
-              "reps": "5 each side"
-            }
-          ]
-        }
-      },
-      "notes": "Modify shoulder movements if pain occurs. Most exercises use reps unless duration is specified."
-    },
-    {
-      "id": "workout_002",
-      "name": "Anisa Strength Circuit",
-      "description": "Rep-based strength routine focusing on posterior chain.",
-      "client": {
-        "name": "Anisa",
-        "focus_areas": ["back", "glutes", "hamstrings"]
-      },
-      "structure": {
-        "circuit": {
-          "rounds": 4,
-          "exercises": [
-            {
-              "name": "Glute Bridges",
-              "reps": 15,
-              "tempo": "2 sec up, 1 sec hold"
-            },
-            {
-              "name": "Bird Dog (Static)",
-              "reps": "8 each side",
-              "hold_sec": 3
-            },
-            {
-              "name": "Floor Touches",
-              "reps": 12,
-              "notes": "Controlled eccentric"
-            }
-          ],
-          "rest_between_rounds_sec": 45
-        }'
-        {
-  "id": "workout_003",
-  "name": "Knee Strengthening Protocol 2.0",
-  "description": "Enhanced routine targeting knee stability through ankle mobility, VMO activation, and posterior chain strength.",
-  "client": {
-    "goals": ["Improve knee stability", "Strengthen posterior chain", "Enhance joint resilience"],
-    "restrictions": ["Avoid excessive knee flexion if pain occurs"],
-    "frequency": "3x/week"
-  },
-  "structure": {
-    "warmup": {
       "exercises": [
         {
           "name": "Wall Ankle Mobilizations",
           "reps": "8 each side",
-          "notes": "Hold 2 seconds at end-range"
+          "focusAreas": ["ankles", "calves"]
         },
-        {
-          "name": "Heel Walks",
-          "duration_sec": 30,
-          "notes": "Focus on controlled steps"
-        }
-      ]
-    },
-    "circuit": {
-      "rounds": 3,
-      "exercises": [
         {
           "name": "Single Leg Glute Bridges",
           "reps": "10-12 per leg",
-          "focus": ["glutes", "hamstrings"]
+          "focusAreas": ["glutes", "hamstrings"]
         },
         {
           "name": "Deadlift (Single Leg)",
           "reps": "10-12 per leg",
-          "focus": ["hamstrings", "balance"]
-        },
-        {
-          "name": "Standing Side Leg Raises",
-          "reps": "20 per side",
-          "focus": ["glutes", "abductors"]
-        },
-        {
-          "name": "Single Leg Calf Raise",
-          "reps": "10-15 per leg",
-          "focus": ["calves", "ankle stability"]
-        },
-        {
-          "name": "Quadruped Hip Extensions",
-          "reps": "10-15 per leg",
-          "focus": ["glutes", "core"]
+          "focusAreas": ["hamstrings", "balance"]
         },
         {
           "name": "Static Lunge Pulse",
           "reps": "10-12 per leg",
-          "focus": ["quads", "glutes"]
-        },
-        {
-          "name": "Side Lunges",
-          "reps": "10 per side",
-          "focus": ["adductors", "quads"]
-        },
-        {
-          "name": "Tip-Toe Squats",
-          "reps": 10,
-          "focus": ["calves", "quads"]
-        },
-        {
-          "name": "Single-Leg Mini Squat Hold",
-          "duration_sec": "10-15 per leg",
-          "focus": ["VMO", "ankle stability"],
-          "notes": "Add pulses if too easy"
+          "focusAreas": ["quads", "glutes"]
         },
         {
           "name": "Wall Sit",
           "duration_sec": "30-60",
-          "focus": ["isometric", "quads"],
-          "notes": "Maintain 90° knee angle"
-        }
-      ],
-      "rest_between_rounds_sec": 60
-    },
-    "cooldown": {
-      "exercises": [
+          "focusAreas": ["isometric", "quads"]
+        },
         {
           "name": "Toe-to-Wall Tibialis Raises",
           "reps": 12,
-          "focus": ["tibialis anterior"]
+          "focusAreas": ["tibialis anterior"]
+        }
+      ],
+      "notes": "Perform exercises in order. Modify reps if knee discomfort occurs."
+    },
+    {
+      "id": "workout_002",
+      "name": "Full Body Mobility",
+      "description": "General mobility routine for all joints",
+      "exercises": [
+        {
+          "name": "Cat Cow",
+          "reps": 12,
+          "focusAreas": ["spine", "core"]
         },
         {
-          "name": "Child's Pose",
-          "duration_sec": 45,
-          "notes": "Focus on deep breathing"
+          "name": "Downward Facing Dog",
+          "duration_sec": 30,
+          "focusAreas": ["hamstrings", "shoulders"]
+        },
+        {
+          "name": "Cossack Squat",
+          "reps": "10 per side",
+          "focusAreas": ["adductors", "hips"]
         }
       ]
-    }
-  },
-  "notes": "Perform exercises in order. Modify reps/duration if experiencing knee discomfort. Wall sits placed last in circuit to maximize quad endurance when joints are warm."
-}
-      }
     }
   ]
 }
