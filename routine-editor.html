@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Routine Editor</title>
+    <title>Fitness Routine Editor</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -69,28 +69,22 @@
             border-radius: 5px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        .focus-area-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 5px;
+        .exercise-editor {
+            background: #f0f7fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #008CBA;
         }
-        .focus-tag {
-            background: #e0f7fa;
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 12px;
-            color: #00796b;
+        .hidden {
+            display: none;
         }
-        .phase-indicator {
-            font-size: 12px;
-            padding: 2px 8px;
-            border-radius: 10px;
-            background: #f0f0f0;
+        .section-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 8px;
+            margin-top: 30px;
         }
-        .phase-warmup { background: #fff3e0; color: #e65100; }
-        .phase-main { background: #e8f5e9; color: #2e7d32; }
-        .phase-cooldown { background: #e3f2fd; color: #1565c0; }
     </style>
 </head>
 <body>
@@ -108,39 +102,7 @@
             <textarea id="routineDesc"></textarea>
         </div>
         
-        <div class="form-group">
-            <label>Client Information:</label>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <div>
-                    <label for="clientGoals">Goals:</label>
-                    <textarea id="clientGoals" rows="3"></textarea>
-                </div>
-                <div>
-                    <label for="clientRestrictions">Restrictions:</label>
-                    <textarea id="clientRestrictions" rows="3"></textarea>
-                </div>
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="clientFrequency">Frequency:</label>
-                <input type="text" id="clientFrequency">
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <label>Circuit Settings:</label>
-            <div style="display: flex; gap: 20px;">
-                <div>
-                    <label for="circuitRounds">Rounds:</label>
-                    <input type="number" id="circuitRounds" min="1" value="3">
-                </div>
-                <div>
-                    <label for="restBetweenRounds">Rest Between (sec):</label>
-                    <input type="number" id="restBetweenRounds" min="0" value="60">
-                </div>
-            </div>
-        </div>
-        
-        <h3>Exercises</h3>
+        <h3 class="section-title">Exercises</h3>
         <div id="routineExercises"></div>
         
         <div class="form-group">
@@ -148,10 +110,8 @@
             <textarea id="routineNotes"></textarea>
         </div>
         
-        <div style="display: flex; gap: 10px;">
-            <button id="saveRoutine" class="button">Save Changes</button>
-            <button id="printRoutine" class="button button-secondary">Print Routine</button>
-        </div>
+        <button id="saveRoutine" class="button">Save Routine</button>
+        <button id="printRoutine" class="button button-secondary">Print Routine</button>
     </div>
 
     <script>
@@ -162,40 +122,26 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            // For demo purposes - in production you would get this from your data
             currentRoutine = routineData.workouts[0] || {
-                id: 'workout_003',
-                name: 'Knee Strengthening Protocol 2.0',
-                description: 'Enhanced routine targeting knee stability',
+                id: 'workout_' + Date.now(),
+                name: '',
+                description: '',
                 exercises: [],
-                client: {
-                    goals: [],
-                    restrictions: [],
-                    frequency: ''
-                },
-                notes: '',
-                circuitRounds: 3,
-                restBetweenRoundsSec: 60
+                notes: ''
             };
             
             loadRoutineData();
             renderExercises();
+            
+            document.getElementById('backToMain').addEventListener('click', () => window.close());
+            document.getElementById('saveRoutine').addEventListener('click', saveRoutine);
+            document.getElementById('printRoutine').addEventListener('click', printRoutine);
         });
 
         function loadRoutineData() {
             document.getElementById('routineName').value = currentRoutine.name;
             document.getElementById('routineDesc').value = currentRoutine.description || '';
             document.getElementById('routineNotes').value = currentRoutine.notes || '';
-            document.getElementById('circuitRounds').value = currentRoutine.circuitRounds || 3;
-            document.getElementById('restBetweenRounds').value = currentRoutine.restBetweenRoundsSec || 60;
-            
-            if (currentRoutine.client) {
-                document.getElementById('clientGoals').value = 
-                    Array.isArray(currentRoutine.client.goals) ? currentRoutine.client.goals.join('\n') : '';
-                document.getElementById('clientRestrictions').value = 
-                    Array.isArray(currentRoutine.client.restrictions) ? currentRoutine.client.restrictions.join('\n') : '';
-                document.getElementById('clientFrequency').value = currentRoutine.client.frequency || '';
-            }
         }
 
         function renderExercises() {
@@ -212,23 +158,18 @@
                 exerciseItem.className = 'exercise-item';
                 
                 const exerciseDetails = exerciseData.find(e => e.name === ex.name) || {};
-                const focusAreas = ex.focusAreas || exerciseDetails.attributes || [];
+                const focusAreas = ex.attributes || exerciseDetails.attributes || [];
                 
                 exerciseItem.innerHTML = `
                     <div>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <strong>${ex.name}</strong>
-                            <span class="phase-indicator phase-${ex.phase || 'main'}">${ex.phase || 'main'}</span>
-                        </div>
-                        <div style="display: flex; gap: 15px; margin-top: 5px;">
+                        <strong>${ex.name}</strong>
+                        <div style="margin-top: 5px;">
                             ${ex.reps ? `<span>${ex.reps} reps</span>` : ''}
                             ${ex.duration_sec ? `<span>${ex.duration_sec} sec</span>` : ''}
                         </div>
-                        ${focusAreas.length > 0 ? `
-                            <div class="focus-area-tags">
-                                ${focusAreas.map(area => `<span class="focus-tag">${area}</span>`).join('')}
-                            </div>
-                        ` : ''}
+                        <div style="margin-top: 5px;">
+                            <small>${focusAreas.join(', ')}</small>
+                        </div>
                         ${ex.notes ? `<div style="margin-top: 5px; font-size: 0.9em;">${ex.notes}</div>` : ''}
                     </div>
                     <div>
@@ -237,11 +178,7 @@
                 `;
                 
                 container.appendChild(exerciseItem);
-                
-                // Add edit listener
-                exerciseItem.querySelector('button').addEventListener('click', () => {
-                    editExercise(index);
-                });
+                exerciseItem.querySelector('button').addEventListener('click', () => editExercise(index));
             });
         }
 
@@ -249,45 +186,92 @@
             const exercise = currentRoutine.exercises[index];
             const exerciseDetails = exerciseData.find(e => e.name === exercise.name) || {};
             
-            const newPhase = prompt("Enter phase (warmup/main/cooldown):", exercise.phase || 'main');
-            if (newPhase && ['warmup', 'main', 'cooldown'].includes(newPhase.toLowerCase())) {
-                exercise.phase = newPhase.toLowerCase();
-            }
+            const editor = document.createElement('div');
+            editor.className = 'exercise-editor';
+            editor.innerHTML = `
+                <h4>Edit Exercise</h4>
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" id="edit-ex-name" value="${exercise.name}">
+                </div>
+                <div class="form-group">
+                    <label>Description:</label>
+                    <textarea id="edit-ex-desc">${exercise.description || exerciseDetails.description || ''}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Type:</label>
+                    <div style="display: flex; gap: 15px;">
+                        <label>
+                            <input type="radio" name="ex-type" value="reps" ${exercise.reps ? 'checked' : ''}> Reps:
+                            <input type="text" id="edit-ex-reps" value="${exercise.reps || ''}" style="width: 60px;">
+                        </label>
+                        <label>
+                            <input type="radio" name="ex-type" value="duration" ${exercise.duration_sec ? 'checked' : ''}> Duration (sec):
+                            <input type="text" id="edit-ex-duration" value="${exercise.duration_sec || ''}" style="width: 60px;">
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Muscles/Areas (comma separated):</label>
+                    <input type="text" id="edit-ex-areas" value="${(exercise.attributes || exerciseDetails.attributes || []).join(', ')}">
+                </div>
+                <div class="form-group">
+                    <label>Notes:</label>
+                    <textarea id="edit-ex-notes">${exercise.notes || ''}</textarea>
+                </div>
+                <button class="button" id="save-exercise">Save</button>
+                <button class="button button-warning" id="cancel-exercise">Cancel</button>
+            `;
             
-            const newReps = prompt("Enter reps (leave blank for duration):", exercise.reps || '');
-            if (newReps !== null) {
-                if (newReps) {
-                    exercise.reps = newReps;
+            document.getElementById('routineExercises').children[index].appendChild(editor);
+            
+            document.getElementById('save-exercise').addEventListener('click', () => {
+                const name = document.getElementById('edit-ex-name').value;
+                const description = document.getElementById('edit-ex-desc').value;
+                const type = document.querySelector('input[name="ex-type"]:checked').value;
+                const areas = document.getElementById('edit-ex-areas').value.split(',').map(s => s.trim()).filter(s => s);
+                const notes = document.getElementById('edit-ex-notes').value;
+                
+                // Update in routine
+                exercise.name = name;
+                exercise.description = description;
+                exercise.attributes = areas;
+                exercise.notes = notes;
+                
+                if (type === 'reps') {
+                    exercise.reps = document.getElementById('edit-ex-reps').value;
                     delete exercise.duration_sec;
                 } else {
-                    const duration = prompt("Enter duration in seconds:", exercise.duration_sec || '30');
-                    if (duration) {
-                        exercise.duration_sec = duration;
-                        delete exercise.reps;
-                    }
+                    exercise.duration_sec = document.getElementById('edit-ex-duration').value;
+                    delete exercise.reps;
                 }
-            }
+                
+                // Update in exercise database
+                let exInDatabase = exerciseData.find(e => e.name === name);
+                if (exInDatabase) {
+                    exInDatabase.description = description;
+                    exInDatabase.attributes = areas;
+                } else {
+                    exerciseData.push({
+                        name: name,
+                        description: description,
+                        attributes: areas
+                    });
+                }
+                
+                localStorage.setItem('exerciseData', JSON.stringify(exerciseData));
+                renderExercises();
+            });
             
-            const newNotes = prompt("Enter notes:", exercise.notes || '');
-            if (newNotes !== null) {
-                exercise.notes = newNotes;
-            }
-            
-            renderExercises();
+            document.getElementById('cancel-exercise').addEventListener('click', () => {
+                renderExercises();
+            });
         }
 
         function saveRoutine() {
             currentRoutine.name = document.getElementById('routineName').value;
             currentRoutine.description = document.getElementById('routineDesc').value;
             currentRoutine.notes = document.getElementById('routineNotes').value;
-            currentRoutine.circuitRounds = parseInt(document.getElementById('circuitRounds').value) || 3;
-            currentRoutine.restBetweenRoundsSec = parseInt(document.getElementById('restBetweenRounds').value) || 60;
-            
-            currentRoutine.client = {
-                goals: document.getElementById('clientGoals').value.split('\n').filter(s => s.trim()),
-                restrictions: document.getElementById('clientRestrictions').value.split('\n').filter(s => s.trim()),
-                frequency: document.getElementById('clientFrequency').value
-            };
             
             // Update in routineData
             const index = routineData.workouts.findIndex(r => r.id === currentRoutine.id);
@@ -304,58 +288,48 @@
         function printRoutine() {
             const printWindow = window.open('', '_blank');
             
-            const exercisesByPhase = {
-                warmup: currentRoutine.exercises.filter(ex => ex.phase === 'warmup'),
-                main: currentRoutine.exercises.filter(ex => !ex.phase || ex.phase === 'main'),
-                cooldown: currentRoutine.exercises.filter(ex => ex.phase === 'cooldown')
-            };
+            const exercisesHtml = currentRoutine.exercises.map(ex => `
+                <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee;">
+                    <h4 style="margin: 0 0 5px 0;">${ex.name}</h4>
+                    <div style="display: flex; gap: 20px; margin-bottom: 5px;">
+                        ${ex.reps ? `<div><strong>Reps:</strong> ${ex.reps}</div>` : ''}
+                        ${ex.duration_sec ? `<div><strong>Duration:</strong> ${ex.duration_sec} sec</div>` : ''}
+                    </div>
+                    <div><strong>Target Areas:</strong> ${ex.attributes?.join(', ') || 'N/A'}</div>
+                    ${ex.notes ? `<div style="margin-top: 5px;">${ex.notes}</div>` : ''}
+                </div>
+            `).join('');
             
             printWindow.document.write(`
                 <html>
                 <head>
                     <title>${currentRoutine.name}</title>
                     <style>
-                        body { font-family: Arial; padding: 20px; }
-                        h1 { color: #2c3e50; }
-                        .section { margin-bottom: 20px; }
-                        .exercise { margin-left: 20px; }
-                        .phase-header { 
-                            background: #f0f0f0; 
-                            padding: 5px 10px;
-                            margin: 15px 0 5px 0;
-                            font-weight: bold;
-                        }
+                        body { font-family: Arial; padding: 25px; color: #333; }
+                        h1 { color: #2c3e50; border-bottom: 2px solid #4CAF50; padding-bottom: 10px; }
+                        .info-section { margin-bottom: 20px; }
+                        @page { size: auto; margin: 10mm; }
                     </style>
                 </head>
                 <body>
                     <h1>${currentRoutine.name}</h1>
-                    <p><em>${currentRoutine.description}</em></p>
-                    
-                    <div class="section">
-                        <h3>Client Information</h3>
-                        <p><strong>Goals:</strong> ${currentRoutine.client.goals.join(', ')}</p>
-                        <p><strong>Restrictions:</strong> ${currentRoutine.client.restrictions.join(', ')}</p>
-                        <p><strong>Frequency:</strong> ${currentRoutine.client.frequency}</p>
+                    <div class="info-section">
+                        <p><strong>Description:</strong> ${currentRoutine.description || 'N/A'}</p>
                     </div>
                     
-                    <div class="section">
-                        <h3>Workout Structure</h3>
-                        <p><strong>Circuit Rounds:</strong> ${currentRoutine.circuitRounds}</p>
-                        <p><strong>Rest Between Rounds:</strong> ${currentRoutine.restBetweenRoundsSec} seconds</p>
-                        
-                        <div class="phase-header">Warmup</div>
-                        ${renderPrintExercises(exercisesByPhase.warmup)}
-                        
-                        <div class="phase-header">Main Routine</div>
-                        ${renderPrintExercises(exercisesByPhase.main)}
-                        
-                        <div class="phase-header">Cooldown</div>
-                        ${renderPrintExercises(exercisesByPhase.cooldown)}
-                    </div>
+                    <h3>Exercises</h3>
+                    ${exercisesHtml}
                     
-                    ${currentRoutine.notes ? `<div class="section"><h3>Notes</h3><p>${currentRoutine.notes}</p></div>` : ''}
+                    ${currentRoutine.notes ? `
+                        <div style="margin-top: 20px;">
+                            <h3>Notes</h3>
+                            <p>${currentRoutine.notes}</p>
+                        </div>
+                    ` : ''}
                     
-                    <p><small>Printed on ${new Date().toLocaleString()}</small></p>
+                    <p style="text-align: right; font-size: 0.8em; margin-top: 30px;">
+                        Generated on ${new Date().toLocaleString()}
+                    </p>
                 </body>
                 </html>
             `);
@@ -365,29 +339,6 @@
                 printWindow.print();
             }, 500);
         }
-        
-        function renderPrintExercises(exercises) {
-            if (exercises.length === 0) return '<p>No exercises</p>';
-            
-            let html = '';
-            exercises.forEach(ex => {
-                html += `
-                    <div class="exercise">
-                        <strong>${ex.name}</strong>: 
-                        ${ex.reps ? `${ex.reps} reps` : `${ex.duration_sec} seconds`}
-                        ${ex.notes ? `<br><em>${ex.notes}</em>` : ''}
-                    </div>
-                `;
-            });
-            return html;
-        }
-
-        document.getElementById('backToMain').addEventListener('click', () => {
-            window.close();
-        });
-        
-        document.getElementById('saveRoutine').addEventListener('click', saveRoutine);
-        document.getElementById('printRoutine').addEventListener('click', printRoutine);
     </script>
 </body>
 </html>
