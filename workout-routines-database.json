@@ -1,69 +1,93 @@
 {
-  "workouts": [
-    {
-      "id": "workout_001",
-      "name": "Neri Knee Strengthening",
-      "description": "Full routine focusing on knee stability and strength",
-      "client": {
-        "goals": ["Improve knee stability", "Strengthen posterior chain"],
-        "restrictions": ["Avoid excessive knee flexion"],
-        "frequency": "3x/week"
-      },
+  "id": "workout_003",
+  "name": "Knee Strengthening Protocol 2.0",
+  "description": "Enhanced routine targeting knee stability through ankle mobility, VMO activation, and posterior chain strength.",
+  "client": {
+    "goals": ["Improve knee stability", "Strengthen posterior chain", "Enhance joint resilience"],
+    "restrictions": ["Avoid excessive knee flexion if pain occurs"],
+    "frequency": "3x/week"
+  },
+  "structure": {
+    "warmup": {
       "exercises": [
         {
           "name": "Wall Ankle Mobilizations",
           "reps": "8 each side",
-          "focusAreas": ["ankles", "calves"]
+          "notes": "Hold 2 seconds at end-range"
         },
+        {
+          "name": "Heel Walks",
+          "duration_sec": 30,
+          "notes": "Focus on controlled steps"
+        }
+      ]
+    },
+    "circuit": {
+      "rounds": 3,
+      "exercises": [
         {
           "name": "Single Leg Glute Bridges",
           "reps": "10-12 per leg",
-          "focusAreas": ["glutes", "hamstrings"]
+          "focus": ["glutes", "hamstrings"]
         },
         {
           "name": "Deadlift (Single Leg)",
           "reps": "10-12 per leg",
-          "focusAreas": ["hamstrings", "balance"]
+          "focus": ["hamstrings", "balance"]
+        },
+        {
+          "name": "Standing Side Leg Raises",
+          "reps": "20 per side",
+          "focus": ["glutes", "abductors"]
+        },
+        {
+          "name": "Single Leg Calf Raise",
+          "reps": "10-15 per leg",
+          "focus": ["calves", "ankle stability"]
+        },
+        {
+          "name": "Quadruped Hip Extensions",
+          "reps": "10-15 per leg",
+          "focus": ["glutes", "core"]
         },
         {
           "name": "Static Lunge Pulse",
           "reps": "10-12 per leg",
-          "focusAreas": ["quads", "glutes"]
+          "focus": ["quads", "glutes"]
         },
         {
-          "name": "Wall Sit",
-          "duration_sec": "30-60",
-          "focusAreas": ["isometric", "quads"]
+          "name": "Side Lunges",
+          "reps": "10 per side",
+          "focus": ["adductors", "quads"]
         },
+        {
+          "name": "Tip-Toe Squats",
+          "reps": 10,
+          "focus": ["calves", "quads"]
+        },
+        {
+          "name": "Single-Leg Mini Squat Hold",
+          "duration_sec": "10-15 per leg",
+          "focus": ["VMO", "ankle stability"],
+          "notes": "Add pulses if too easy"
+        }
+      ],
+      "rest_between_rounds_sec": 60
+    },
+    "cooldown": {
+      "exercises": [
         {
           "name": "Toe-to-Wall Tibialis Raises",
           "reps": 12,
-          "focusAreas": ["tibialis anterior"]
-        }
-      ],
-      "notes": "Perform exercises in order. Modify reps if knee discomfort occurs."
-    },
-    {
-      "id": "workout_002",
-      "name": "Full Body Mobility",
-      "description": "General mobility routine for all joints",
-      "exercises": [
-        {
-          "name": "Cat Cow",
-          "reps": 12,
-          "focusAreas": ["spine", "core"]
+          "focus": ["tibialis anterior"]
         },
         {
-          "name": "Downward Facing Dog",
-          "duration_sec": 30,
-          "focusAreas": ["hamstrings", "shoulders"]
-        },
-        {
-          "name": "Cossack Squat",
-          "reps": "10 per side",
-          "focusAreas": ["adductors", "hips"]
+          "name": "Child's Pose",
+          "duration_sec": 45,
+          "notes": "Focus on deep breathing"
         }
       ]
     }
-  ]
+  },
+  "notes": "Perform exercises in order. Modify reps if experiencing knee discomfort. The single-leg focus enhances stability while protecting joints."
 }
