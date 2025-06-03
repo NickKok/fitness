@@ -2379,17 +2379,29 @@
   {
     "name": "Wall Ankle Mobilizations",
     "description": "Knee-to-wall drill to improve loaded dorsiflexion for squat/lunge mechanics.",
-    "attributes": ["ankles", "mobility", "warmup"]
+    "attributes": [
+      "ankles",
+      "mobility",
+      "warmup"
+    ]
   },
   {
     "name": "Single-Leg Mini Squat Hold",
     "description": "Unilateral shallow squat to strengthen VMO and challenge ankle stability.",
-    "attributes": ["legs", "balance", "strength", "VMO"]
+    "attributes": [
+      "legs",
+      "balance",
+      "strength",
+      "VMO"
+    ]
   },
   {
     "name": "Toe-to-Wall Tibialis Raises",
     "description": "Standing tibialis isolation with back against wall for shin strength.",
-    "attributes": ["ankles", "tibialis", "strength"]
+    "attributes": [
+      "ankles",
+      "tibialis",
+      "strength"
+    ]
   }
 ]
-  
