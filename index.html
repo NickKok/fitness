@@ -101,11 +101,32 @@
         document.getElementById('routineEditorBtn').addEventListener('click', () => {
             localStorage.setItem('exerciseData', JSON.stringify(exerciseData));
             localStorage.setItem('routineData', JSON.stringify(routineData));
-            window.open('routine-editor.html', '_blank');
+            const editorWindow = window.open('routine-editor.html', '_blank');
+            
+            // Set up message listener for updates from editor
+            editorWindow.onload = function() {
+                window.addEventListener('message', function(event) {
+                    if (event.data.type === 'updateData') {
+                        exerciseData = event.data.exerciseData;
+                        routineData = event.data.routineData;
+                        localStorage.setItem('exerciseData', JSON.stringify(exerciseData));
+                        localStorage.setItem('routineData', JSON.stringify(routineData));
+                        
+                        // Update the file info display
+                        fileInfo.innerHTML = `
+                            <p>✅ <strong>Exercises Loaded:</strong> ${exerciseData.length} exercises</p>
+                            <p>✅ <strong>Routines Loaded:</strong> ${routineData.workouts.length} routines</p>
+                            <p style="color: #4CAF50; font-weight: bold;">Data updated successfully!</p>
+                        `;
+                    }
+                });
+            };
         });
+        
         document.getElementById('exerciseEditorBtn').addEventListener('click', () => {
             alert('Exercise editor coming soon!');
         });
+        
         document.getElementById('downloadBtn').addEventListener('click', downloadJSONs);
         
         // File loading function
