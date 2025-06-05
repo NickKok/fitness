@@ -12,6 +12,7 @@
             padding: 20px;
             line-height: 1.6;
             color: #333;
+            background-color: #f9f9f9;
         }
         .button {
             background-color: #4CAF50;
@@ -25,36 +26,52 @@
             margin: 10px 5px;
             cursor: pointer;
             border-radius: 5px;
+            transition: all 0.3s;
+        }
+        .button:hover {
+            background-color: #45a049;
         }
         .button-secondary {
             background-color: #008CBA;
         }
+        .button-secondary:hover {
+            background-color: #0077a3;
+        }
         .button-warning {
             background-color: #f44336;
         }
+        .button-warning:hover {
+            background-color: #d32f2f;
+        }
         .editor-container {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
             margin-top: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         }
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
         }
-        input[type="text"], textarea {
+        input[type="text"], textarea, select {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 6px;
             font-family: inherit;
             font-size: inherit;
             box-sizing: border-box;
+            transition: border 0.3s;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #4CAF50;
+            outline: none;
         }
         textarea {
             min-height: 100px;
@@ -63,17 +80,44 @@
         .exercise-item {
             display: flex;
             justify-content: space-between;
-            padding: 12px;
-            margin: 8px 0;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
             background: white;
-            border-radius: 5px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        .exercise-item:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .exercise-info {
+            flex-grow: 1;
+        }
+        .exercise-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .exercise-details {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        .exercise-areas {
+            font-size: 0.9em;
+            color: #00796b;
+            margin-top: 5px;
+        }
+        .exercise-controls {
+            display: flex;
+            gap: 5px;
         }
         .exercise-editor {
             background: #f0f7fa;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
             border-left: 4px solid #008CBA;
         }
         .hidden {
@@ -85,6 +129,12 @@
             padding-bottom: 8px;
             margin-top: 30px;
         }
+        .client-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
     </style>
 </head>
 <body>
@@ -94,12 +144,28 @@
     <div class="editor-container">
         <div class="form-group">
             <label for="routineName">Routine Name:</label>
-            <input type="text" id="routineName">
+            <input type="text" id="routineName" placeholder="Enter routine name">
         </div>
         
         <div class="form-group">
             <label for="routineDesc">Description:</label>
-            <textarea id="routineDesc"></textarea>
+            <textarea id="routineDesc" placeholder="Describe the routine's purpose"></textarea>
+        </div>
+        
+        <div class="client-info">
+            <h3 class="section-title">Client Information</h3>
+            <div class="form-group">
+                <label for="clientGoals">Goals:</label>
+                <textarea id="clientGoals" placeholder="Enter client goals (comma separated)"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="clientRestrictions">Restrictions:</label>
+                <textarea id="clientRestrictions" placeholder="Enter any restrictions"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="clientFrequency">Frequency:</label>
+                <input type="text" id="clientFrequency" placeholder="e.g., 3x/week">
+            </div>
         </div>
         
         <h3 class="section-title">Exercises</h3>
@@ -107,11 +173,13 @@
         
         <div class="form-group">
             <label for="routineNotes">Notes:</label>
-            <textarea id="routineNotes"></textarea>
+            <textarea id="routineNotes" placeholder="Any additional notes or modifications"></textarea>
         </div>
         
-        <button id="saveRoutine" class="button">Save Routine</button>
-        <button id="printRoutine" class="button button-secondary">Print Routine</button>
+        <div style="display: flex; gap: 10px;">
+            <button id="saveRoutine" class="button">Save Routine</button>
+            <button id="printRoutine" class="button button-secondary">Print Routine</button>
+        </div>
     </div>
 
     <script>
@@ -127,12 +195,18 @@
                 name: '',
                 description: '',
                 exercises: [],
+                client: {
+                    goals: [],
+                    restrictions: [],
+                    frequency: ''
+                },
                 notes: ''
             };
             
             loadRoutineData();
             renderExercises();
             
+            // Event listeners
             document.getElementById('backToMain').addEventListener('click', () => window.close());
             document.getElementById('saveRoutine').addEventListener('click', saveRoutine);
             document.getElementById('printRoutine').addEventListener('click', printRoutine);
@@ -142,6 +216,14 @@
             document.getElementById('routineName').value = currentRoutine.name;
             document.getElementById('routineDesc').value = currentRoutine.description || '';
             document.getElementById('routineNotes').value = currentRoutine.notes || '';
+            
+            if (currentRoutine.client) {
+                document.getElementById('clientGoals').value = 
+                    Array.isArray(currentRoutine.client.goals) ? currentRoutine.client.goals.join(', ') : '';
+                document.getElementById('clientRestrictions').value = 
+                    Array.isArray(currentRoutine.client.restrictions) ? currentRoutine.client.restrictions.join(', ') : '';
+                document.getElementById('clientFrequency').value = currentRoutine.client.frequency || '';
+            }
         }
 
         function renderExercises() {
@@ -161,24 +243,35 @@
                 const focusAreas = ex.attributes || exerciseDetails.attributes || [];
                 
                 exerciseItem.innerHTML = `
-                    <div>
-                        <strong>${ex.name}</strong>
-                        <div style="margin-top: 5px;">
+                    <div class="exercise-info">
+                        <div class="exercise-name">${ex.name}</div>
+                        <div class="exercise-details">
                             ${ex.reps ? `<span>${ex.reps} reps</span>` : ''}
                             ${ex.duration_sec ? `<span>${ex.duration_sec} sec</span>` : ''}
                         </div>
-                        <div style="margin-top: 5px;">
-                            <small>${focusAreas.join(', ')}</small>
-                        </div>
-                        ${ex.notes ? `<div style="margin-top: 5px; font-size: 0.9em;">${ex.notes}</div>` : ''}
+                        ${focusAreas.length > 0 ? `
+                            <div class="exercise-areas">
+                                <strong>Targets:</strong> ${focusAreas.join(', ')}
+                            </div>
+                        ` : ''}
+                        ${ex.description ? `<div style="margin-top: 5px; font-size: 0.9em;">${ex.description}</div>` : ''}
+                        ${ex.notes ? `<div style="margin-top: 5px; font-size: 0.9em; color: #666;">${ex.notes}</div>` : ''}
                     </div>
-                    <div>
+                    <div class="exercise-controls">
                         <button class="button-secondary" data-index="${index}">Edit</button>
+                        <button class="button-warning" data-index="${index}">×</button>
                     </div>
                 `;
                 
                 container.appendChild(exerciseItem);
-                exerciseItem.querySelector('button').addEventListener('click', () => editExercise(index));
+                
+                // Add event listeners
+                exerciseItem.querySelector('.button-secondary').addEventListener('click', () => {
+                    editExercise(index);
+                });
+                exerciseItem.querySelector('.button-warning').addEventListener('click', () => {
+                    removeExercise(index);
+                });
             });
         }
 
@@ -201,26 +294,30 @@
                 <div class="form-group">
                     <label>Type:</label>
                     <div style="display: flex; gap: 15px;">
-                        <label>
-                            <input type="radio" name="ex-type" value="reps" ${exercise.reps ? 'checked' : ''}> Reps:
+                        <label style="display: flex; align-items: center; gap: 5px;">
+                            <input type="radio" name="ex-type" value="reps" ${exercise.reps ? 'checked' : ''}>
+                            Reps:
                             <input type="text" id="edit-ex-reps" value="${exercise.reps || ''}" style="width: 60px;">
                         </label>
-                        <label>
-                            <input type="radio" name="ex-type" value="duration" ${exercise.duration_sec ? 'checked' : ''}> Duration (sec):
+                        <label style="display: flex; align-items: center; gap: 5px;">
+                            <input type="radio" name="ex-type" value="duration" ${exercise.duration_sec ? 'checked' : ''}>
+                            Duration (sec):
                             <input type="text" id="edit-ex-duration" value="${exercise.duration_sec || ''}" style="width: 60px;">
                         </label>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Muscles/Areas (comma separated):</label>
+                    <label>Target Areas (comma separated):</label>
                     <input type="text" id="edit-ex-areas" value="${(exercise.attributes || exerciseDetails.attributes || []).join(', ')}">
                 </div>
                 <div class="form-group">
                     <label>Notes:</label>
                     <textarea id="edit-ex-notes">${exercise.notes || ''}</textarea>
                 </div>
-                <button class="button" id="save-exercise">Save</button>
-                <button class="button button-warning" id="cancel-exercise">Cancel</button>
+                <div style="display: flex; gap: 10px;">
+                    <button class="button" id="save-exercise">Save</button>
+                    <button class="button button-warning" id="cancel-exercise">Cancel</button>
+                </div>
             `;
             
             document.getElementById('routineExercises').children[index].appendChild(editor);
@@ -268,10 +365,23 @@
             });
         }
 
+        function removeExercise(index) {
+            if (confirm('Delete this exercise from the routine?')) {
+                currentRoutine.exercises.splice(index, 1);
+                renderExercises();
+            }
+        }
+
         function saveRoutine() {
             currentRoutine.name = document.getElementById('routineName').value;
             currentRoutine.description = document.getElementById('routineDesc').value;
             currentRoutine.notes = document.getElementById('routineNotes').value;
+            
+            currentRoutine.client = {
+                goals: document.getElementById('clientGoals').value.split(',').map(s => s.trim()).filter(s => s),
+                restrictions: document.getElementById('clientRestrictions').value.split(',').map(s => s.trim()).filter(s => s),
+                frequency: document.getElementById('clientFrequency').value
+            };
             
             // Update in routineData
             const index = routineData.workouts.findIndex(r => r.id === currentRoutine.id);
@@ -296,7 +406,8 @@
                         ${ex.duration_sec ? `<div><strong>Duration:</strong> ${ex.duration_sec} sec</div>` : ''}
                     </div>
                     <div><strong>Target Areas:</strong> ${ex.attributes?.join(', ') || 'N/A'}</div>
-                    ${ex.notes ? `<div style="margin-top: 5px;">${ex.notes}</div>` : ''}
+                    ${ex.description ? `<div style="margin-top: 5px;">${ex.description}</div>` : ''}
+                    ${ex.notes ? `<div style="margin-top: 5px; font-style: italic;">${ex.notes}</div>` : ''}
                 </div>
             `).join('');
             
@@ -308,6 +419,7 @@
                         body { font-family: Arial; padding: 25px; color: #333; }
                         h1 { color: #2c3e50; border-bottom: 2px solid #4CAF50; padding-bottom: 10px; }
                         .info-section { margin-bottom: 20px; }
+                        .client-info { background: #f5f5f5; padding: 15px; border-radius: 5px; margin: 15px 0; }
                         @page { size: auto; margin: 10mm; }
                     </style>
                 </head>
@@ -315,6 +427,13 @@
                     <h1>${currentRoutine.name}</h1>
                     <div class="info-section">
                         <p><strong>Description:</strong> ${currentRoutine.description || 'N/A'}</p>
+                    </div>
+                    
+                    <div class="client-info">
+                        <h3 style="margin-top: 0;">Client Information</h3>
+                        <p><strong>Goals:</strong> ${currentRoutine.client.goals.join(', ') || 'N/A'}</p>
+                        <p><strong>Restrictions:</strong> ${currentRoutine.client.restrictions.join(', ') || 'N/A'}</p>
+                        <p><strong>Frequency:</strong> ${currentRoutine.client.frequency || 'N/A'}</p>
                     </div>
                     
                     <h3>Exercises</h3>
