@@ -149,5 +149,118 @@
       "circuitRounds": 3,
       "restBetweenRoundsSec": 60
     }
+  ],
+  {
+  "workouts": [
+    {
+      "id": "workout_001",
+      "name": "20-Minute Equipment-Free Fat Burner",
+      "description": "A complete indoor workout targeting calorie burn, visceral fat reduction, and shoulder mobility improvement. No equipment needed.",
+      "client": {
+        "goals": [
+          "Burn calories",
+          "Target visceral fat",
+          "Improve shoulder mobility",
+          "Maintain moderate fitness"
+        ],
+        "restrictions": [
+          "Reduce shoulder ROM if pain occurs"
+        ],
+        "frequency": "3-4x/week"
+      },
+      "exercises": [
+        {
+          "name": "Arm Circles",
+          "duration_sec": 60,
+          "focusAreas": ["shoulders", "mobility"],
+          "notes": "30 sec forward / 30 sec backward",
+          "phase": "warmup"
+        },
+        {
+          "name": "Cat Cow",
+          "duration_sec": 60,
+          "focusAreas": ["spine", "core"],
+          "phase": "warmup"
+        },
+        {
+          "name": "March in Place",
+          "duration_sec": 60,
+          "focusAreas": ["cardio"],
+          "phase": "warmup"
+        },
+        {
+          "name": "Shoulder Rolls",
+          "duration_sec": 60,
+          "focusAreas": ["shoulders", "mobility"],
+          "phase": "warmup"
+        },
+        {
+          "name": "Squat + Side Leg Raise",
+          "duration_sec": 40,
+          "focusAreas": ["legs", "glutes", "core"],
+          "phase": "main",
+          "notes": "Compound movement for visceral fat focus"
+        },
+        {
+          "name": "Mountain Climbers (Slow)",
+          "duration_sec": 40,
+          "focusAreas": ["cardio", "core"],
+          "phase": "main"
+        },
+        {
+          "name": "Bird Dog (Dynamic)",
+          "duration_sec": 40,
+          "focusAreas": ["core", "shoulders"],
+          "phase": "main",
+          "notes": "Focus on shoulder mobility"
+        },
+        {
+          "name": "Modified Burpee (Step-back)",
+          "duration_sec": 40,
+          "focusAreas": ["full-body", "cardio"],
+          "phase": "main",
+          "notes": "Low impact version"
+        },
+        {
+          "name": "Elbow Plank Shoulder Taps",
+          "duration_sec": 40,
+          "focusAreas": ["core", "shoulders"],
+          "phase": "main"
+        },
+        {
+          "name": "Child's Pose",
+          "duration_sec": 60,
+          "focusAreas": ["back", "shoulders", "stretching"],
+          "phase": "cooldown"
+        },
+        {
+          "name": "Thread the Needle",
+          "duration_sec": 60,
+          "focusAreas": ["shoulders", "rotator cuff"],
+          "notes": "1 min per side",
+          "phase": "cooldown"
+        },
+        {
+          "name": "Seated Side Twist",
+          "duration_sec": 60,
+          "focusAreas": ["core", "spine"],
+          "notes": "30 sec per side",
+          "phase": "cooldown"
+        },
+        {
+          "name": "Standing Upward Stretch",
+          "duration_sec": 60,
+          "focusAreas": ["spine", "shoulders"],
+          "phase": "cooldown"
+        }
+      ],
+      "notes": "Pace: Moderate intensity (able to talk but feel challenged). For progression: Add 1-2 reps/week or reduce rest time. Focus on compound movements for visceral fat reduction.",
+      "circuitRounds": 3,
+      "restBetweenRoundsSec": 30,
+      "totalDurationMin": 20,
+      "intensity": "moderate",
+      "equipment": "none"
+    }
   ]
+}
 }
