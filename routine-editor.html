@@ -126,7 +126,6 @@
                         <div class="exercise-details">
                             ${ex.reps ? `<span>${ex.reps} reps</span>` : ''}
                             ${ex.duration_sec ? `<span>${ex.duration_sec} sec</span>` : ''}
-                            ${ex.phase ? `<span>Phase: ${ex.phase}</span>` : ''}
                         </div>
                         ${focusAreas.length > 0 ? `
                             <div class="exercise-areas">
@@ -186,14 +185,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Phase:</label>
-                    <select id="edit-ex-phase" style="width: 200px;">
-                        <option value="warmup" ${exercise.phase === 'warmup' ? 'selected' : ''}>Warmup</option>
-                        <option value="main" ${!exercise.phase || exercise.phase === 'main' ? 'selected' : ''}>Main</option>
-                        <option value="cooldown" ${exercise.phase === 'cooldown' ? 'selected' : ''}>Cooldown</option>
-                    </select>
-                </div>
-                <div class="form-group">
                     <label>Target Areas (comma separated):</label>
                     <input type="text" id="edit-ex-areas" value="${(exercise.focusAreas || exercise.attributes || exerciseDetails.attributes || []).join(', ')}">
                 </div>
@@ -215,14 +206,12 @@
                 const type = document.querySelector('input[name="ex-type"]:checked').value;
                 const areas = document.getElementById('edit-ex-areas').value.split(',').map(s => s.trim()).filter(s => s);
                 const notes = document.getElementById('edit-ex-notes').value;
-                const phase = document.getElementById('edit-ex-phase').value;
                 
                 // Update in routine
                 exercise.name = name;
                 exercise.description = description;
                 exercise.focusAreas = areas;
                 exercise.notes = notes;
-                exercise.phase = phase;
                 
                 if (type === 'reps') {
                     exercise.reps = document.getElementById('edit-ex-reps').value;
@@ -295,13 +284,31 @@
         function printRoutine() {
             const printWindow = window.open('', '_blank');
             
-            const exercisesHtml = currentRoutine.exercises.map(ex => `
+            // Split exercises into two columns
+            const exercises = currentRoutine.exercises;
+            const half = Math.ceil(exercises.length / 2);
+            const leftColumn = exercises.slice(0, half);
+            const rightColumn = exercises.slice(half);
+            
+            const leftColumnHtml = leftColumn.map(ex => `
                 <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee;">
                     <h4 style="margin: 0 0 5px 0;">${ex.name}</h4>
                     <div style="display: flex; gap: 20px; margin-bottom: 5px;">
                         ${ex.reps ? `<div><strong>Reps:</strong> ${ex.reps}</div>` : ''}
                         ${ex.duration_sec ? `<div><strong>Duration:</strong> ${ex.duration_sec} sec</div>` : ''}
-                        <div><strong>Phase:</strong> ${ex.phase || 'main'}</div>
+                    </div>
+                    <div><strong>Target Areas:</strong> ${(ex.focusAreas || ex.attributes || []).join(', ') || 'N/A'}</div>
+                    ${ex.description ? `<div style="margin-top: 5px;">${ex.description}</div>` : ''}
+                    ${ex.notes ? `<div style="margin-top: 5px; font-style: italic;">${ex.notes}</div>` : ''}
+                </div>
+            `).join('');
+            
+            const rightColumnHtml = rightColumn.map(ex => `
+                <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #eee;">
+                    <h4 style="margin: 0 0 5px 0;">${ex.name}</h4>
+                    <div style="display: flex; gap: 20px; margin-bottom: 5px;">
+                        ${ex.reps ? `<div><strong>Reps:</strong> ${ex.reps}</div>` : ''}
+                        ${ex.duration_sec ? `<div><strong>Duration:</strong> ${ex.duration_sec} sec</div>` : ''}
                     </div>
                     <div><strong>Target Areas:</strong> ${(ex.focusAreas || ex.attributes || []).join(', ') || 'N/A'}</div>
                     ${ex.description ? `<div style="margin-top: 5px;">${ex.description}</div>` : ''}
@@ -318,7 +325,13 @@
                         h1 { color: #2c3e50; border-bottom: 2px solid #4CAF50; padding-bottom: 10px; }
                         .info-section { margin-bottom: 20px; }
                         .client-info { background: #f5f5f5; padding: 15px; border-radius: 5px; margin: 15px 0; }
-                        @page { size: auto; margin: 10mm; }
+                        .print-container { display: flex; gap: 30px; }
+                        .print-column { flex: 1; }
+                        @page { size: A4; margin: 15mm; }
+                        @media print {
+                            body { padding: 0; }
+                            .print-container { gap: 20px; }
+                        }
                     </style>
                 </head>
                 <body>
@@ -335,7 +348,14 @@
                     </div>
                     
                     <h3>Exercises</h3>
-                    ${exercisesHtml}
+                    <div class="print-container">
+                        <div class="print-column">
+                            ${leftColumnHtml}
+                        </div>
+                        <div class="print-column">
+                            ${rightColumnHtml}
+                        </div>
+                    </div>
                     
                     ${currentRoutine.notes ? `
                         <div style="margin-top: 20px;">
