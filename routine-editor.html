@@ -55,35 +55,19 @@
         // Load data from localStorage
         let exerciseData = JSON.parse(localStorage.getItem('exerciseData')) || [];
         let routineData = JSON.parse(localStorage.getItem('routineData')) || { workouts: [] };
-        let currentRoutineIndex = parseInt(localStorage.getItem('currentRoutineIndex')) || -1;
+        let currentRoutineIndex = parseInt(localStorage.getItem('currentRoutineIndex'));
         let currentRoutine = null;
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             if (currentRoutineIndex >= 0 && currentRoutineIndex < routineData.workouts.length) {
-                // Editing existing routine
                 currentRoutine = JSON.parse(JSON.stringify(routineData.workouts[currentRoutineIndex]));
+                loadRoutineData();
+                renderExercises();
             } else {
-                // Creating new routine
-                currentRoutine = {
-                    id: 'workout_' + Date.now(),
-                    name: 'New Routine',
-                    description: '',
-                    exercises: [],
-                    client: {
-                        goals: [],
-                        restrictions: [],
-                        frequency: ''
-                    },
-                    notes: '',
-                    circuitRounds: 3,
-                    restBetweenRoundsSec: 30,
-                    totalDurationMin: 30
-                };
+                alert('Invalid routine selection');
+                window.close();
             }
-            
-            loadRoutineData();
-            renderExercises();
             
             // Event listeners
             document.getElementById('backToMain').addEventListener('click', () => {
@@ -265,12 +249,8 @@
                 frequency: document.getElementById('clientFrequency').value
             };
             
-            // Update or add routine
-            if (currentRoutineIndex >= 0 && currentRoutineIndex < routineData.workouts.length) {
-                routineData.workouts[currentRoutineIndex] = currentRoutine;
-            } else {
-                routineData.workouts.push(currentRoutine);
-            }
+            // Update routine
+            routineData.workouts[currentRoutineIndex] = currentRoutine;
             
             localStorage.setItem('routineData', JSON.stringify(routineData));
             

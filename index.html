@@ -34,9 +34,6 @@
             <div id="routineList" class="routine-list"></div>
             
             <div class="button-group">
-                <button id="newRoutineBtn" class="button button-secondary">
-                    <i class="fas fa-plus"></i> New Routine
-                </button>
                 <button id="downloadBtn" class="button">
                     <i class="fas fa-download"></i> Download JSON Files
                 </button>
@@ -50,9 +47,8 @@
         let exerciseData = [];
         let routineData = { workouts: [] };
         let fuse = null;
-        let editorWindow = null;
         
-        // Initialize message listener once
+        // Initialize message listener
         window.addEventListener('message', function(event) {
             if (event.data.type === 'updateData') {
                 exerciseData = event.data.exerciseData;
@@ -140,14 +136,11 @@
             localStorage.setItem('routineData', JSON.stringify(routineData));
             localStorage.setItem('currentRoutineIndex', index);
             
-            editorWindow = window.open('routine-editor.html', '_blank');
+            window.open('routine-editor.html', '_blank');
         }
         
         // Event listeners
         document.getElementById('loadFiles').addEventListener('click', loadFiles);
-        document.getElementById('newRoutineBtn').addEventListener('click', () => {
-            openEditor(-1); // -1 indicates new routine
-        });
         document.getElementById('downloadBtn').addEventListener('click', downloadJSONs);
         
         // File loading function
