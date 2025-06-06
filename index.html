@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fitness Routine Manager</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
@@ -25,52 +26,128 @@
         </div>
         
         <div id="mainMenu" class="hidden">
-            <h2>2. Select Editor</h2>
-            <button id="routineEditorBtn" class="button">Routine Editor</button>
-            <button id="exerciseEditorBtn" class="button button-secondary">Exercise Editor</button>
-            <button id="downloadBtn" class="button">Download JSON Files</button>
+            <h2>2. Select Routine to Edit</h2>
+            <div class="search-container">
+                <input type="text" id="routineSearch" placeholder="Search routines..." class="search-input">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+            <div id="routineList" class="routine-list"></div>
+            
+            <div class="button-group">
+                <button id="newRoutineBtn" class="button button-secondary">
+                    <i class="fas fa-plus"></i> New Routine
+                </button>
+                <button id="downloadBtn" class="button">
+                    <i class="fas fa-download"></i> Download JSON Files
+                </button>
+            </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
     <script>
-        // Global variables to store the JSON data
+        // Global variables
         let exerciseData = [];
         let routineData = { workouts: [] };
+        let fuse = null;
+        let editorWindow = null;
         
+        // Initialize message listener once
+        window.addEventListener('message', function(event) {
+            if (event.data.type === 'updateData') {
+                exerciseData = event.data.exerciseData;
+                routineData = event.data.routineData;
+                localStorage.setItem('exerciseData', JSON.stringify(exerciseData));
+                localStorage.setItem('routineData', JSON.stringify(routineData));
+                
+                // Update UI
+                initFuse();
+                renderRoutines();
+                fileInfo.innerHTML = `
+                    <p>✅ <strong>Exercises Loaded:</strong> ${exerciseData.length} exercises</p>
+                    <p>✅ <strong>Routines Loaded:</strong> ${routineData.workouts.length} routines</p>
+                    <p style="color: #4CAF50; font-weight: bold;">Data updated successfully!</p>
+                `;
+            }
+        });
+
         // DOM elements
         const uploadSection = document.getElementById('uploadSection');
         const mainMenu = document.getElementById('mainMenu');
         const fileInfo = document.getElementById('fileInfo');
+        const routineList = document.getElementById('routineList');
+        const routineSearch = document.getElementById('routineSearch');
+        
+        // Initialize Fuse.js for fuzzy search
+        function initFuse() {
+            const options = {
+                keys: ['name', 'description', 'client.goals'],
+                threshold: 0.4,
+                includeScore: true
+            };
+            fuse = new Fuse(routineData.workouts, options);
+        }
+        
+        // Render routine list
+        function renderRoutines(routines = routineData.workouts) {
+            routineList.innerHTML = '';
+            
+            if (!routines || routines.length === 0) {
+                routineList.innerHTML = '<p class="no-routines">No routines found</p>';
+                return;
+            }
+            
+            routines.forEach((routine, index) => {
+                const routineItem = document.createElement('div');
+                routineItem.className = 'routine-item';
+                routineItem.innerHTML = `
+                    <div class="routine-info">
+                        <h3>${routine.name}</h3>
+                        <p>${routine.description || 'No description'}</p>
+                        <div class="routine-meta">
+                            <span><i class="fas fa-bullseye"></i> ${routine.client.goals.slice(0, 2).join(', ')}</span>
+                            <span><i class="fas fa-clock"></i> ${routine.totalDurationMin || '--'} min</span>
+                        </div>
+                    </div>
+                    <button class="button edit-btn" data-index="${index}">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                `;
+                routineList.appendChild(routineItem);
+                
+                // Add click event
+                routineItem.querySelector('.edit-btn').addEventListener('click', () => {
+                    openEditor(index);
+                });
+            });
+        }
+        
+        // Handle search
+        routineSearch.addEventListener('input', (e) => {
+            if (!fuse) return;
+            
+            if (e.target.value === '') {
+                renderRoutines();
+            } else {
+                const results = fuse.search(e.target.value);
+                renderRoutines(results.map(result => result.item));
+            }
+        });
+        
+        // Open editor with selected routine
+        function openEditor(index) {
+            localStorage.setItem('exerciseData', JSON.stringify(exerciseData));
+            localStorage.setItem('routineData', JSON.stringify(routineData));
+            localStorage.setItem('currentRoutineIndex', index);
+            
+            editorWindow = window.open('routine-editor.html', '_blank');
+        }
         
         // Event listeners
         document.getElementById('loadFiles').addEventListener('click', loadFiles);
-        document.getElementById('routineEditorBtn').addEventListener('click', () => {
-            localStorage.setItem('exerciseData', JSON.stringify(exerciseData));
-            localStorage.setItem('routineData', JSON.stringify(routineData));
-            const editorWindow = window.open('routine-editor.html', '_blank');
-            
-            // Set up message listener for updates from editor
-            window.addEventListener('message', function(event) {
-                if (event.data.type === 'updateData') {
-                    exerciseData = event.data.exerciseData;
-                    routineData = event.data.routineData;
-                    localStorage.setItem('exerciseData', JSON.stringify(exerciseData));
-                    localStorage.setItem('routineData', JSON.stringify(routineData));
-                    
-                    // Update the file info display
-                    fileInfo.innerHTML = `
-                        <p>✅ <strong>Exercises Loaded:</strong> ${exerciseData.length} exercises</p>
-                        <p>✅ <strong>Routines Loaded:</strong> ${routineData.workouts.length} routines</p>
-                        <p style="color: #4CAF50; font-weight: bold;">Data updated successfully!</p>
-                    `;
-                }
-            });
+        document.getElementById('newRoutineBtn').addEventListener('click', () => {
+            openEditor(-1); // -1 indicates new routine
         });
-        
-        document.getElementById('exerciseEditorBtn').addEventListener('click', () => {
-            alert('Exercise editor coming soon!');
-        });
-        
         document.getElementById('downloadBtn').addEventListener('click', downloadJSONs);
         
         // File loading function
@@ -84,7 +161,6 @@
             }
             
             try {
-                // Read files sequentially with error handling
                 const exerciseContent = await readFile(exerciseFile);
                 exerciseData = parseJSON(exerciseContent, 'Exercise Database');
                 
@@ -98,13 +174,17 @@
                 
                 uploadSection.classList.add('hidden');
                 mainMenu.classList.remove('hidden');
+                
+                // Initialize search and render
+                initFuse();
+                renderRoutines();
             } catch (error) {
                 alert('Error: ' + error.message);
                 console.error(error);
             }
         }
 
-        // Improved file reader with Promise
+        // Helper functions
         function readFile(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -114,7 +194,6 @@
             });
         }
 
-        // Robust JSON parsing with validation
         function parseJSON(content, type) {
             try {
                 const data = JSON.parse(content);
@@ -130,14 +209,9 @@
             }
         }
         
-        // Download functionality
         function downloadJSONs() {
-            // Get the latest data from localStorage
-            const currentExerciseData = JSON.parse(localStorage.getItem('exerciseData')) || [];
-            const currentRoutineData = JSON.parse(localStorage.getItem('routineData')) || { workouts: [] };
-            
-            const exerciseBlob = new Blob([JSON.stringify(currentExerciseData, null, 2)], { type: 'application/json' });
-            const routineBlob = new Blob([JSON.stringify(currentRoutineData, null, 2)], { type: 'application/json' });
+            const exerciseBlob = new Blob([JSON.stringify(exerciseData, null, 2)], { type: 'application/json' });
+            const routineBlob = new Blob([JSON.stringify(routineData, null, 2)], { type: 'application/json' });
             
             const exerciseUrl = URL.createObjectURL(exerciseBlob);
             const routineUrl = URL.createObjectURL(routineBlob);
