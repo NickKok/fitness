@@ -12,21 +12,17 @@
         <h1>Fitness Routine Manager</h1>
         
         <div id="uploadSection">
-            <h2>1. Upload JSON Files</h2>
+            <h2>1. Upload Combined Data File</h2>
             <div class="file-input">
-                <label for="exerciseFile">Exercise Database:</label>
-                <input type="file" id="exerciseFile" accept=".json">
+                <label for="dataFile">Fitness Data (JSON):</label>
+                <input type="file" id="dataFile" accept=".json">
             </div>
-            <div class="file-input">
-                <label for="routineFile">Workout Routines:</label>
-                <input type="file" id="routineFile" accept=".json">
-            </div>
-            <button id="loadFiles" class="button">Load Files</button>
+            <button id="loadFile" class="button">Load Data</button>
             <div id="fileInfo"></div>
         </div>
         
         <div id="mainMenu" class="hidden">
-            <h2>2. Select Routine to Edit</h2>
+            <h2>2. Manage Routines</h2>
             <div class="search-container">
                 <input type="text" id="routineSearch" placeholder="Search routines..." class="search-input">
                 <i class="fas fa-search search-icon"></i>
@@ -35,7 +31,10 @@
             
             <div class="button-group">
                 <button id="downloadBtn" class="button">
-                    <i class="fas fa-download"></i> Download JSON Files
+                    <i class="fas fa-download"></i> Download All Data
+                </button>
+                <button id="newRoutineBtn" class="button button-secondary">
+                    <i class="fas fa-plus"></i> New Routine
                 </button>
             </div>
         </div>
@@ -43,190 +42,177 @@
 
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
     <script>
-        // Global variables
-        let exerciseData = [];
-        let routineData = { workouts: [] };
-        let fuse = null;
-        
-        // Initialize message listener
-        window.addEventListener('message', function(event) {
-            if (event.data.type === 'updateData') {
-                exerciseData = event.data.exerciseData;
-                routineData = event.data.routineData;
-                localStorage.setItem('exerciseData', JSON.stringify(exerciseData));
-                localStorage.setItem('routineData', JSON.stringify(routineData));
+        // Global data store
+        const app = {
+            data: { exercises: [], routines: [] },
+            init() {
+                this.loadFromLocalStorage();
+                this.bindEvents();
                 
-                // Update UI
-                initFuse();
-                renderRoutines();
-                fileInfo.innerHTML = `
-                    <p>✅ <strong>Exercises Loaded:</strong> ${exerciseData.length} exercises</p>
-                    <p>✅ <strong>Routines Loaded:</strong> ${routineData.workouts.length} routines</p>
-                    <p style="color: #4CAF50; font-weight: bold;">Data updated successfully!</p>
-                `;
-            }
-        });
-
-        // DOM elements
-        const uploadSection = document.getElementById('uploadSection');
-        const mainMenu = document.getElementById('mainMenu');
-        const fileInfo = document.getElementById('fileInfo');
-        const routineList = document.getElementById('routineList');
-        const routineSearch = document.getElementById('routineSearch');
-        
-        // Initialize Fuse.js for fuzzy search
-        function initFuse() {
-            const options = {
-                keys: ['name', 'description', 'client.goals'],
-                threshold: 0.4,
-                includeScore: true
-            };
-            fuse = new Fuse(routineData.workouts, options);
-        }
-        
-        // Render routine list
-        function renderRoutines(routines = routineData.workouts) {
-            routineList.innerHTML = '';
+                if (this.data.routines.length > 0) {
+                    this.showMainMenu();
+                }
+            },
             
-            if (!routines || routines.length === 0) {
-                routineList.innerHTML = '<p class="no-routines">No routines found</p>';
-                return;
-            }
+            loadFromLocalStorage() {
+                const saved = localStorage.getItem('fitnessData');
+                if (saved) {
+                    this.data = JSON.parse(saved);
+                    this.initFuse();
+                }
+            },
             
-            routines.forEach((routine, index) => {
-                const routineItem = document.createElement('div');
-                routineItem.className = 'routine-item';
-                routineItem.innerHTML = `
-                    <div class="routine-info">
-                        <h3>${routine.name}</h3>
-                        <p>${routine.description || 'No description'}</p>
-                        <div class="routine-meta">
-                            <span><i class="fas fa-bullseye"></i> ${routine.client.goals.slice(0, 2).join(', ')}</span>
-                            <span><i class="fas fa-clock"></i> ${routine.totalDurationMin || '--'} min</span>
-                        </div>
-                    </div>
-                    <button class="button edit-btn" data-index="${index}">
-                        <i class="fas fa-edit"></i> Edit
-                    </button>
-                `;
-                routineList.appendChild(routineItem);
+            bindEvents() {
+                document.getElementById('loadFile').addEventListener('click', () => this.loadDataFile());
+                document.getElementById('downloadBtn').addEventListener('click', () => this.downloadData());
+                document.getElementById('newRoutineBtn').addEventListener('click', () => this.newRoutine());
+                document.getElementById('routineSearch').addEventListener('input', (e) => this.searchRoutines(e));
+            },
+            
+            async loadDataFile() {
+                const fileInput = document.getElementById('dataFile');
+                if (!fileInput.files.length) {
+                    alert('Please select a JSON file first');
+                    return;
+                }
                 
-                // Add click event
-                routineItem.querySelector('.edit-btn').addEventListener('click', () => {
-                    openEditor(index);
+                try {
+                    const file = fileInput.files[0];
+                    const content = await this.readFile(file);
+                    this.data = JSON.parse(content);
+                    
+                    if (!this.data.exercises || !this.data.routines) {
+                        throw new Error('Invalid data format: missing exercises or routines');
+                    }
+                    
+                    localStorage.setItem('fitnessData', JSON.stringify(this.data));
+                    this.initFuse();
+                    this.showMainMenu();
+                    this.updateFileInfo();
+                    
+                } catch (error) {
+                    alert(`Error loading file: ${error.message}`);
+                    console.error(error);
+                }
+            },
+            
+            readFile(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = () => reject(new Error('Failed to read file'));
+                    reader.readAsText(file);
                 });
-            });
-        }
-        
-        // Handle search
-        routineSearch.addEventListener('input', (e) => {
-            if (!fuse) return;
+            },
             
-            if (e.target.value === '') {
-                renderRoutines();
-            } else {
-                const results = fuse.search(e.target.value);
-                renderRoutines(results.map(result => result.item));
-            }
-        });
-        
-        // Open editor with selected routine
-        function openEditor(index) {
-            localStorage.setItem('exerciseData', JSON.stringify(exerciseData));
-            localStorage.setItem('routineData', JSON.stringify(routineData));
-            localStorage.setItem('currentRoutineIndex', index);
+            initFuse() {
+                this.fuse = new Fuse(this.data.routines, {
+                    keys: ['name', 'description', 'client.goals'],
+                    threshold: 0.4,
+                    includeScore: true
+                });
+            },
             
-            window.open('routine-editor.html', '_blank');
-        }
-        
-        // Event listeners
-        document.getElementById('loadFiles').addEventListener('click', loadFiles);
-        document.getElementById('downloadBtn').addEventListener('click', downloadJSONs);
-        
-        // File loading function
-        async function loadFiles() {
-            const exerciseFile = document.getElementById('exerciseFile').files[0];
-            const routineFile = document.getElementById('routineFile').files[0];
+            showMainMenu() {
+                document.getElementById('uploadSection').classList.add('hidden');
+                document.getElementById('mainMenu').classList.remove('hidden');
+                this.renderRoutines();
+            },
             
-            if (!exerciseFile || !routineFile) {
-                alert('Please select both JSON files');
-                return;
-            }
-            
-            try {
-                const exerciseContent = await readFile(exerciseFile);
-                exerciseData = parseJSON(exerciseContent, 'Exercise Database');
+            renderRoutines(routines = this.data.routines) {
+                const container = document.getElementById('routineList');
                 
-                const routineContent = await readFile(routineFile);
-                routineData = parseJSON(routineContent, 'Workout Routines');
+                if (!routines || routines.length === 0) {
+                    container.innerHTML = '<p class="no-routines">No routines found</p>';
+                    return;
+                }
                 
-                fileInfo.innerHTML = `
-                    <p>✅ <strong>Exercises Loaded:</strong> ${exerciseData.length} exercises</p>
-                    <p>✅ <strong>Routines Loaded:</strong> ${routineData.workouts.length} routines</p>
+                container.innerHTML = routines.map(routine => `
+                    <div class="routine-item" data-id="${routine.id}">
+                        <div class="routine-info">
+                            <h3>${routine.name}</h3>
+                            <p>${routine.description || 'No description available'}</p>
+                            <div class="routine-meta">
+                                <span><i class="fas fa-bullseye"></i> ${this.formatGoals(routine)}</span>
+                                <span><i class="fas fa-clock"></i> ${routine.totalDurationMin || '--'} min</span>
+                                <span><i class="fas fa-dumbbell"></i> ${routine.exercises?.length || 0} exercises</span>
+                            </div>
+                        </div>
+                        <button class="button edit-btn">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                    </div>
+                `).join('');
+                
+                // Add event listeners
+                document.querySelectorAll('.routine-item').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        if (!e.target.classList.contains('edit-btn')) return;
+                        this.editRoutine(item.dataset.id);
+                    });
+                });
+            },
+            
+            formatGoals(routine) {
+                return routine.client?.goals?.slice(0, 2).join(', ') || 'No goals specified';
+            },
+            
+            searchRoutines(event) {
+                const term = event.target.value.trim();
+                if (!term) {
+                    this.renderRoutines();
+                    return;
+                }
+                
+                const results = this.fuse.search(term).map(result => result.item);
+                this.renderRoutines(results);
+            },
+            
+            editRoutine(routineId) {
+                const index = this.data.routines.findIndex(r => r.id === routineId);
+                if (index >= 0) {
+                    localStorage.setItem('currentRoutineIndex', index);
+                    localStorage.setItem('fitnessData', JSON.stringify(this.data));
+                    window.open('routine-editor.html', '_blank');
+                }
+            },
+            
+            newRoutine() {
+                const newRoutine = {
+                    id: 'workout_' + Date.now().toString().slice(-4),
+                    name: 'New Routine',
+                    description: '',
+                    exercises: [],
+                    client: { goals: [], restrictions: [] }
+                };
+                
+                this.data.routines.push(newRoutine);
+                this.editRoutine(newRoutine.id);
+            },
+            
+            downloadData() {
+                const blob = new Blob([JSON.stringify(this.data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'fitness-data-export.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            },
+            
+            updateFileInfo() {
+                document.getElementById('fileInfo').innerHTML = `
+                    <p>✅ <strong>Exercises:</strong> ${this.data.exercises.length}</p>
+                    <p>✅ <strong>Routines:</strong> ${this.data.routines.length}</p>
+                    <p class="timestamp">Loaded: ${new Date().toLocaleString()}</p>
                 `;
-                
-                uploadSection.classList.add('hidden');
-                mainMenu.classList.remove('hidden');
-                
-                // Initialize search and render
-                initFuse();
-                renderRoutines();
-            } catch (error) {
-                alert('Error: ' + error.message);
-                console.error(error);
             }
-        }
-
-        // Helper functions
-        function readFile(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = () => reject(new Error(`Failed to read file: ${file.name}`));
-                reader.readAsText(file);
-            });
-        }
-
-        function parseJSON(content, type) {
-            try {
-                const data = JSON.parse(content);
-                if (type === 'Exercise Database' && !Array.isArray(data)) {
-                    throw new Error('Exercise database should be an array');
-                }
-                if (type === 'Workout Routines' && !data.workouts) {
-                    throw new Error('Workout routines should have a workouts array');
-                }
-                return data;
-            } catch (e) {
-                throw new Error(`Invalid ${type} JSON: ${e.message}`);
-            }
-        }
+        };
         
-        function downloadJSONs() {
-            const exerciseBlob = new Blob([JSON.stringify(exerciseData, null, 2)], { type: 'application/json' });
-            const routineBlob = new Blob([JSON.stringify(routineData, null, 2)], { type: 'application/json' });
-            
-            const exerciseUrl = URL.createObjectURL(exerciseBlob);
-            const routineUrl = URL.createObjectURL(routineBlob);
-            
-            const exerciseLink = document.createElement('a');
-            exerciseLink.href = exerciseUrl;
-            exerciseLink.download = 'exercise-database-updated.json';
-            
-            const routineLink = document.createElement('a');
-            routineLink.href = routineUrl;
-            routineLink.download = 'workout-routines-updated.json';
-            
-            document.body.appendChild(exerciseLink);
-            document.body.appendChild(routineLink);
-            exerciseLink.click();
-            routineLink.click();
-            document.body.removeChild(exerciseLink);
-            document.body.removeChild(routineLink);
-            
-            URL.revokeObjectURL(exerciseUrl);
-            URL.revokeObjectURL(routineUrl);
-        }
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', () => app.init());
     </script>
 </body>
 </html>
