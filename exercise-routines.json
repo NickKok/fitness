@@ -1,0 +1,123 @@
+{
+  "routines": [
+    {
+      "meta": {
+        "name": "Knee Strengthening Protocol",
+        "description": "Enhanced routine targeting knee stability and joint integrity.",
+        "goals": ["Improve knee stability", "Strengthen posterior chain"],
+        "restrictions": ["Avoid excessive knee flexion if pain occurs"],
+        "frequency": "2 times per week"
+      },
+      "exercises": [
+        {
+          "name": "Wall Ankle Mobilizations",
+          "sets": 1,
+          "reps": "8 reps each side",
+          "method": "From database"
+        },
+        {
+          "name": "Heel Walks",
+          "sets": 1,
+          "duration": "30 seconds",
+          "method": "From database"
+        },
+        {
+          "name": "Single Leg Glute Bridges",
+          "sets": 1,
+          "reps": "10-12 reps per leg",
+          "method": "From database"
+        },
+        {
+          "name": "Deadlift (Single Leg)",
+          "sets": 1,
+          "reps": "10-12 reps per leg",
+          "method": "From database"
+        },
+        {
+          "name": "Standing Side Leg Raises",
+          "sets": 1,
+          "reps": "20 reps per side",
+          "method": "From database"
+        },
+        {
+          "name": "Single Leg Calf Raises",
+          "sets": 1,
+          "reps": "15 reps per leg",
+          "method": "From database"
+        },
+        {
+          "name": "Forward Lunges",
+          "sets": 1,
+          "reps": "10-12 reps per leg",
+          "method": "From database",
+          "notes": "Hold lunge position for 1-2s per rep."
+        },
+        {
+          "name": "Side Lunges",
+          "sets": 1,
+          "reps": "10 reps",
+          "method": "From database"
+        },
+        {
+          "name": "Single-Leg Mini Squat Hold",
+          "sets": 1,
+          "duration": "30 seconds per leg",
+          "method": "From database"
+        },
+        {
+          "name": "Child's Pose",
+          "sets": 1,
+          "duration": "45 seconds",
+          "method": "From database"
+        }
+      ]
+    },
+    {
+      "meta": {
+        "name": "Upper Body Strength Circuit",
+        "description": "Joint-friendly intensive routine focusing on arms, shoulders, back and core",
+        "goals": ["Upper body strength", "Shoulder stability", "Core endurance"],
+        "restrictions": ["Modify push-ups if shoulder discomfort occurs"],
+        "frequency": "2-3 times per week",
+        "duration": "20 minutes"
+      },
+      "exercises": [
+        {
+          "name": "Diamond Push-ups",
+          "sets": 3,
+          "reps": "8-12 reps",
+          "method": "From database",
+          "notes": "Modify on knees if needed"
+        },
+        {
+          "name": "Back Fists",
+          "sets": 3,
+          "duration": "40s",
+          "method": "From database",
+          "notes": "Engage core for rotation"
+        },
+        {
+          "name": "Plank Shoulder Taps",
+          "sets": 3,
+          "duration": "40s",
+          "method": "From database",
+          "notes": "Keep hips stable"
+        },
+        {
+          "name": "Bird Dog - Dynamic",
+          "sets": 3,
+          "reps": "10 reps/side",
+          "method": "From database",
+          "notes": "Slow and controlled"
+        },
+        {
+          "name": "Bear Hold",
+          "sets": 3,
+          "duration": "40s",
+          "method": "From database",
+          "notes": "Keep knees 1-2\" above ground"
+        }
+      ]
+    }
+  ]
+}

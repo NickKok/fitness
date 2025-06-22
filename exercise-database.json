@@ -1,0 +1,1480 @@
+{
+  "meta": {
+    "version": "2.1",
+    "type": "exercise_database",
+    "last_updated": "2023-11-15",
+    "exercise_count": 193
+  },
+  "exercises": [
+    {
+      "name": "Wall Ankle Mobilizations",
+      "description": "Knee-to-wall drill improving dorsiflexion range for squats/lunges by maintaining heel contact while knee touches wall.",
+      "attributes": ["ankles", "mobility", "warmup"],
+      "method": "1. Face wall with toes 4-6\" away\n2. Keep heel down as knee touches wall\n3. Hold 2 seconds at end range\n4. Adjust distance to maintain challenge",
+      "tips": ""
+    },
+    {
+      "name": "Single-Leg Mini Squat Hold",
+      "description": "Isometric unilateral hold to strengthen VMO and challenge ankle stability.",
+      "attributes": ["legs", "balance", "strength"],
+      "method": "1. Stand on one leg with slight knee bend\n2. Align knee over mid-foot\n3. Hold 20-30 seconds\n4. Maintain neutral pelvis",
+      "tips": ""
+    },
+    {
+      "name": "Ab Tucks",
+      "description": "Seated abdominal isolation emphasizing posterior pelvic tilt for lower ab recruitment.",
+      "attributes": ["upper", "abs", "core", "lite", "strength"],
+      "method": "1. Sit with knees bent, feet lifted\n2. Hands behind thighs for support\n3. Exhale while tucking knees in\n4. Inhale to return with control",
+      "tips": ""
+    },
+    {
+      "name": "Alternating Arm Raises",
+      "description": "Dynamic shoulder preparation through full sagittal plane range with scapular control.",
+      "attributes": ["upper", "shoulders", "arms", "lite", "warmup"],
+      "method": "1. Stand with scapulae retracted\n2. Slowly raise one arm overhead\n3. Lower with control (3-4 seconds)\n4. Alternate arms rhythmically",
+      "tips": ""
+    },
+    {
+      "name": "Back Fists",
+      "description": "Rotational striking movement developing shoulder stability and transverse plane core engagement.",
+      "attributes": ["upper", "arms", "back", "core", "lite", "strength"],
+      "method": "1. Athletic stance, elbows bent 90°\n2. Rotate from hips to extend arm\n3. Strike at shoulder height\n4. Retract faster than extension",
+      "tips": ""
+    },
+    {
+      "name": "Back Step w/ Forward Arm Raises",
+      "description": "Coordinated movement combining lower-body stability with shoulder activation.",
+      "attributes": ["full", "back", "shoulders", "legs", "triceps", "arms", "lite", "warmup"],
+      "method": "1. Stand tall, arms at sides\n2. Step back with one leg\n3. Simultaneously raise arms forward\n4. Return to start with control",
+      "tips": ""
+    },
+    {
+      "name": "Bear / Beast Hold",
+      "description": "Static quadruped position for core and shoulder stability.",
+      "attributes": ["full", "back", "legs", "core", "glutes", "strength"],
+      "method": "1. On hands and knees, lift knees slightly\n2. Maintain flat back\n3. Hold position steadily\n4. Breathe normally",
+      "tips": ""
+    },
+    {
+      "name": "Bear Walk / Crawl",
+      "description": "Dynamic crawling movement for full-body coordination.",
+      "attributes": ["full", "back", "legs", "core", "XL", "strength"],
+      "method": "1. Start in bear hold position\n2. Move opposite hand/foot forward\n3. Keep hips stable\n4. Maintain controlled movement",
+      "tips": ""
+    },
+    {
+      "name": "Bicycle Crunches / Kicks",
+      "description": "Rotational core exercise targeting obliques dynamically.",
+      "attributes": ["upper", "core", "abs", "stability", "XL", "strength"],
+      "method": "1. Lie on back, hands behind head\n2. Bring elbow to opposite knee\n3. Alternate sides smoothly\n4. Keep lower back pressed down",
+      "tips": ""
+    },
+    {
+      "name": "Bicycle Kicks - Legs Only",
+      "description": "Lower ab isolation with reduced neck strain.",
+      "attributes": ["upper", "core", "abs", "legs", "lite", "strength"],
+      "method": "1. Lie on back, hands under hips\n2. Alternate leg movements\n3. Small circles engage lower abs\n4. Control the tempo",
+      "tips": ""
+    },
+    {
+      "name": "Bird Dog - Dynamic",
+      "description": "Alternating limb extensions for anti-rotation core training.",
+      "attributes": ["full", "back", "core", "shoulders", "glutes", "arms", "strength"],
+      "method": "1. On hands and knees\n2. Extend opposite arm/leg\n3. Return with control\n4. Alternate sides",
+      "tips": ""
+    },
+    {
+      "name": "Bird Dog - Static",
+      "description": "Isometric hold for core and glute endurance.",
+      "attributes": ["full", "back", "hamstrings", "glutes", "core", "arms", "legs", "strength"],
+      "method": "1. Extend opposite limbs\n2. Hold position steadily\n3. Maintain neutral spine\n4. Breathe normally",
+      "tips": ""
+    },
+    {
+      "name": "Boat Pose",
+      "description": "Yoga pose for core and hip flexor strength.",
+      "attributes": ["upper", "core", "stability", "yoga"],
+      "method": "1. Sit with knees bent\n2. Lean back, lift feet\n3. Extend arms forward\n4. Hold with engaged core",
+      "tips": ""
+    },
+    {
+      "name": "Bounce & Cross Punch",
+      "description": "Boxing combination with rebound steps for coordination.",
+      "attributes": ["full", "cardio", "calves", "arms", "legs", "shoulders", "lite", "warmup"],
+      "method": "1. Athletic stance, slight bounce\n2. Throw cross-body punch\n3. Alternate sides\n4. Maintain light footwork",
+      "tips": ""
+    },
+    {
+      "name": "Bounce & Straight Punch",
+      "description": "Vertical punches with dynamic footwork.",
+      "attributes": ["full", "cardio", "calves", "arms", "legs", "shoulders", "lite", "warmup"],
+      "method": "1. Stand with feet shoulder-width\n2. Small bounce with each punch\n3. Alternate arms\n4. Keep elbows slightly bent",
+      "tips": ""
+    },
+    {
+      "name": "Bounce & Up Punch",
+      "description": "Overhead punches with plyometric footwork.",
+      "attributes": ["full", "cardio", "calves", "arms", "legs", "shoulders", "lite", "warmup"],
+      "method": "1. Start in athletic stance\n2. Small jump with each punch\n3. Punch upward at 45° angle\n4. Land softly",
+      "tips": ""
+    },
+    {
+      "name": "Bridge Pose",
+      "description": "Yoga backbend for hip and chest opening.",
+      "attributes": ["full", "back", "glutes", "yoga"],
+      "method": "1. Lie on back, knees bent\n2. Press through heels to lift hips\n3. Interlace fingers if possible\n4. Hold position",
+      "tips": ""
+    },
+    {
+      "name": "Bunny Hop",
+      "description": "Plyometric jump for power development.",
+      "attributes": ["full", "core", "legs", "cardio", "back", "XL", "strength"],
+      "method": "1. Quarter squat position\n2. Explode upward, knees to chest\n3. Land softly\n4. Immediately rebound",
+      "tips": ""
+    },
+    {
+      "name": "Burpee - Modified to Step",
+      "description": "Low-impact metabolic conditioning movement.",
+      "attributes": ["full", "lite", "cardio", "chest", "arms", "strength"],
+      "method": "1. Stand to plank (step back)\n2. Optional push-up\n3. Step feet forward\n4. Return to standing",
+      "tips": ""
+    },
+    {
+      "name": "Burpees + Jump",
+      "description": "High-intensity full-body exercise.",
+      "attributes": ["full", "legs", "cardio", "upper", "XL", "strength"],
+      "method": "1. Squat, hands to floor\n2. Jump back to plank\n3. Jump feet forward\n4. Explode upward",
+      "tips": ""
+    },
+    {
+      "name": "Burpees + Push-up",
+      "description": "Full-body explosive movement with added chest challenge.",
+      "attributes": ["full", "upper", "cardio", "back", "XL", "strength"],
+      "method": "1. Squat down, hands to floor\n2. Jump back to plank\n3. Perform strict push-up\n4. Jump feet forward",
+      "tips": ""
+    },
+    {
+      "name": "Burpees + Push-up + Jump",
+      "description": "Advanced burpee variation with plyometrics.",
+      "attributes": ["full", "XL", "cardio", "upper", "legs", "strength"],
+      "method": "1. Perform standard burpee with push-up\n2. After standing, add vertical jump\n3. Land softly\n4. Immediately descend",
+      "tips": ""
+    },
+    {
+      "name": "Butt Kicks",
+      "description": "Running in place variation emphasizing hamstring engagement.",
+      "attributes": ["legs", "cardio", "hamstrings", "lite", "warmup"],
+      "method": "1. Stand tall with core engaged\n2. Alternate bringing heels to glutes\n3. Maintain quick cadence\n4. Keep torso upright",
+      "tips": ""
+    },
+    {
+      "name": "Calf Raises",
+      "description": "Isolated ankle extension movement for calf development.",
+      "attributes": ["legs", "calves", "quads", "glutes", "strength"],
+      "method": "1. Stand on edge of step\n2. Lift heels as high as possible\n3. Slowly lower below step level\n4. Control entire range",
+      "tips": ""
+    },
+    {
+      "name": "Cat Cow",
+      "description": "Yoga spinal mobility sequence.",
+      "attributes": ["full", "back", "yoga"],
+      "method": "1. Start on hands and knees\n2. Inhale: Arch back (Cow)\n3. Exhale: Round spine (Cat)\n4. Flow smoothly between positions",
+      "tips": ""
+    },
+    {
+      "name": "Chair Pose",
+      "description": "Yoga squat hold for leg endurance.",
+      "attributes": ["legs", "quads", "yoga"],
+      "method": "1. Stand with feet together\n2. Lower into squat position\n3. Arms raised overhead\n4. Hold with engaged core",
+      "tips": ""
+    },
+    {
+      "name": "Chest Opener with Butt Kicks",
+      "description": "Combination of upper-body stretch and dynamic leg movement.",
+      "attributes": ["full", "legs", "upper", "lite", "warmup"],
+      "method": "1. Clasp hands behind back\n2. Lift arms while kicking heels up\n3. Maintain upright posture\n4. Coordinate breath with movement",
+      "tips": ""
+    },
+    {
+      "name": "Cinderblock Rows",
+      "description": "Bent-over rows using a cinderblock for resistance.",
+      "attributes": ["upper", "back", "arms", "core", "XL", "strength"],
+      "method": "1. Hinge at hips with flat back\n2. Hold cinderblock with both hands\n3. Pull elbows back to torso\n4. Control descent",
+      "tips": ""
+    },
+    {
+      "name": "Commando Plank",
+      "description": "Dynamic plank variation with forearm-to-hand transitions.",
+      "attributes": ["full", "core", "back", "shoulders", "XL", "strength"],
+      "method": "1. Start in forearm plank\n2. Push up to one hand\n3. Alternate sides with control\n4. Maintain rigid torso",
+      "tips": ""
+    },
+    {
+      "name": "Cossack Squat",
+      "description": "Lateral squat for adductor mobility.",
+      "attributes": ["legs", "quads", "adductors", "back", "core", "XL", "strength"],
+      "method": "1. Wide stance, toes pointed out\n2. Shift weight to one side\n3. Keep opposite leg straight\n4. Alternate sides",
+      "tips": ""
+    },
+    {
+      "name": "Crab Walk",
+      "description": "Reverse tabletop movement for shoulder and hip strength.",
+      "attributes": ["full", "legs", "arms", "core", "back", "strength"],
+      "method": "1. Sit with hands and feet on floor\n2. Lift hips to tabletop position\n3. Walk backward/forward\n4. Keep hips high",
+      "tips": ""
+    },
+    {
+      "name": "Cross Punches",
+      "description": "Horizontal punches for shoulder endurance.",
+      "attributes": ["upper", "cardio", "arms", "shoulders", "lite", "strength"],
+      "method": "1. Athletic stance, elbows bent\n2. Rotate torso to punch across body\n3. Alternate sides\n4. Keep wrists straight",
+      "tips": ""
+    },
+    {
+      "name": "Crow Pose",
+      "description": "Arm balance pose for core and wrist strength.",
+      "attributes": ["upper", "core", "shoulders", "arms", "XL", "yoga"],
+      "method": "1. Squat with hands on floor\n2. Place knees on triceps\n3. Shift weight forward\n4. Lift feet slowly",
+      "tips": ""
+    },
+    {
+      "name": "Deadlift (Single Leg)",
+      "description": "Unilateral hip hinge for balance and hamstring focus.",
+      "attributes": ["legs", "hamstrings", "back", "core", "stability", "strength"],
+      "method": "1. Stand on one leg, slight knee bend\n2. Hinge at hips with flat back\n3. Reach toward floor\n4. Return to start",
+      "tips": ""
+    },
+    {
+      "name": "Deadlift (Two Legs)",
+      "description": "Classic hip hinge for posterior chain strength.",
+      "attributes": ["legs", "hamstrings", "back", "core", "lite", "strength"],
+      "method": "1. Feet hip-width, soft knees\n2. Hinge at hips, bar close to body\n3. Drive through heels to stand\n4. Control descent",
+      "tips": ""
+    },
+    {
+      "name": "Diamond Push-ups",
+      "description": "Close-hand push-up for triceps emphasis.",
+      "attributes": ["upper", "chest", "triceps", "arms", "shoulders", "back", "XL", "strength"],
+      "method": "1. Hands form diamond shape\n2. Lower chest to hands\n3. Keep elbows close to body\n4. Push back up",
+      "tips": ""
+    },
+    {
+      "name": "Dip & Back Kick",
+      "description": "Coordinated dip and leg extension for mobility.",
+      "attributes": ["legs", "cardio", "lite", "warmup"],
+      "method": "1. Stand with hands on hips\n2. Small squat (dip)\n3. Kick one leg back\n4. Alternate sides",
+      "tips": ""
+    },
+    {
+      "name": "Dip & Reach",
+      "description": "Dynamic dip with overhead reach.",
+      "attributes": ["full", "cardio", "warmup", "lite"],
+      "method": "1. Small squat (dip)\n2. Explode upward with reach\n3. Land softly\n4. Repeat",
+      "tips": ""
+    },
+    {
+      "name": "Donkey Kick / Fire Hydrant Combo",
+      "description": "Glute activation sequence with hip abduction.",
+      "attributes": ["legs", "glutes", "back", "abductors", "hamstrings", "full", "adductors", "core"],
+      "method": "1. On hands and knees\n2. Kick leg back (donkey kick)\n3. Return to knee lift (fire hydrant)\n4. Alternate sides",
+      "tips": ""
+    },
+    {
+      "name": "Donkey Kicks",
+      "description": "Isolated glute kickbacks.",
+      "attributes": ["legs", "glutes", "abs", "core", "hamstrings", "back", "strength"],
+      "method": "1. On hands and knees\n2. Keep knee bent 90°\n3. Lift heel toward ceiling\n4. Control movement",
+      "tips": ""
+    },
+    {
+      "name": "Downward Facing Dog",
+      "description": "Yoga pose for hamstring and shoulder flexibility.",
+      "attributes": ["full", "back", "arms", "legs", "yoga"],
+      "method": "1. Start on hands and knees\n2. Lift hips up and back\n3. Straighten legs if possible\n4. Press chest toward thighs",
+      "tips": ""
+    },
+    {
+      "name": "Drawing Bow",
+      "description": "Qigong-inspired posture for upper-body tension.",
+      "attributes": ["upper", "arms", "core", "abs", "qigong"],
+      "method": "1. Stand with one arm extended\n2. Pull back as if drawing bow\n3. Hold tension\n4. Alternate sides",
+      "tips": ""
+    },
+    {
+      "name": "Dynamic Side Lunge",
+      "description": "Lateral lunge with dynamic movement.",
+      "attributes": ["legs", "back", "core", "glutes", "quads", "strength"],
+      "method": "1. Step wide to one side\n2. Bend knee, keep other leg straight\n3. Push back to center\n4. Alternate sides",
+      "tips": ""
+    },
+    {
+      "name": "Elbow Plank",
+      "description": "Forearm plank for core endurance.",
+      "attributes": ["full", "core", "abs", "shoulders", "chest", "back", "legs", "strength"],
+      "method": "1. Forearms on ground, elbows under shoulders\n2. Form straight line from head to heels\n3. Engage core\n4. Hold position",
+      "tips": ""
+    },
+    {
+      "name": "Fire Hydrants",
+      "description": "Hip abduction for gluteus medius strength.",
+      "attributes": ["legs", "abductors", "glutes", "strength"],
+      "method": "1. On hands and knees\n2. Lift knee out to side\n3. Keep hip at 90°\n4. Control movement",
+      "tips": ""
+    },
+    {
+      "name": "Flutter Kicks",
+      "description": "Supine leg lifts for lower abs.",
+      "attributes": ["upper", "abs", "core", "quads", "strength"],
+      "method": "1. Lie on back, hands under hips\n2. Lift legs slightly\n3. Alternate small kicks\n4. Keep lower back pressed down",
+      "tips": ""
+    },
+    {
+      "name": "Forward Jumping Squat",
+      "description": "Plyometric squat with forward jump.",
+      "attributes": ["legs", "quads", "stability", "cardio", "strength"],
+      "method": "1. Start in squat position\n2. Explode forward with jump\n3. Land softly in squat\n4. Immediately repeat",
+      "tips": ""
+    },
+    {
+      "name": "Frog Crunches",
+      "description": "Abdominal crunch with wide knee position.",
+      "attributes": ["upper", "core", "groin", "abs", "strength"],
+      "method": "1. Lie on back, knees wide\n2. Hands behind head\n3. Crunch upward\n4. Control descent",
+      "tips": ""
+    },
+    {
+      "name": "Froggers",
+      "description": "Explosive squat-to-plank movement.",
+      "attributes": ["full", "arms", "cardio", "stability", "XL", "back", "core", "quads", "strength"],
+      "method": "1. Start in standing position\n2. Drop into squat, hands to floor\n3. Jump back to plank\n4. Jump feet forward to squat",
+      "tips": ""
+    },
+    {
+      "name": "Front Leg Raises",
+      "description": "Hip flexor and quadriceps isolation.",
+      "attributes": ["upper", "abs", "quads", "lite", "stability", "legs", "strength"],
+      "method": "1. Stand tall, hold onto support if needed\n2. Lift one leg straight forward\n3. Control movement\n4. Alternate legs",
+      "tips": ""
+    },
+    {
+      "name": "Forward Lunges",
+      "description": "Basic lunge for unilateral leg strength.",
+      "attributes": ["legs", "quads", "stability", "strength"],
+      "method": "1. Step forward with one leg\n2. Lower until both knees at 90°\n3. Push back to start\n4. Alternate legs",
+      "tips": ""
+    },
+    {
+      "name": "Glute Bridges",
+      "description": "Hip thrust for glute activation.",
+      "attributes": ["legs", "glutes", "core", "hamstrings", "back", "lite", "strength"],
+      "method": "1. Lie on back, knees bent\n2. Lift hips to full extension\n3. Squeeze glutes at top\n4. Lower with control",
+      "tips": ""
+    },
+    {
+      "name": "Good Morning",
+      "description": "Hip hinge for hamstring flexibility.",
+      "attributes": ["legs", "back", "hamstrings", "stretching"],
+      "method": "1. Stand with hands behind head\n2. Hinge at hips with slight knee bend\n3. Keep back flat\n4. Return to standing",
+      "tips": ""
+    },
+    {
+      "name": "High Knees",
+      "description": "Running in place with exaggerated knee lifts.",
+      "attributes": ["legs", "cardio", "warmup", "strength"],
+      "method": "1. Stand tall, core engaged\n2. Drive knees upward\n3. Land softly\n4. Maintain quick pace",
+      "tips": ""
+    },
+    {
+      "name": "Hip Thrust + Single Leg",
+      "description": "Advanced glute bridge variation.",
+      "attributes": ["legs", "hamstrings", "core", "stability", "glutes", "XL", "strength"],
+      "method": "1. Shoulders on bench, one leg extended\n2. Drive through heel to lift hips\n3. Squeeze glutes at top\n4. Lower with control",
+      "tips": ""
+    },
+    {
+      "name": "Indian Pushup",
+      "description": "Dynamic yoga push-up for full-body strength.",
+      "attributes": ["full", "upper", "back", "core", "XL", "strength"],
+      "method": "1. Start in downward dog\n2. Lower into cobra position\n3. Push back to downward dog\n4. Flow continuously",
+      "tips": ""
+    },
+    {
+      "name": "Jumping Jacks",
+      "description": "Classic cardio warm-up.",
+      "attributes": ["full", "cardio", "warmup", "strength"],
+      "method": "1. Start with feet together\n2. Jump feet wide while raising arms\n3. Return to start\n4. Maintain rhythm",
+      "tips": ""
+    },
+    {
+      "name": "Jumping Lunges",
+      "description": "Plyometric alternating lunge.",
+      "attributes": ["legs", "quads", "cardio", "core", "XL", "strength"],
+      "method": "1. Lunge position\n2. Explode upward, switch legs\n3. Land softly in lunge\n4. Immediately repeat",
+      "tips": ""
+    },
+    {
+      "name": "Jumping Squats",
+      "description": "Explosive squat with vertical jump.",
+      "attributes": ["legs", "quads", "cardio", "XL", "strength"],
+      "method": "1. Squat to parallel\n2. Explode upward with arm swing\n3. Land softly in squat\n4. Immediately repeat",
+      "tips": ""
+    },
+    {
+      "name": "Kettlebell Swing",
+      "description": "Hip-driven swing for posterior chain power.",
+      "attributes": ["full", "legs", "hamstrings", "glutes", "back", "shoulders", "core", "XL", "strength"],
+      "method": "1. Hinge at hips, kettlebell between legs\n2. Drive hips forward explosively\n3. Let arms swing to chest height\n4. Control backswing",
+      "tips": ""
+    },
+    {
+      "name": "Knee Pushup",
+      "description": "Modified push-up for beginners.",
+      "attributes": ["upper", "core", "arms", "chest", "lite", "strength"],
+      "method": "1. Knees on ground, hands shoulder-width\n2. Lower chest to ground\n3. Keep body straight\n4. Push back up",
+      "tips": ""
+    },
+    {
+      "name": "Lunges",
+      "description": "Standard forward lunge.",
+      "attributes": ["legs", "quads", "stability", "strength"],
+      "method": "1. Step forward with one leg\n2. Lower until both knees at 90°\n3. Push back to start\n4. Alternate legs",
+      "tips": ""
+    },
+    {
+      "name": "Mountain Climbers",
+      "description": "Dynamic plank with alternating knee drives.",
+      "attributes": ["full", "cardio", "arms", "shoulders", "chest", "core", "XL", "strength"],
+      "method": "1. Plank position\n2. Drive one knee toward chest\n3. Alternate legs quickly\n4. Keep hips stable",
+      "tips": ""
+    },
+    {
+      "name": "Nordic Curl",
+      "description": "Eccentric hamstring curl.",
+      "attributes": ["legs", "back", "hamstrings", "calves", "XL", "strength"],
+      "method": "1. Kneel with feet anchored\n2. Slowly lower torso forward\n3. Use arms to control descent\n4. Push back to start",
+      "tips": ""
+    },
+    {
+      "name": "Plank Hold",
+      "description": "Basic core stabilization exercise.",
+      "attributes": ["full", "core", "back", "arms", "shoulders", "glutes", "strength"],
+      "method": "1. Hands under shoulders\n2. Form straight line from head to heels\n3. Engage core\n4. Hold position",
+      "tips": ""
+    },
+    {
+      "name": "Push-ups",
+      "description": "Fundamental upper-body pushing movement.",
+      "attributes": ["upper", "core", "arms", "chest", "back", "strength"],
+      "method": "1. Plank position, hands shoulder-width\n2. Lower chest to ground\n3. Keep elbows at 45°\n4. Push back up",
+      "tips": ""
+    },
+    {
+      "name": "Reverse Lunges",
+      "description": "Lunge stepping backward for quad focus.",
+      "attributes": ["legs", "quads", "stability", "strength"],
+      "method": "1. Step back with one leg\n2. Lower until both knees at 90°\n3. Push back to start\n4. Alternate legs",
+      "tips": ""
+    },
+    {
+      "name": "Side Lunges",
+      "description": "Lateral lunge for adductor strength.",
+      "attributes": ["legs", "adductors", "quads", "glutes", "back", "strength"],
+      "method": "1. Step wide to one side\n2. Bend knee, keep other leg straight\n3. Push back to center\n4. Alternate sides",
+      "tips": ""
+    },
+    {
+      "name": "Squats",
+      "description": "Fundamental lower-body strength movement.",
+      "attributes": ["legs", "glutes", "hamstrings", "quads", "cardio", "strength"],
+      "method": "1. Feet shoulder-width or wider\n2. Lower hips below knees\n3. Keep chest up\n4. Drive through heels",
+      "tips": ""
+    },
+    {
+      "name": "Superman",
+      "description": "Prone back extension for spinal erectors.",
+      "attributes": ["full", "back", "glutes", "core", "strength"],
+      "method": "1. Lie face down\n2. Lift arms and legs simultaneously\n3. Hold at top\n4. Lower with control",
+      "tips": ""
+    },
+    {
+      "name": "Tricep Dips",
+      "description": "Bodyweight dip for triceps strength.",
+      "attributes": ["upper", "triceps", "shoulders", "back", "arms", "strength"],
+      "method": "1. Hands on bench behind you\n2. Lower body by bending elbows\n3. Keep elbows pointing back\n4. Push back up",
+      "tips": ""
+    },
+    {
+      "name": "Walking Lunges",
+      "description": "Forward-moving lunge variation.",
+      "attributes": ["legs", "quads", "cardio", "core", "strength"],
+      "method": "1. Step forward into lunge\n2. Push up and bring back leg forward\n3. Continue alternating\n4. Maintain upright torso",
+      "tips": ""
+    },
+    {
+      "name": "Walking Sumo Squat (Deep)",
+      "description": "Wide-stance squat walk for hip mobility.",
+      "attributes": ["legs", "glutes", "hamstrings", "adductors", "cardio", "strength"],
+      "method": "1. Wide stance, toes pointed out\n2. Lower into deep squat\n3. Take small steps forward\n4. Maintain squat position",
+      "tips": ""
+    },
+    {
+      "name": "Warrior I",
+      "description": "Yoga pose for leg and shoulder strength.",
+      "attributes": ["legs", "shoulders", "yoga"],
+      "method": "1. Lunge position, back foot at 45°\n2. Raise arms overhead\n3. Square hips forward\n4. Hold position",
+      "tips": ""
+    },
+    {
+      "name": "Wide Pushup",
+      "description": "Push-up with hands wider than shoulders.",
+      "attributes": ["upper", "chest", "arms", "core", "strength"],
+      "method": "1. Hands wider than shoulders\n2. Lower chest to ground\n3. Keep body straight\n4. Push back up",
+      "tips": ""
+    },
+    {
+      "name": "Wrist Rotations",
+      "description": "Joint mobility exercise for wrists.",
+      "attributes": ["arms", "lite", "warmup"],
+      "method": "1. Extend arms forward\n2. Rotate wrists in circles\n3. Alternate directions\n4. Control movement",
+      "tips": ""
+    },
+    {
+      "name": "Door Bar Chin-Up Negatives",
+      "description": "Eccentric chin-up for back and arm strength.",
+      "attributes": ["upper", "back", "biceps", "arms", "XL", "strength"],
+      "method": "1. Start at top of chin-up position\n2. Slowly lower down (4-6 seconds)\n3. Reset at bottom\n4. Repeat",
+      "tips": ""
+    },
+    {
+      "name": "Door Bar Dead Hang",
+      "description": "Static hang to improve grip and shoulder stability.",
+      "attributes": ["upper", "back", "shoulders", "arms", "XL", "strength"],
+      "method": "1. Hang from bar with straight arms\n2. Engage shoulders\n3. Maintain neutral spine\n4. Hold for time",
+      "tips": ""
+    },
+    {
+      "name": "Down Dog w/ Knee Push-Up",
+      "description": "Yoga push-up hybrid for core and shoulders.",
+      "attributes": ["full", "core", "chest", "shoulders", "back", "strength"],
+      "method": "1. Start in downward dog\n2. Lower into modified push-up\n3. Push back to downward dog\n4. Repeat",
+      "tips": ""
+    },
+    {
+      "name": "Downward Dog Push-Up",
+      "description": "Dynamic yoga push-up variation.",
+      "attributes": ["full", "core", "chest", "shoulders", "XL", "strength"],
+      "method": "1. Start in plank position\n2. Push hips up to downward dog\n3. Lower back to plank\n4. Flow continuously",
+      "tips": ""
+    },
+    {
+      "name": "Floor Touches",
+      "description": "Bend-and-reach movement for hamstring flexibility.",
+      "attributes": ["legs", "back", "hamstrings", "lite", "stretching"],
+      "method": "1. Stand with feet together\n2. Hinge at hips to reach toward toes\n3. Keep knees slightly bent\n4. Return to standing",
+      "tips": ""
+    },
+    {
+      "name": "Half Handstand (Heels Up)",
+      "description": "Inverted pose for shoulder and core strength.",
+      "attributes": ["upper", "shoulders", "core", "lite", "stability"],
+      "method": "1. Downward dog position\n2. Walk feet closer to hands\n3. Lift one leg at a time\n4. Hold position",
+      "tips": ""
+    },
+    {
+      "name": "Handstands (3/4)",
+      "description": "Partial handstand for balance training.",
+      "attributes": ["full", "upper", "shoulders", "core", "stability"],
+      "method": "1. Start in downward dog\n2. Kick up to partial handstand\n3. Use wall for support if needed\n4. Hold position",
+      "tips": ""
+    },
+    {
+      "name": "Hip Openers",
+      "description": "Dynamic stretches for hip mobility.",
+      "attributes": ["legs", "warmup", "mobility"],
+      "method": "1. Stand on one leg\n2. Circle other leg in controlled motion\n3. Alternate directions\n4. Switch legs",
+      "tips": ""
+    },
+    {
+      "name": "Hook Punches",
+      "description": "Boxing-inspired rotational punches.",
+      "attributes": ["upper", "arms", "shoulders", "core", "cardio", "lite"],
+      "method": "1. Athletic stance, elbows bent\n2. Rotate torso to throw hook punch\n3. Keep wrist straight\n4. Alternate sides",
+      "tips": ""
+    },
+    {
+      "name": "Inchworm",
+      "description": "Forward fold to plank movement for hamstrings.",
+      "attributes": ["full", "upper", "back", "hamstrings", "cardio"],
+      "method": "1. Stand, fold forward to touch toes\n2. Walk hands out to plank\n3. Walk feet back to hands\n4. Repeat",
+      "tips": ""
+    },
+    {
+      "name": "Kettlebell Goblet Squat",
+      "description": "Front-loaded squat for leg and core strength.",
+      "attributes": ["legs", "quads", "glutes", "core", "strength"],
+      "method": "1. Hold kettlebell at chest\n2. Squat deep, elbows inside knees\n3. Keep chest upright\n4. Drive through heels",
+      "tips": ""
+    },
+    {
+      "name": "Kettlebell Overhead Squat",
+      "description": "Squat with overhead weight for full-body challenge.",
+      "attributes": ["full", "legs", "shoulders", "core", "XL", "strength"],
+      "method": "1. Press kettlebell overhead\n2. Squat while keeping weight stable\n3. Maintain upright torso\n4. Stand back up",
+      "tips": ""
+    },
+    {
+      "name": "Low Plank Climbers",
+      "description": "Slow mountain climbers for core endurance.",
+      "attributes": ["full", "core", "cardio", "XL", "strength"],
+      "method": "1. Forearm plank position\n2. Slowly bring one knee to elbow\n3. Alternate sides\n4. Keep hips stable",
+      "tips": ""
+    },
+    {
+      "name": "Lying Leg Raises",
+      "description": "Supine leg lift for lower abs.",
+      "attributes": ["upper", "abs", "core", "strength"],
+      "method": "1. Lie on back, hands under hips\n2. Lift legs to 90°\n3. Lower slowly\n4. Keep lower back pressed down",
+      "tips": ""
+    },
+    {
+      "name": "Lying Scissor Kicks",
+      "description": "Alternating leg movements for lower abs.",
+      "attributes": ["upper", "abs", "core", "quads", "strength"],
+      "method": "1. Lie on back, hands under hips\n2. Alternate lifting legs\n3. Small, controlled movements\n4. Keep lower back down",
+      "tips": ""
+    },
+    {
+      "name": "Marches",
+      "description": "Stationary marching for warm-up.",
+      "attributes": ["legs", "lite", "warmup"],
+      "method": "1. Stand tall\n2. Alternate lifting knees\n3. Add arm swing\n4. Controlled movement",
+      "tips": ""
+    },
+    {
+      "name": "Mod Boat Pose",
+      "description": "Modified yoga pose for core strength.",
+      "attributes": ["upper", "core", "arms", "quads", "yoga"],
+      "method": "1. Sit with knees bent, feet down\n2. Lean back slightly\n3. Lift feet slightly\n4. Hold position",
+      "tips": ""
+    },
+    {
+      "name": "Mountain Climbers - Slow",
+      "description": "Controlled plank knee drives for core stability.",
+      "attributes": ["full", "core", "cardio", "strength"],
+      "method": "1. Plank position\n2. Slowly bring one knee to chest\n3. Alternate sides\n4. Keep hips stable",
+      "tips": ""
+    },
+    {
+      "name": "Oblique Side Crunches",
+      "description": "Twisting crunch for oblique engagement.",
+      "attributes": ["upper", "obliques", "core", "strength"],
+      "method": "1. Lie on back, knees bent\n2. Hands behind head\n3. Crunch with rotation\n4. Alternate sides",
+      "tips": ""
+    },
+    {
+      "name": "Pigeon Pose",
+      "description": "Yoga stretch for hip flexors and glutes.",
+      "attributes": ["legs", "glutes", "hips", "yoga", "stretching"],
+      "method": "1. From tabletop, bring one knee forward\n2. Extend other leg back\n3. Square hips\n4. Hold stretch",
+      "tips": ""
+    },
+    {
+      "name": "Pike Pushup",
+      "description": "Incline push-up for shoulders.",
+      "attributes": ["upper", "shoulders", "arms", "chest", "XL", "strength"],
+      "method": "1. Downward dog position\n2. Bend elbows to lower head toward floor\n3. Push back up\n4. Keep hips high",
+      "tips": ""
+    },
+    {
+      "name": "Plank Back Kicks",
+      "description": "Plank with alternating leg extensions.",
+      "attributes": ["full", "core", "glutes", "hamstrings", "XL", "strength"],
+      "method": "1. Plank position\n2. Kick one leg straight back\n3. Alternate legs\n4. Keep hips stable",
+      "tips": ""
+    },
+    {
+      "name": "Plank Jack",
+      "description": "Jumping plank variation for cardio.",
+      "attributes": ["full", "cardio", "core", "XL", "strength"],
+      "method": "1. Plank position\n2. Jump feet wide then together\n3. Maintain straight body line\n4. Controlled movement",
+      "tips": ""
+    },
+    {
+      "name": "Plank Rotations",
+      "description": "Dynamic plank with torso twists.",
+      "attributes": ["full", "core", "obliques", "strength"],
+      "method": "1. Side plank position\n2. Rotate through center to other side\n3. Alternate sides\n4. Control movement",
+      "tips": ""
+    },
+    {
+      "name": "Plank Shoulder Taps",
+      "description": "Plank with alternating shoulder touches.",
+      "attributes": ["full", "core", "stability", "strength"],
+      "method": "1. Plank position\n2. Tap opposite shoulder with hand\n3. Alternate sides\n4. Minimize hip movement",
+      "tips": ""
+    },
+    {
+      "name": "Punch and Butt Kick",
+      "description": "Boxing combo with leg engagement.",
+      "attributes": ["full", "cardio", "arms", "legs", "lite"],
+      "method": "1. Athletic stance\n2. Throw punch then kick heel to glute\n3. Alternate sides\n4. Maintain rhythm",
+      "tips": ""
+    },
+    {
+      "name": "Rabbit Walk",
+      "description": "Quadrupedal walk with rounded back.",
+      "attributes": ["full", "core", "back", "strength"],
+      "method": "1. On hands and knees\n2. Round spine upward\n3. Take small steps forward\n4. Keep rounded position",
+      "tips": ""
+    },
+    {
+      "name": "Reverse Crunch",
+      "description": "Supine leg curl for lower abs.",
+      "attributes": ["upper", "abs", "core", "strength"],
+      "method": "1. Lie on back, knees bent\n2. Lift hips off floor\n3. Curl knees toward chest\n4. Lower with control",
+      "tips": ""
+    },
+    {
+      "name": "Reverse Plank",
+      "description": "Posterior chain hold for glutes and shoulders.",
+      "attributes": ["full", "glutes", "shoulders", "core", "XL", "strength"],
+      "method": "1. Sit with legs extended\n2. Place hands behind hips\n3. Lift hips to straight line\n4. Hold position",
+      "tips": ""
+    },
+    {
+      "name": "Scissor Jacks",
+      "description": "Wide jumping jack variation.",
+      "attributes": ["full", "cardio", "warmup"],
+      "method": "1. Start with legs crossed\n2. Jump to wide stance\n3. Cross opposite leg forward\n4. Alternate",
+      "tips": ""
+    },
+    {
+      "name": "Seated Leg Raises",
+      "description": "Seated alternating leg lifts for hip flexors.",
+      "attributes": ["upper", "core", "hip flexors", "strength"],
+      "method": "1. Sit on edge of chair\n2. Alternate lifting legs\n3. Keep torso upright\n4. Control movement",
+      "tips": ""
+    },
+    {
+      "name": "Shadow Boxing + Kick",
+      "description": "Boxing moves with added kicks.",
+      "attributes": ["full", "cardio", "arms", "legs", "lite"],
+      "method": "1. Basic boxing stance\n2. Throw combinations\n3. Add front kicks between punches\n4. Maintain form",
+      "tips": ""
+    },
+    {
+      "name": "Side Balance Jumps",
+      "description": "Lateral jumps for leg power.",
+      "attributes": ["legs", "cardio", "stability", "XL"],
+      "method": "1. Stand on one leg\n2. Jump side to side\n3. Land softly\n4. Maintain balance",
+      "tips": ""
+    },
+    {
+      "name": "Side Elbow Plank",
+      "description": "Side plank on elbows for obliques.",
+      "attributes": ["upper", "obliques", "core", "strength"],
+      "method": "1. Side forearm plank\n2. Stack feet\n3. Lift hips\n4. Hold position",
+      "tips": ""
+    },
+    {
+      "name": "Side Leg Raises",
+      "description": "Lateral leg lifts for gluteus medius.",
+      "attributes": ["legs", "glutes", "abductors", "strength"],
+      "method": "1. Lie on side, legs stacked\n2. Lift top leg upward\n3. Control movement\n4. Switch sides",
+      "tips": ""
+    },
+    {
+      "name": "Side Plank",
+      "description": "Static side hold for core stability.",
+      "attributes": ["full", "obliques", "core", "strength"],
+      "method": "1. Side plank position\n2. Stack feet\n3. Lift hips\n4. Hold position",
+      "tips": ""
+    },
+    {
+      "name": "Side Shuffle w/ Toe Touch",
+      "description": "Lateral movement with coordination challenge.",
+      "attributes": ["legs", "cardio", "stability", "warmup"],
+      "method": "1. Athletic stance\n2. Shuffle sideways\n3. Periodically touch opposite toe\n4. Stay light on feet",
+      "tips": ""
+    },
+    {
+      "name": "Side Walk in Plank",
+      "description": "Plank with lateral steps for core endurance.",
+      "attributes": ["full", "core", "arms", "XL", "strength"],
+      "method": "1. Plank position\n2. Step sideways with hand and foot\n3. Maintain straight body line\n4. Controlled movement",
+      "tips": ""
+    },
+    {
+      "name": "Single Leg Calf Raise",
+      "description": "Unilateral calf strengthening.",
+      "attributes": ["legs", "calves", "stability", "strength"],
+      "method": "1. Stand on one leg\n2. Raise up on toes\n3. Lower slowly\n4. Repeat",
+      "tips": ""
+    },
+    {
+      "name": "Skaters",
+      "description": "Lateral jumps for power and balance.",
+      "attributes": ["legs", "cardio", "stability", "strength"],
+      "method": "1. Start in slight squat\n2. Leap side to side\n3. Land softly\n4. Touch floor with opposite hand",
+      "tips": ""
+    },
+    {
+      "name": "Spiderman Push-ups",
+      "description": "Push-up with knee-to-elbow movement.",
+      "attributes": ["full", "upper", "core", "XL", "strength"],
+      "method": "1. Push-up position\n2. As you lower, bring knee to elbow\n3. Alternate sides\n4. Maintain straight body line",
+      "tips": ""
+    },
+    {
+      "name": "Split Jacks",
+      "description": "Wide-stance jumping jack variation.",
+      "attributes": ["full", "cardio", "warmup", "XL"],
+      "method": "1. Start in wide stance\n2. Jump while crossing arms\n3. Return to wide stance\n4. Alternate cross",
+      "tips": ""
+    },
+    {
+      "name": "Squat + Side Leg Raise",
+      "description": "Squat with added abduction for glutes.",
+      "attributes": ["legs", "glutes", "quads", "abductors", "strength"],
+      "method": "1. Perform squat\n2. As you stand, lift one leg to side\n3. Alternate sides\n4. Control movement",
+      "tips": ""
+    },
+    {
+      "name": "Squat Hold",
+      "description": "Isometric squat for endurance.",
+      "attributes": ["legs", "quads", "glutes", "strength"],
+      "method": "1. Lower into squat position\n2. Hold at parallel\n3. Keep chest up\n4. Breathe steadily",
+      "tips": ""
+    },
+    {
+      "name": "Standing Back Leg Raises",
+      "description": "Posterior leg lifts for glutes.",
+      "attributes": ["legs", "glutes", "hamstrings", "strength"],
+      "method": "1. Stand tall, hold onto support\n2. Kick one leg straight back\n3. Squeeze glute at top\n4. Alternate legs",
+      "tips": ""
+    },
+    {
+      "name": "Star Plank",
+      "description": "Wide-arm plank variation for core challenge.",
+      "attributes": ["full", "core", "arms", "XL", "strength"],
+      "method": "1. Plank position with wide hand placement\n2. Maintain straight body line\n3. Engage core\n4. Hold position",
+      "tips": ""
+    },
+    {
+      "name": "Step Jacks",
+      "description": "Low-impact jumping jack alternative.",
+      "attributes": ["lite", "cardio", "warmup"],
+      "method": "1. Step one foot out to side\n2. Bring hands overhead\n3. Return to center\n4. Alternate sides",
+      "tips": ""
+    },
+    {
+      "name": "Sumo Ballerina Squat",
+      "description": "Deep squat with heel lift for calves.",
+      "attributes": ["legs", "glutes", "quads", "calves", "XL", "strength"],
+      "method": "1. Wide stance, toes pointed out\n2. Lower into deep squat\n3. Lift heels at bottom\n4. Return to start",
+      "tips": ""
+    },
+    {
+      "name": "Supine Leg Raises",
+      "description": "Lying leg lifts for lower abs.",
+      "attributes": ["upper", "abs", "core", "strength"],
+      "method": "1. Lie on back, hands under hips\n2. Lift legs to 90°\n3. Lower slowly\n4. Keep lower back pressed down",
+      "tips": ""
+    },
+    {
+      "name": "Tip Toe Sumo Squat",
+      "description": "Sumo squat performed on toes.",
+      "attributes": ["legs", "calves", "glutes", "quads", "XL", "strength"],
+      "method": "1. Wide stance, toes pointed out\n2. Rise onto toes\n3. Lower into squat\n4. Maintain balance",
+      "tips": ""
+    },
+    {
+      "name": "Toe Tap Hops",
+      "description": "Quick foot taps for agility.",
+      "attributes": ["legs", "cardio", "stability", "lite"],
+      "method": "1. Stand with one foot slightly forward\n2. Quickly alternate toe taps\n3. Stay light on feet\n4. Maintain rhythm",
+      "tips": ""
+    },
+    {
+      "name": "Tree Pose",
+      "description": "Yoga balance pose for stability.",
+      "attributes": ["legs", "stability", "yoga"],
+      "method": "1. Stand on one leg\n2. Place opposite foot on inner thigh\n3. Hands at heart center\n4. Hold position",
+      "tips": ""
+    },
+    {
+      "name": "Tuck Jump",
+      "description": "Explosive jump with knee tuck.",
+      "attributes": ["legs", "cardio", "XL", "strength"],
+      "method": "1. Start in quarter squat\n2. Explode upward, knees to chest\n3. Land softly\n4. Immediately repeat",
+      "tips": ""
+    },
+    {
+      "name": "Two-Point Plank",
+      "description": "Alternating limb plank for core challenge.",
+      "attributes": ["full", "core", "stability", "XL", "strength"],
+      "method": "1. Plank position\n2. Lift opposite arm and leg\n3. Hold briefly\n4. Alternate sides",
+      "tips": ""
+    },
+    {
+      "name": "Upward Facing Dog",
+      "description": "Yoga backbend for spinal extension.",
+      "attributes": ["full", "back", "yoga"],
+      "method": "1. Lie prone, hands under shoulders\n2. Press up, straightening arms\n3. Keep hips lifted\n4. Open chest",
+      "tips": ""
+    },
+    {
+      "name": "Warrior II",
+      "description": "Yoga pose for leg and shoulder endurance.",
+      "attributes": ["legs", "shoulders", "yoga"],
+      "method": "1. Wide stance, front knee bent\n2. Arms extended parallel to floor\n3. Gaze over front hand\n4. Hold position",
+      "tips": ""
+    },
+    {
+      "name": "Seated Side Stretch",
+      "description": "Yoga stretch for lateral flexibility.",
+      "attributes": ["full", "yoga", "stretching"],
+      "method": "1. Sit with legs crossed\n2. Reach one arm overhead\n3. Lean to opposite side\n4. Hold stretch",
+      "tips": ""
+    },
+    {
+      "name": "Seated Side Twists",
+      "description": "Rotational stretch for spinal mobility.",
+      "attributes": ["full", "core", "yoga"],
+      "method": "1. Sit with legs extended\n2. Twist torso to one side\n3. Use opposite arm for leverage\n4. Alternate sides",
+      "tips": ""
+    },
+    {
+      "name": "Seated Up Stretch",
+      "description": "Seated forward reach for hamstrings.",
+      "attributes": ["legs", "hamstrings", "stretching"],
+      "method": "1. Sit with legs straight\n2. Reach forward toward toes\n3. Keep back straight\n4. Hold stretch",
+      "tips": ""
+    },
+    {
+      "name": "Seated Wide Leg Forward Fold",
+      "description": "Seated straddle stretch for inner thighs.",
+      "attributes": ["legs", "adductors", "yoga"],
+      "method": "1. Wide seated straddle\n2. Walk hands forward\n3. Keep spine long\n4. Hold stretch",
+      "tips": ""
+    },
+    {
+      "name": "Shadow Boxing",
+      "description": "Boxing combinations without equipment.",
+      "attributes": ["upper", "cardio", "arms", "lite"],
+      "method": "1. Athletic boxing stance\n2. Throw various punch combinations\n3. Move around imaginary opponent\n4. Maintain form",
+      "tips": ""
+    },
+    {
+      "name": "Shadow Boxing + Side Shifting",
+      "description": "Boxing footwork with lateral movement.",
+      "attributes": ["full", "cardio", "legs", "lite"],
+      "method": "1. Basic boxing stance\n2. Add lateral steps between punches\n3. Maintain balance\n4. Controlled movement",
+      "tips": ""
+    },
+    {
+      "name": "Shoulder Rolls",
+      "description": "Circular shoulder movements for mobility.",
+      "attributes": ["upper", "shoulders", "warmup"],
+      "method": "1. Stand tall\n2. Roll shoulders in circular motion\n3. Alternate directions\n4. Controlled movement",
+      "tips": ""
+    },
+    {
+      "name": "Side Iso Ab Crunch",
+      "description": "Isolated side crunch for obliques.",
+      "attributes": ["upper", "obliques", "core", "strength"],
+      "method": "1. Side-lying position\n2. Lift torso upward\n3. Focus on oblique contraction\n4. Controlled movement",
+      "tips": ""
+    },
+    {
+      "name": "Side Leg Raises + Squat",
+      "description": "Combination move for glutes and quads.",
+      "attributes": ["legs", "glutes", "quads", "strength"],
+      "method": "1. Perform squat\n2. As you stand, lift leg to side\n3. Alternate sides\n4. Control movement",
+      "tips": ""
+    },
+    {
+      "name": "Side to Side Hop",
+      "description": "Quick lateral jumps for agility.",
+      "attributes": ["legs", "cardio", "stability", "XL"],
+      "method": "1. Start in athletic stance\n2. Jump side to side quickly\n3. Land softly\n4. Maintain control",
+      "tips": ""
+    },
+    {
+      "name": "Sidekicks",
+      "description": "Martial-arts-inspired lateral kicks.",
+      "attributes": ["legs", "glutes", "cardio", "lite"],
+      "method": "1. Stand sideways to target\n2. Lift knee, extend leg outward\n3. Retract quickly\n4. Alternate sides",
+      "tips": ""
+    },
+    {
+      "name": "Sideways Bear Crawl",
+      "description": "Lateral crawling for full-body engagement.",
+      "attributes": ["full", "core", "shoulders", "XL", "strength"],
+      "method": "1. Bear crawl position\n2. Move sideways\n3. Cross hand over hand\n4. Maintain low position",
+      "tips": ""
+    },
+    {
+      "name": "Single Leg Hops",
+      "description": "Unilateral jumps for power.",
+      "attributes": ["legs", "cardio", "stability", "XL"],
+      "method": "1. Stand on one leg\n2. Hop forward/backward/sideways\n3. Land softly\n4. Maintain balance",
+      "tips": ""
+    },
+    {
+      "name": "Situps- Frog",
+      "description": "Wide-knee sit-up variation.",
+      "attributes": ["upper", "abs", "core", "strength"],
+      "method": "1. Lie on back, knees wide\n2. Perform sit-up\n3. Keep knees apart\n4. Control descent",
+      "tips": ""
+    },
+    {
+      "name": "Skater",
+      "description": "Lateral leap for power and balance.",
+      "attributes": ["legs", "cardio", "stability"],
+      "method": "1. Start in slight squat\n2. Leap laterally\n3. Land on opposite leg\n4. Touch floor with hand",
+      "tips": ""
+    },
+    {
+      "name": "Skipping",
+      "description": "Rope-free skipping motion.",
+      "attributes": ["legs", "cardio", "XL", "warmup"],
+      "method": "1. Alternate hopping on each foot\n2. Add arm swing\n3. Light, bouncy movement\n4. Maintain rhythm",
+      "tips": ""
+    },
+    {
+      "name": "Spiderman Mountain Climbers",
+      "description": "Knee-to-elbow plank variation.",
+      "attributes": ["full", "core", "cardio", "XL", "strength"],
+      "method": "1. Plank position\n2. Bring knee to same-side elbow\n3. Alternate sides\n4. Keep hips stable",
+      "tips": ""
+    },
+    {
+      "name": "Splits",
+      "description": "Static stretch for hamstrings and hips.",
+      "attributes": ["legs", "hamstrings", "stretching"],
+      "method": "1. Gradually lower into split position\n2. Use hands for support\n3. Hold stretch\n4. Breathe deeply",
+      "tips": ""
+    },
+    {
+      "name": "Sprawl",
+      "description": "Burpee-to-plank movement.",
+      "attributes": ["full", "cardio", "XL", "strength"],
+      "method": "1. From standing, drop hands to floor\n2. Jump feet back to plank\n3. Immediately return to standing\n4. Repeat quickly",
+      "tips": ""
+    },
+    {
+      "name": "Squat + Kick",
+      "description": "Squat with front kick combination.",
+      "attributes": ["legs", "quads", "cardio", "strength"],
+      "method": "1. Perform squat\n2. As you stand, kick one leg forward\n3. Alternate sides\n4. Control movement",
+      "tips": ""
+    },
+    {
+      "name": "Squat + Reverse Lunges",
+      "description": "Compound lower-body sequence.",
+      "attributes": ["legs", "quads", "glutes", "XL", "strength"],
+      "method": "1. Perform squat\n2. Step back into lunge\n3. Return to squat\n4. Alternate legs",
+      "tips": ""
+    },
+    {
+      "name": "Squat Hold + Punch",
+      "description": "Isometric squat with upper-body work.",
+      "attributes": ["full", "legs", "arms", "strength"],
+      "method": "1. Hold squat position\n2. Throw alternating punches\n3. Maintain squat depth\n4. Controlled movement",
+      "tips": ""
+    },
+    {
+      "name": "Squat Side Punches",
+      "description": "Squat with rotational punches.",
+      "attributes": ["full", "legs", "arms", "cardio"],
+      "method": "1. Squat position\n2. Throw punches to sides\n3. Rotate from core\n4. Maintain squat",
+      "tips": ""
+    },
+    {
+      "name": "Squat+Chair Pose",
+      "description": "Yoga-inspired squat hold.",
+      "attributes": ["legs", "quads", "yoga", "strength"],
+      "method": "1. Lower into squat\n2. Raise arms overhead\n3. Hold position\n4. Breathe steadily",
+      "tips": ""
+    },
+    {
+      "name": "Squat+Front Kick",
+      "description": "Squat to front kick combination.",
+      "attributes": ["legs", "quads", "cardio", "strength"],
+      "method": "1. Perform squat\n2. As you stand, kick forward\n3. Alternate sides\n4. Control movement",
+      "tips": ""
+    },
+    {
+      "name": "Squat Jacks",
+      "description": "Jumping squat with wide/narrow stance.",
+      "attributes": ["legs", "cardio", "XL", "strength"],
+      "method": "1. Start in narrow squat\n2. Jump to wide squat\n3. Alternate quickly\n4. Land softly",
+      "tips": ""
+    },
+    {
+      "name": "Standing Backwards Bend",
+      "description": "Gentle backbend for spinal extension.",
+      "attributes": ["full", "back", "stretching"],
+      "method": "1. Stand tall, hands on hips\n2. Gently arch backward\n3. Keep knees slightly bent\n4. Hold stretch",
+      "tips": ""
+    },
+    {
+      "name": "Standing Front Leg Raises",
+      "description": "Anterior leg lifts for hip flexors.",
+      "attributes": ["legs", "hip flexors", "strength"],
+      "method": "1. Stand tall, hold support if needed\n2. Lift one leg straight forward\n3. Control movement\n4. Alternate legs",
+      "tips": ""
+    },
+    {
+      "name": "Standing Side Leg Raises",
+      "description": "Lateral leg lifts for gluteus medius.",
+      "attributes": ["legs", "glutes", "abductors", "strength"],
+      "method": "1. Stand tall, hold support\n2. Lift one leg to side\n3. Keep torso upright\n4. Alternate legs",
+      "tips": ""
+    },
+    {
+      "name": "Standing Star Taps",
+      "description": "Dynamic reach and tap sequence.",
+      "attributes": ["full", "core", "stability"],
+      "method": "1. Stand in center of imaginary star\n2. Reach to tap each point\n3. Maintain balance\n4. Controlled movement",
+      "tips": ""
+    },
+    {
+      "name": "Star Plank (1/2 Down)",
+      "description": "Modified star plank for core endurance.",
+      "attributes": ["full", "core", "arms", "XL", "strength"],
+      "method": "1. Modified plank on knees\n2. Wide hand placement\n3. Hold position\n4. Engage core",
+      "tips": ""
+    },
+    {
+      "name": "Straight Leg Standing Crunch",
+      "description": "Standing ab engagement move.",
+      "attributes": ["upper", "abs", "core", "strength"],
+      "method": "1. Stand with hands behind head\n2. Lift one knee while crunching\n3. Alternate sides\n4. Control movement",
+      "tips": ""
+    },
+    {
+      "name": "Straight Leg Toe Touches",
+      "description": "Standing hamstring stretch.",
+      "attributes": ["legs", "hamstrings", "stretching"],
+      "method": "1. Stand with legs straight\n2. Hinge at hips to reach toward toes\n3. Keep back flat\n4. Hold stretch",
+      "tips": ""
+    },
+    {
+      "name": "Straight Punches Standing",
+      "description": "Basic boxing punches in stance.",
+      "attributes": ["upper", "cardio", "arms", "lite"],
+      "method": "1. Boxing stance\n2. Throw straight punches\n3. Rotate from core\n4. Alternate arms",
+      "tips": ""
+    },
+    {
+      "name": "Sumo Squat / Chair Pose Combo",
+      "description": "Yoga-squat hybrid for endurance.",
+      "attributes": ["legs", "glutes", "quads", "yoga", "strength"],
+      "method": "1. Wide stance sumo squat\n2. Transition to chair pose\n3. Alternate between positions\n4. Controlled movement",
+      "tips": ""
+    },
+    {
+      "name": "Sumo Squats",
+      "description": "Wide-stance squat variation.",
+      "attributes": ["legs", "glutes", "adductors", "strength"],
+      "method": "1. Wide stance, toes pointed out\n2. Lower into deep squat\n3. Keep chest upright\n4. Drive through heels",
+      "tips": ""
+    },
+    {
+      "name": "Supine Cycle Crunches",
+      "description": "Supine bicycle motion for abs.",
+      "attributes": ["upper", "abs", "core", "strength"],
+      "method": "1. Lie on back, hands behind head\n2. Alternate elbow to opposite knee\n3. Extend other leg\n4. Controlled movement",
+      "tips": ""
+    },
+    {
+      "name": "Three Legged Dog",
+      "description": "Yoga pose with leg lift.",
+      "attributes": ["full", "hamstrings", "yoga"],
+      "method": "1. Downward dog position\n2. Lift one leg upward\n3. Square hips\n4. Hold position",
+      "tips": ""
+    },
+    {
+      "name": "Tip Toe Sumo Squat",
+      "description": "Sumo squat on toes for calf engagement.",
+      "attributes": ["legs", "calves", "glutes", "XL", "strength"],
+      "method": "1. Wide stance, toes pointed out\n2. Rise onto toes\n3. Lower into squat\n4. Maintain balance",
+      "tips": ""
+    },
+    {
+      "name": "Toe Reaches (Wide Leg)",
+      "description": "Wide-stance forward fold.",
+      "attributes": ["legs", "hamstrings", "stretching"],
+      "method": "1. Wide stance\n2. Hinge at hips to reach toward floor\n3. Keep back flat\n4. Hold stretch",
+      "tips": ""
+    },
+    {
+      "name": "Toe Touches (Feet Together)",
+      "description": "Standing forward fold stretch.",
+      "attributes": ["legs", "hamstrings", "stretching"],
+      "method": "1. Stand with feet together\n2. Hinge at hips to reach toward toes\n3. Keep knees slightly bent\n4. Hold stretch",
+      "tips": ""
+    },
+    {
+      "name": "Travoltas",
+      "description": "Cross-body knee-to-elbow movement.",
+      "attributes": ["full", "core", "cardio", "lite"],
+      "method": "1. Stand tall\n2. Bring opposite knee to elbow\n3. Alternate sides\n4. Add hop for intensity",
+      "tips": ""
+    },
+    {
+      "name": "Two-Point Plank",
+      "description": "Alternating limb plank for core challenge.",
+      "attributes": ["full", "core", "stability", "XL", "strength"],
+      "method": "1. Plank position\n2. Lift opposite arm and leg\n3. Hold briefly\n4. Alternate sides",
+      "tips": ""
+    },
+    {
+      "name": "Uppercuts",
+      "description": "Vertical boxing punches for shoulders and core.",
+      "attributes": ["upper", "shoulders", "core", "cardio", "lite"],
+      "method": "1. Boxing stance\n2. Throw upward punches from waist\n3. Rotate from core\n4. Alternate arms",
+      "tips": ""
+    },
+    {
+      "name": "Walk Backwards",
+      "description": "Retro walking for coordination.",
+      "attributes": ["legs", "stability", "lite", "warmup"],
+      "method": "1. Walk backward deliberately\n2. Land toe-to-heel\n3. Maintain upright posture\n4. Controlled movement",
+      "tips": ""
+    },
+    {
+      "name": "Walking Sumo Squat (Low)",
+      "description": "Wide-stance squat walk with low posture.",
+      "attributes": ["legs", "glutes", "hamstrings", "cardio", "strength"],
+      "method": "1. Deep sumo squat position\n2. Take small steps forward\n3. Maintain low stance\n4. Controlled movement",
+      "tips": ""
+    },
+    {
+      "name": "Walking Toe Touches",
+      "description": "Dynamic hamstring stretch while walking.",
+      "attributes": ["legs", "hamstrings", "stretching", "lite"],
+      "method": "1. Walk forward\n2. Alternate touching toes with each step\n3. Keep knees slightly bent\n4. Controlled movement",
+      "tips": ""
+    },
+    {
+      "name": "Wide Squats (Plie)",
+      "description": "Ballet-inspired squat for inner thighs.",
+      "attributes": ["legs", "adductors", "glutes", "strength"],
+      "method": "1. Wide stance, toes pointed out\n2. Lower into squat\n3. Keep knees tracking over toes\n4. Drive through heels",
+      "tips": ""
+    },
+    {
+      "name": "Cinderblock Overhead Press",
+      "description": "Shoulder press using cinderblock.",
+      "attributes": ["upper", "shoulders", "arms", "XL", "strength"],
+      "method": "1. Hold cinderblock at shoulders\n2. Press overhead\n3. Control descent\n4. Keep core engaged",
+      "tips": ""
+    },
+    {
+      "name": "Cinderblock Bicep Curls",
+      "description": "Bicep curls with cinderblock.",
+      "attributes": ["upper", "biceps", "arms", "strength"],
+      "method": "1. Hold cinderblock with both hands\n2. Curl upward\n3. Squeeze at top\n4. Control descent",
+      "tips": ""
+    },
+    {
+      "name": "Cinderblock / Farmers Carry",
+      "description": "Loaded carry for grip and core.",
+      "attributes": ["full", "arms", "core", "XL", "strength"],
+      "method": "1. Hold heavy objects at sides\n2. Walk with upright posture\n3. Engage core\n4. Controlled breathing",
+      "tips": ""
+    },
+    {
+      "name": "Half Lift & Fold",
+      "description": "Yoga forward fold variation.",
+      "attributes": ["legs", "hamstrings", "yoga", "stretching"],
+      "method": "1. Forward fold position\n2. Lift halfway to flat back\n3. Then fold deeper\n4. Flow between positions",
+      "tips": ""
+    },
+    {
+      "name": "Happy Baby Pose",
+      "description": "Supine hip-opening yoga pose.",
+      "attributes": ["legs", "hips", "yoga", "stretching"],
+      "method": "1. Lie on back\n2. Grab feet with hands\n3. Open knees wide\n4. Rock gently if desired",
+      "tips": ""
+    },
+    {
+      "name": "Head Turns (L-R & U-D)",
+      "description": "Neck mobility exercises.",
+      "attributes": ["upper", "neck", "warmup", "lite"],
+      "method": "1. Slow side-to-side head turns\n2. Then up-and-down motions\n3. Full range of motion\n4. Controlled movement",
+      "tips": ""
+    },
+    {
+      "name": "High Lunge (Warrior 2)",
+      "description": "Yoga lunge with arms extended.",
+      "attributes": ["legs", "shoulders", "yoga", "strength"],
+      "method": "1. Lunge position\n2. Arms extended parallel to floor\n3. Square hips forward\n4. Hold position",
+      "tips": ""
+    },
+    {
+      "name": "Knee & Ankle Rotations",
+      "description": "Joint warm-up for lower body.",
+      "attributes": ["legs", "warmup", "lite"],
+      "method": "1. Seated or standing\n2. Rotate ankles in circles\n3. Then draw circles with knees\n4. Alternate directions",
+      "tips": ""
+    },
+    {
+      "name": "Knee to Hands",
+      "description": "Dynamic core and hip flexor movement.",
+      "attributes": ["full", "core", "hip flexors", "strength"],
+      "method": "1. Stand tall\n2. Lift knee while reaching hands down\n3. Alternate sides\n4. Controlled movement",
+      "tips": ""
+    },
+    {
+      "name": "Lying Knees to Chest",
+      "description": "Supine knee hug for lower back relief.",
+      "attributes": ["legs", "lower back", "stretching"],
+      "method": "1. Lie on back\n2. Hug knees to chest\n3. Rock gently if desired\n4. Hold stretch",
+      "tips": ""
+    },
+    {
+      "name": "Lying Leg Extensions",
+      "description": "Supine leg straightening for quads.",
+      "attributes": ["legs", "quads", "strength"],
+      "method": "1. Lie on back, knees bent\n2. Extend one leg at a time\n3. Control movement\n4. Alternate legs",
+      "tips": ""
+    },
+    {
+      "name": "Seated Alt Leg Raises",
+      "description": "Alternating seated leg lifts.",
+      "attributes": ["legs", "hip flexors", "strength"],
+      "method": "1. Sit on edge of chair\n2. Alternate lifting legs\n3. Keep torso upright\n4. Control movement",
+      "tips": ""
+    },
+    {
+      "name": "Sealed Jacks",
+      "description": "Low-impact jumping jack variation.",
+      "attributes": ["full", "cardio", "lite", "warmup"],
+      "method": "1. Modified jumping jack without arm raise\n2. Step feet out/in\n3. Hands can stay at sides\n4. Controlled movement",
+      "tips": ""
+    },
+    {
+      "name": "Seal Claps",
+      "description": "Dynamic arm movement for shoulders.",
+      "attributes": ["upper", "shoulders", "warmup", "lite"],
+      "method": "1. Stand with arms extended forward\n2. Clap hands together then behind back\n3. Continuous motion\n4. Controlled movement",
+      "tips": ""
+    },
+    {
+      "name": "Side Kick",
+      "description": "Martial-arts-inspired lateral kick.",
+      "attributes": ["legs", "glutes", "cardio", "lite"],
+      "method": "1. Stand sideways to target\n2. Lift knee, extend leg outward\n3. Retract quickly\n4. Alternate sides",
+      "tips": ""
+    },
+    {
+      "name": "Standing Upward Stretch",
+      "description": "Overhead reach for spinal decompression.",
+      "attributes": ["full", "stretching", "yoga"],
+      "method": "1. Stand tall\n2. Reach arms overhead\n3. Interlace fingers, palms up\n4. Hold stretch",
+      "tips": ""
+    },
+    {
+      "name": "Extended Triangle Pose",
+      "description": "Yoga pose for hamstrings and obliques.",
+      "attributes": ["legs", "obliques", "yoga", "stretching"],
+      "method": "1. Wide stance\n2. Reach forward then down to one leg\n3. Opposite arm reaches up\n4. Hold position",
+      "tips": ""
+    },
+    {
+      "name": "Goddess Pose",
+      "description": "Wide-stance yoga squat.",
+      "attributes": ["legs", "adductors", "yoga", "strength"],
+      "method": "1. Wide stance, toes pointed out\n2. Lower into squat\n3. Arms in goalpost position\n4. Hold position",
+      "tips": ""
+    },
+    {
+      "name": "Garland Pose / Deep Squat",
+      "description": "Yoga squat for hip mobility.",
+      "attributes": ["legs", "hips", "yoga", "stretching"],
+      "method": "1. Deep squat position\n2. Elbows inside knees\n3. Hands at heart center\n4. Hold position",
+      "tips": ""
+    },
+    {
+      "name": "Forward Fold",
+      "description": "Standing forward bend for hamstrings.",
+      "attributes": ["legs", "hamstrings", "yoga", "stretching"],
+      "method": "1. Stand with feet together\n2. Hinge at hips to fold forward\n3. Let head hang heavy\n4. Hold stretch",
+      "tips": ""
+    },
+    {
+      "name": "Low Plank Leg Raises",
+      "description": "Plank with alternating leg lifts.",
+      "attributes": ["full", "core", "glutes", "XL", "strength"],
+      "method": "1. Forearm plank position\n2. Alternate lifting legs\n3. Keep hips stable\n4. Controlled movement",
+      "tips": ""
+    },
+    {
+      "name": "Low Side Lunges (Hands on Floor)",
+      "description": "Lateral lunge with added stability challenge.",
+      "attributes": ["legs", "adductors", "core", "strength"],
+      "method": "1. Wide stance\n2. Lower into side lunge with hands on floor\n3. Keep chest up\n4. Alternate sides",
+      "tips": ""
+    },
+    {
+      "name": "Low Squat Walk",
+      "description": "Deep squat position walking.",
+      "attributes": ["legs", "quads", "glutes", "XL", "strength"],
+      "method": "1. Deep squat position\n2. Take small steps forward\n3. Maintain low stance\n4. Controlled movement",
+      "tips": ""
+    },
+    {
+      "name": "Lunge Punch",
+      "description": "Lunge with rotational punch.",
+      "attributes": ["full", "legs", "arms", "cardio", "strength"],
+      "method": "1. Lunge forward\n2. Throw opposite arm punch\n3. Return to start\n4. Alternate sides",
+      "tips": ""
+    },
+    {
+      "name": "Punches Standing",
+      "description": "Boxing punches in athletic stance.",
+      "attributes": ["full", "arms", "cardio", "lite"],
+      "method": "1. Athletic boxing stance\n2. Throw various punch combinations\n3. Rotate from core\n4. Maintain form",
+      "tips": ""
+    },
+    {
+      "name": "Savasana",
+      "description": "Final yoga relaxation pose.",
+      "attributes": ["full", "yoga", "cooldown"],
+      "method": "1. Lie flat on back\n2. Arms at sides, palms up\n3. Close eyes\n4. Breathe deeply for 5-10 minutes",
+      "tips": ""
+    },
+    {
+      "name": "Sumo Squat + Side Leg Raise",
+      "description": "Compound lower-body movement.",
+      "attributes": ["legs", "glutes", "adductors", "XL", "strength"],
+      "method": "1. Perform sumo squat\n2. As you stand, lift one leg to side\n3. Alternate sides\n4. Control movement",
+      "tips": ""
+    },
+    {
+      "name": "Toe-to-Wall Tibialis Raises",
+      "description": "Standing tibialis isolation with back against wall for shin strength.",
+      "attributes": ["ankles", "tibialis", "strength"],
+      "method": "1. Stand with back against wall, heels slightly away\n2. Lift toes upward while keeping heels grounded\n3. Slowly lower back down\n4. Repeat for specified reps",
+      "tips": ""
+    },
+    {
+      "name": "Single Leg Glute Bridges",
+      "description": "Unilateral hip extension exercise from supine position.",
+      "attributes": ["glutes", "hamstrings", "quads", "back"],
+      "method": "1. Lie on back with one knee bent, other leg extended\n2. Drive through heel to lift hips\n3. Squeeze glutes at top\n4. Lower with control",
+      "tips": ""
+    },
+    {
+      "name": "Heel Walks",
+      "description": "Locomotion exercise emphasizing tibialis anterior engagement.",
+      "attributes": ["tibialis anterior", "shins"],
+      "method": "1. Lift toes off ground\n2. Walk forward on heels only\n3. Maintain upright posture\n4. Take small, controlled steps",
+      "tips": ""
+    }
+  ]
+}
