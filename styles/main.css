@@ -1,0 +1,36 @@
+body {
+    background-color: #f8f9fa;
+    padding-top: 20px;
+    padding-bottom: 50px;
+}
+
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    border: none;
+}
+
+.table-responsive {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.modal-content {
+    border-radius: 10px;
+}
+
+.btn {
+    margin-right: 5px;
+}
+
+#routineEditor {
+    transition: all 0.3s ease;
+}
+
+.exercise-card {
+    transition: transform 0.2s;
+}
+
+.exercise-card:hover {
+    transform: translateY(-3px);
+}
