@@ -5,14 +5,11 @@ const searchBtn = document.getElementById('searchBtn');
 const addExerciseBtn = document.getElementById('addExerciseBtn');
 const downloadExerciseBtn = document.getElementById('downloadExerciseBtn');
 const exerciseModal = new bootstrap.Modal('#exerciseModal');
-// ... other elements
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-    if (exerciseTableBody) {
-        renderExerciseTable();
-        setupExerciseEventListeners();
-    }
+    renderExerciseTable();
+    setupExerciseEventListeners();
 });
 
 function setupExerciseEventListeners() {

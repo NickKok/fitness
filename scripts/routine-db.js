@@ -1,29 +1,34 @@
 // DOM Elements
 const routineSelect = document.getElementById('routineSelect');
 const routineEditor = document.getElementById('routineEditor');
-const routineName = document.getElementById('routineName');
+const routineNameInput = document.getElementById('routineName');
 const routineDescription = document.getElementById('routineDescription');
 const routineExercises = document.getElementById('routineExercises');
 const addExerciseToRoutineBtn = document.getElementById('addExerciseToRoutineBtn');
 const downloadRoutineBtn = document.getElementById('downloadRoutineBtn');
 const exerciseSelectorModal = new bootstrap.Modal('#exerciseSelectorModal');
-// ... other elements
 
 // Current routine being edited
 let currentRoutine = null;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-    if (routineSelect) {
-        populateRoutineSelect();
-        setupRoutineEventListeners();
-    }
+    initializeRoutineManager();
 });
+
+function initializeRoutineManager() {
+    loadFromLocalStorage();
+    populateRoutineSelect();
+    setupRoutineEventListeners();
+}
 
 function setupRoutineEventListeners() {
     routineSelect.addEventListener('change', handleRoutineSelect);
     addExerciseToRoutineBtn.addEventListener('click', openExerciseSelector);
     downloadRoutineBtn.addEventListener('click', downloadRoutineDB);
+    
+    // Add event listener for exercise selector modal
+    document.getElementById('selectExerciseBtn')?.addEventListener('click', addSelectedExerciseToRoutine);
 }
 
 function populateRoutineSelect() {
@@ -45,7 +50,10 @@ function handleRoutineSelect(e) {
     }
     
     currentRoutine = routineDB.find(r => r.meta.name === routineName);
-    if (!currentRoutine) return;
+    if (!currentRoutine) {
+        console.error("Routine not found:", routineName);
+        return;
+    }
     
     // Populate routine editor
     routineNameInput.value = currentRoutine.meta.name;
@@ -61,37 +69,45 @@ function renderRoutineExercises() {
     routineExercises.innerHTML = '';
     
     currentRoutine.exercises.forEach((exercise, index) => {
-        const exerciseCard = document.createElement('div');
-        exerciseCard.className = 'card mb-3';
-        
         const exerciseData = findExerciseByName(exercise.name) || {};
+        const exerciseCard = document.createElement('div');
+        exerciseCard.className = 'card mb-3 exercise-card';
         
         exerciseCard.innerHTML = `
             <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <h5>${exercise.name}</h5>
-                    <button class="btn btn-sm btn-danger remove-exercise" data-index="${index}">Remove</button>
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h5>${exercise.name}</h5>
+                        <p class="text-muted">${exerciseData.description || ''}</p>
+                    </div>
+                    <button class="btn btn-sm btn-danger remove-exercise" data-index="${index}">
+                        <i class="bi bi-trash"></i> Remove
+                    </button>
                 </div>
-                <p>${exerciseData.description || ''}</p>
                 
-                <div class="row mb-2">
+                <div class="row g-3 mt-2">
                     <div class="col-md-4">
                         <label class="form-label">Sets</label>
-                        <input type="text" class="form-control sets-input" value="${exercise.sets || ''}" data-index="${index}">
+                        <input type="text" class="form-control sets-input" 
+                               value="${exercise.sets || ''}" data-index="${index}">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Reps/Duration</label>
-                        <input type="text" class="form-control reps-input" value="${exercise.reps || exercise.duration || ''}" data-index="${index}">
+                        <input type="text" class="form-control reps-input" 
+                               value="${exercise.reps || exercise.duration || ''}" data-index="${index}">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Notes</label>
-                        <input type="text" class="form-control notes-input" value="${exercise.notes || ''}" data-index="${index}">
+                        <input type="text" class="form-control notes-input" 
+                               value="${exercise.notes || ''}" data-index="${index}">
                     </div>
                 </div>
                 
-                <button class="btn btn-sm btn-outline-primary edit-exercise-btn" data-name="${exercise.name}">
-                    Edit Exercise Definition
-                </button>
+                <div class="mt-3">
+                    <button class="btn btn-sm btn-outline-primary edit-exercise-btn" data-name="${exercise.name}">
+                        <i class="bi bi-pencil"></i> Edit Exercise Definition
+                    </button>
+                </div>
             </div>
         `;
         
@@ -146,7 +162,7 @@ function removeExerciseFromRoutine(e) {
 
 function editExerciseDefinition(e) {
     const exerciseName = e.target.dataset.name;
-    openExerciseModal(exerciseName);
+    window.location.href = `./exercise-db.html?edit=${encodeURIComponent(exerciseName)}`;
 }
 
 function openExerciseSelector() {
@@ -166,7 +182,7 @@ function renderExerciseSelectionTable() {
         row.innerHTML = `
             <td><input type="radio" name="selectedExercise" value="${exercise.name}"></td>
             <td>${exercise.name}</td>
-            <td>${exercise.description}</td>
+            <td>${exercise.description.substring(0, 50)}${exercise.description.length > 50 ? '...' : ''}</td>
         `;
         
         exerciseSelectionBody.appendChild(row);
@@ -177,15 +193,18 @@ function addSelectedExerciseToRoutine() {
     if (!currentRoutine) return;
     
     const selected = document.querySelector('input[name="selectedExercise"]:checked');
-    if (!selected) return;
+    if (!selected) {
+        alert('Please select an exercise first');
+        return;
+    }
     
     const exerciseName = selected.value;
     
     // Add to routine
     currentRoutine.exercises.push({
         name: exerciseName,
-        sets: '',
-        reps: ''
+        sets: '1',
+        reps: '10-12'
     });
     
     saveToLocalStorage();
@@ -200,6 +219,3 @@ function downloadRoutineDB() {
     
     downloadJSON(data, 'exercise-routines.json');
 }
-
-// Set up exercise selector button
-document.getElementById('selectExerciseBtn').addEventListener('click', addSelectedExerciseToRoutine);
